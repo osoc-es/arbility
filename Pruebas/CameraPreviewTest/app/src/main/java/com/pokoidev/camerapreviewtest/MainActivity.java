@@ -24,6 +24,11 @@ import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,7 +39,9 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private com.pokoidev.camerapreviewtest.AutoFitTextureView mTextureView;
+
+    private com.pokoidev.camerapreviewtest.AutoFitTextureView camera_texture_view;
+    private TextView text;
     private static final int REQUEST_CAMERA_PERMISSION = 1;
     private static final int MAX_PREVIEW_WIDTH = 1920;
     private static final int MAX_PREVIEW_HEIGHT = 1080;
@@ -76,18 +83,29 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
     protected void onResume() {
         super.onResume();
 
-        if (mTextureView.isAvailable()) {
-            openCamera(mTextureView.getWidth(), mTextureView.getHeight());
+        if (camera_texture_view.isAvailable()) {
+            openCamera(camera_texture_view.getWidth(), camera_texture_view.getHeight());
         } else {
-            mTextureView.setSurfaceTextureListener(this);
+            camera_texture_view.setSurfaceTextureListener(this);
         }
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTextureView = new com.pokoidev.camerapreviewtest.AutoFitTextureView(this);
-        mTextureView.setSurfaceTextureListener(this);
-        setContentView(mTextureView);
+        setContentView(R.layout.activity_main);
+
+        RelativeLayout _layout = (RelativeLayout) findViewById(R.id.layout);
+        TextView text = (TextView) findViewById(R.id.adiosmundo);
+        camera_texture_view = new com.pokoidev.camerapreviewtest.AutoFitTextureView(this);
+        camera_texture_view.setSurfaceTextureListener(this);
+
+        _layout.addView(camera_texture_view);
+
+        _layout.removeView(text);
+        _layout.addView(text);
+
+
+
     }
 
     static class CompareSizesByArea implements Comparator<Size> {
@@ -197,10 +215,10 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
 
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    mTextureView.setAspectRatio(
+                    camera_texture_view.setAspectRatio(
                             mPreviewSize.getWidth(), mPreviewSize.getHeight());
                 } else {
-                    mTextureView.setAspectRatio(
+                    camera_texture_view.setAspectRatio(
                             mPreviewSize.getHeight(), mPreviewSize.getWidth());
                 }
 
@@ -214,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
 
     private void createCameraPreviewSession() {
         try {
-            SurfaceTexture texture = mTextureView.getSurfaceTexture();
+            SurfaceTexture texture = camera_texture_view.getSurfaceTexture();
             assert texture != null;
             Surface surface = new Surface(texture);
 
