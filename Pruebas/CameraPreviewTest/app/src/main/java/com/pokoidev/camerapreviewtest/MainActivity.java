@@ -27,8 +27,6 @@ import android.view.TextureView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -52,30 +50,33 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
         ORIENTATIONS.append(Surface.ROTATION_180, 270);
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
-    private Semaphore mCameraOpenCloseLock = new Semaphore(1);
-    private String mCameraId;
-    private CameraDevice mCameraDevice;
-    private CameraCaptureSession mCaptureSession;
-    private CaptureRequest.Builder mPreviewRequestBuilder;
-    private CaptureRequest mPreviewRequest;
-    private int mSensorOrientation;
-    private Size mPreviewSize;
+    private Semaphore camera_open_close_semaphore = new Semaphore(1);
+    private String camera_id;
+    private CameraDevice camera_device;
+    private CameraCaptureSession capture_session;
+    private CaptureRequest.Builder preview_request_builder;
+    private CaptureRequest preview_request;
+    private int sensor_orientation;
+    private Size preview_size;
 
+    /**
+     * Method that manages the close of the camera
+     */
     private void closeCamera() {
         try {
-            mCameraOpenCloseLock.acquire();
-            if (null != mCaptureSession) {
-                mCaptureSession.close();
-                mCaptureSession = null;
+            camera_open_close_semaphore.acquire();
+            if (null != capture_session) {
+                capture_session.close();
+                capture_session = null;
             }
-            if (null != mCameraDevice) {
-                mCameraDevice.close();
-                mCameraDevice = null;
+            if (null != camera_device) {
+                camera_device.close();
+                camera_device = null;
             }
         } catch (InterruptedException e) {
             throw new RuntimeException("Interrupted while trying to lock camera closing.", e);
         } finally {
-            mCameraOpenCloseLock.release();
+            camera_open_close_semaphore.release();
         }
     }
 
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
     protected void onResume() {
         super.onResume();
 
+        // Check if the texture view of the camera is still available
         if (camera_texture_view.isAvailable()) {
             openCamera(camera_texture_view.getWidth(), camera_texture_view.getHeight());
         } else {
@@ -95,13 +97,18 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
         setContentView(R.layout.activity_main);
 
         RelativeLayout _layout = (RelativeLayout) findViewById(R.id.layout);
-        TextView text = (TextView) findViewById(R.id.adiosmundo);
+
+        //TODO: Save all the views reference of the layout
+
         camera_texture_view = new com.pokoidev.camerapreviewtest.AutoFitTextureView(this);
         camera_texture_view.setSurfaceTextureListener(this);
 
         _layout.addView(camera_texture_view);
 
+        //TODO: Remove all the views from the layout
         _layout.removeView(text);
+
+        //TODO: Add the views to the layout
         _layout.addView(text);
 
 
@@ -157,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
                     continue;
                 }
 
-                mCameraId = cameraId;
+                camera_id = cameraId;
 
                 StreamConfigurationMap map = characteristics.get(
                         CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
@@ -170,18 +177,18 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
                         new CompareSizesByArea());
 
                 int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-                mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+                sensor_orientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
                 boolean swappedDimensions = false;
                 switch (displayRotation) {
                     case Surface.ROTATION_0:
                     case Surface.ROTATION_180:
-                        if (mSensorOrientation == 90 || mSensorOrientation == 270) {
+                        if (sensor_orientation == 90 || sensor_orientation == 270) {
                             swappedDimensions = true;
                         }
                         break;
                     case Surface.ROTATION_90:
                     case Surface.ROTATION_270:
-                        if (mSensorOrientation == 0 || mSensorOrientation == 180) {
+                        if (sensor_orientation == 0 || sensor_orientation == 180) {
                             swappedDimensions = true;
                         }
                         break;
@@ -209,17 +216,17 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
                     maxPreviewHeight = MAX_PREVIEW_HEIGHT;
                 }
 
-                mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
+                preview_size = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
                         rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth,
                         maxPreviewHeight, largest);
 
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     camera_texture_view.setAspectRatio(
-                            mPreviewSize.getWidth(), mPreviewSize.getHeight());
+                            preview_size.getWidth(), preview_size.getHeight());
                 } else {
                     camera_texture_view.setAspectRatio(
-                            mPreviewSize.getHeight(), mPreviewSize.getWidth());
+                            preview_size.getHeight(), preview_size.getWidth());
                 }
 
                 return;
@@ -230,30 +237,33 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
         }
     }
 
+    /**
+     * Method called when the camera is open to create the preview
+     */
     private void createCameraPreviewSession() {
         try {
             SurfaceTexture texture = camera_texture_view.getSurfaceTexture();
             assert texture != null;
             Surface surface = new Surface(texture);
 
-            mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            mPreviewRequestBuilder.addTarget(surface);
-            mCameraDevice.createCaptureSession(Arrays.asList(surface),
+            preview_request_builder = camera_device.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            preview_request_builder.addTarget(surface);
+            camera_device.createCaptureSession(Arrays.asList(surface),
                     new CameraCaptureSession.StateCallback() {
 
                         @Override
                         public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                            if (null == mCameraDevice) {
+                            if (null == camera_device) {
                                 return;
                             }
 
-                            mCaptureSession = cameraCaptureSession;
+                            capture_session = cameraCaptureSession;
                             try {
-                                mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
+                                preview_request_builder.set(CaptureRequest.CONTROL_AF_MODE,
                                         CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
 
-                                mPreviewRequest = mPreviewRequestBuilder.build();
-                                mCaptureSession.setRepeatingRequest(mPreviewRequest,
+                                preview_request = preview_request_builder.build();
+                                capture_session.setRepeatingRequest(preview_request,
                                         null, null);
                             } catch (CameraAccessException e) {
                                 e.printStackTrace();
@@ -271,27 +281,44 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
         }
     }
 
+
+    /**
+     * Camera device events calls in relation to the camera device state
+     */
     private final CameraDevice.StateCallback mStateCallback = new CameraDevice.StateCallback() {
 
+        /**
+         * Method called when the camera is opened
+         * @param cameraDevice
+         */
         @Override
         public void onOpened(@NonNull CameraDevice cameraDevice) {
-            mCameraOpenCloseLock.release();
-            mCameraDevice = cameraDevice;
+            camera_open_close_semaphore.release();
+            camera_device = cameraDevice;
             createCameraPreviewSession();
         }
 
+        /**
+         * Method called when the camera is disconnected
+         * @param cameraDevice
+         */
         @Override
         public void onDisconnected(@NonNull CameraDevice cameraDevice) {
-            mCameraOpenCloseLock.release();
+            camera_open_close_semaphore.release();
             cameraDevice.close();
-            mCameraDevice = null;
+            camera_device = null;
         }
 
+        /**
+         * Method called when any error occurred with the camera
+         * @param cameraDevice
+         * @param error
+         */
         @Override
         public void onError(@NonNull CameraDevice cameraDevice, int error) {
-            mCameraOpenCloseLock.release();
+            camera_open_close_semaphore.release();
             cameraDevice.close();
-            mCameraDevice = null;
+            camera_device = null;
             Activity activity = MainActivity.this;
             if (null != activity) {
                 activity.finish();
@@ -300,45 +327,88 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
 
     };
 
+    /**
+     * This method opens the camera with given width and height sizes
+     */
     private void openCamera(int width, int height) {
+
+        // Request the permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCameraPermission();
             return;
         }
 
+        // Set the size
         setUpCameraOutputs(width, height);
+
+        //Opens the camera
         CameraManager manager = (CameraManager)this.getSystemService(Context.CAMERA_SERVICE);
         try {
-            if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
+            if (!camera_open_close_semaphore.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
                 throw new RuntimeException("Time out waiting to lock camera opening.");
             }
-            manager.openCamera(mCameraId, mStateCallback, null);
+            manager.openCamera(camera_id, mStateCallback, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
         }
     }
+
+    /**
+     * Implementation of interface android.view.TextureView.SurfaceTextureListener method.
+     * Called when the surface texture is available
+     * @param surface the surface texture
+     * @param width the width of the view
+     * @param height the height of the view
+     */
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         openCamera(width, height);
     }
 
+    /**
+     * Implementation of interface android.view.TextureView.SurfaceTextureListener method.
+     * Called when the size of the surface texture changes
+     * @param surface The surface texture
+     * @param width The width of the view
+     * @param height The height of the view
+     */
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
     }
 
+    /**
+     * Implementation of interface android.view.TextureView.SurfaceTextureListener method.
+     * Called when the surface texture is destroyed.
+     * @param surface The surface texture
+     * @return
+     */
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
         closeCamera();
         return true;
     }
 
+    /**
+     * Implementation of interface android.view.TextureView.SurfaceTextureListener method.
+     * Called when the surface texture is updated
+     * @param surface The surface texture
+     */
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
     }
 
+    /**
+     * Method that request the permission to uses the camera
+     */
     private void requestCameraPermission() {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
     }
 
+    /**
+     * Implementation of the method from android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback and android.app.Activity
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {
@@ -348,7 +418,7 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
                 }
-                return;
+                break;
             }
         }
     }
