@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tv_rotation;
+    TextView tv_pitch, tv_roll, tv_azimuth;
     SensorManager sManager;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        tv_rotation = (TextView) findViewById(R.id.tv_rotation);
+        tv_pitch = (TextView) findViewById(R.id.tv_pitch);
+        tv_roll = (TextView) findViewById(R.id.tv_roll);
+        tv_azimuth = (TextView) findViewById(R.id.tv_azimuth);
     }
 
     SensorEventListener sListener;
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 magnetic = new float[9];
                 SensorManager.getRotationMatrix(gravity, magnetic, accels, mags);
                 float[] outGravity = new float[9];
-                SensorManager.remapCoordinateSystem(gravity, SensorManager.AXIS_X,SensorManager.AXIS_Z, outGravity);
+                SensorManager.remapCoordinateSystem(gravity, SensorManager.AXIS_X,SensorManager.AXIS_Y, outGravity);
                 SensorManager.getOrientation(outGravity, values);
 
                 azimuth = values[0] * 57.2957795f;
@@ -78,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 roll = values[2] * 57.2957795f;
                 mags = null;
                 accels = null;
-                if(pitch<0)
-                    pitch=-pitch;
-                System.out.println("Pitch "+pitch);
-                tv_rotation.setText(Float.toString(pitch));
+
+                tv_pitch.setText(Float.toString(pitch));
+                tv_roll.setText(Float.toString(roll));
+                tv_azimuth.setText(Float.toString(azimuth));
             }
         }
     };

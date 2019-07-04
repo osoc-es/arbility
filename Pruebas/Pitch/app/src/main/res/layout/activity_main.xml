@@ -10,13 +10,41 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/tv_info"
+        android:id="@+id/tv_infoPitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rotation angle (Pitch)" />
 
     <TextView
-        android:id="@+id/tv_rotation"
+        android:id="@+id/tv_pitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="0"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/tv_infoRoll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rotation angle (Roll)" />
+
+    <TextView
+        android:id="@+id/tv_roll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="0"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/tv_infoAzimuth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rotation angle (Azimuth)" />
+
+    <TextView
+        android:id="@+id/tv_azimuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
