@@ -35,9 +35,13 @@ import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.Pose;
 import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is an example activity that uses the Sceneform UX package to make common AR tasks easier.
@@ -71,15 +75,31 @@ public class HelloSceneformActivity extends AppCompatActivity {
     Button btn2 = (Button) findViewById(R.id.anchor2);
     Button distance = (Button) findViewById(R.id.distance);
     Button raise = (Button) findViewById(R.id.raise);
+    Button clear = (Button)findViewById(R.id.clear);
     TextView data = (TextView) findViewById(R.id.tv_distance);
     SeekBar height = (SeekBar) findViewById(R.id.height);
+    List<AnchorNode> anchorNodes = new ArrayList<>();
 
-    btn1.setOnClickListener(new View.OnClickListener() {
+    clear.setOnClickListener(new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-            anchor1 = myanchor;
+        public void onClick(View v)
+        {
+            for(AnchorNode n : anchorNodes){
+                arFragment.getArSceneView().getScene().removeChild(n);
+                n.getAnchor().detach();
+                n.setParent(null);
+                n = null;
+            }
+            data.setText("Eliminando cosas");
         }
     });
+
+      btn1.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              anchor1 = myanchor;
+          }
+      });
 
       btn2.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -123,7 +143,7 @@ public class HelloSceneformActivity extends AppCompatActivity {
     // When you build a Renderable, Sceneform loads its resources in the background while returning
     // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
     ModelRenderable.builder()
-        .setSource(this, R.raw.andy)
+        .setSource(this, R.raw.cubito)
         .build()
         .thenAccept(renderable -> andyRenderable = renderable)
         .exceptionally(
@@ -148,6 +168,7 @@ public class HelloSceneformActivity extends AppCompatActivity {
                     hitResult.getHitPose().compose(Pose.makeTranslation(0, 0.2f, 0)));*/
             AnchorNode anchorNode = new AnchorNode(anchor);
           anchorNode.setParent(arFragment.getArSceneView().getScene());
+          anchorNodes.add(anchorNode);
 
           myanchor = anchor;
           myanchornode = anchorNode;
