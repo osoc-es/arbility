@@ -24,6 +24,9 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
     double longitud;
     double latitud;
 
+    private LocationListener locationListener;
+    private LocationManager locationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +68,9 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
 
     private void obtenerUbi() {
 
+        locationManager = (LocationManager) ObtenerLongitudLatitud.this.getSystemService( Context.LOCATION_SERVICE );
 
-        LocationManager locationManager = (LocationManager) ObtenerLongitudLatitud.this.getSystemService( Context.LOCATION_SERVICE );
-
-        LocationListener locationListener = new LocationListener() {
+        locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 tvLongitud.setText( Double.toString( location.getLongitude() ));
@@ -82,12 +84,10 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
                 b.putDouble("longitud", longitud);
                 b.putDouble("latitud", latitud);
 
-
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtras(b);
                 startActivity(i);
-
-
-
+                end();
             }
 
             @Override
@@ -112,5 +112,10 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
 
 
         locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, locationListener );
+    }
+
+    public void end(){
+        locationManager.removeUpdates(locationListener);
+        this.finish();
     }
 }

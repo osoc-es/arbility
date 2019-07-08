@@ -19,11 +19,11 @@
     android:layout_height="match_parent"
     tools:context=".HelloSceneformActivity">
 
-  <fragment android:name="com.google.ar.sceneform.ux.ArFragment"
+  <fragment
       android:id="@+id/ux_fragment"
+      android:name="com.google.ar.sceneform.ux.ArFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
-
 
 
   <Button
@@ -52,13 +52,20 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="300dp"
       android:text="Raise" />
+  <Button
+      android:id="@+id/clear"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="300dp"
+      android:layout_marginTop="50dp"
+      android:text="Clear" />
 
   <TextView
       android:id="@+id/tv_distance"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Hola caracola"
-      android:layout_marginTop="50dp"/>
+      android:layout_marginTop="50dp"
+      android:text="Hola caracola" />
 
   <SeekBar
       android:id="@+id/height"
