@@ -36,15 +36,15 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
 
         validacion();
 
-        gps.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                obtenerUbi();
+
+    }
+
+    public void btnMapa(View v){
+
+        obtenerUbi();
+        gps.setEnabled( false );
 
 
-
-            }
-        } );
     }
 
     private void validacion() {
@@ -77,15 +77,15 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
                 longitud = location.getLongitude();
                 latitud = location.getLatitude();
 
-                Intent i = new Intent( ObtenerLongitudLatitud.this, MainActivity.class );
+                Intent i = new Intent( ObtenerLongitudLatitud.this, MainActivity.class ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 Bundle b = new Bundle();
                 b.putDouble("longitud", longitud);
                 b.putDouble("latitud", latitud);
-                System.out.println( "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
-                System.out.println(longitud+" "+latitud);
+
 
                 i.putExtras(b);
                 startActivity(i);
+                finish();
 
 
             }
