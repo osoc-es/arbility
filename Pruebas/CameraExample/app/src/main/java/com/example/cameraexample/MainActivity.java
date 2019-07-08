@@ -15,9 +15,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Button btnCapture;
+    private Spinner spin;
     private ImageView imgCapture;
+    private ImageView imgIcone;
     private static final int Image_Capture_Code = 1;
-    String[] access = { "India", "USA", "China", "Japan", "Other"};
+    String[] access = { "Rampa", "Bordillo", "Ascensor", "Puerta", "Other"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +27,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         btnCapture =(Button)findViewById(R.id.btnTakePicture);
         imgCapture = (ImageView) findViewById(R.id.img_camera);
-        Spinner spin = (Spinner) findViewById(R.id.spin_access);
+        imgIcone = (ImageView) findViewById( R.id.img_icon );
+        spin = (Spinner) findViewById(R.id.spin_access);
         spin.setOnItemSelectedListener(this);
 
-        //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,access);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
 
         btnCapture.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +60,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //Performing action onItemSelected and onNothing selected
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-        Toast.makeText(getApplicationContext(),access[position] , Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),access[position] , Toast.LENGTH_LONG).show();
+        if (access[position] == "Rampa") {
+            imgIcone.setImageResource(R.drawable.rampa);
+        }
+        else if (access[position] == "Bordillo") {
+            imgIcone.setImageResource(R.drawable.bordillo);
+        }
+        else if (access[position] == "Ascensor") {
+            imgIcone.setImageResource(R.drawable.ascensor);
+        }
+        else if (access[position] == "Puerta") {
+            imgIcone.setImageResource(R.drawable.puerta);
+        }
+        else if (access[position] == "Other") {
+            imgIcone.setImageResource(R.drawable.otro);
+        }
+
     }
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
