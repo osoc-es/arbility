@@ -77,7 +77,7 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
                 longitud = location.getLongitude();
                 latitud = location.getLatitude();
 
-                Intent i = new Intent( ObtenerLongitudLatitud.this, MainActivity.class ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent i = new Intent( ObtenerLongitudLatitud.this, MainActivity.class ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
                 Bundle b = new Bundle();
                 b.putDouble("longitud", longitud);
                 b.putDouble("latitud", latitud);
@@ -85,7 +85,7 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
 
                 i.putExtras(b);
                 startActivity(i);
-                finish();
+
 
 
             }

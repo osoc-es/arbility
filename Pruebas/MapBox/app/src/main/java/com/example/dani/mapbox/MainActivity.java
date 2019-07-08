@@ -40,12 +40,9 @@ public class MainActivity extends AppCompatActivity {
                         Bundle bu = getIntent().getExtras();
                         longitud = bu.getDouble( "longitud" );
                         latitud = bu.getDouble( "latitud" );
+                        bu.clear();
 
-                        System.out.println( "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
-                        System.out.println(longitud+" "+latitud);
-
-                                style.addImage("marker-icon-id",
-                                BitmapFactory.decodeResource(
+                        style.addImage("marker-icon-id", BitmapFactory.decodeResource(
                                         MainActivity.this.getResources(), R.drawable.mapbox_marker_icon_default));
 
                         GeoJsonSource geoJsonSource = new GeoJsonSource("source-id", Feature.fromGeometry(
