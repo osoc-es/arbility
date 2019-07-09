@@ -74,10 +74,11 @@ public class HelloSceneformActivity extends AppCompatActivity {
     Button btn1 = (Button) findViewById(R.id.anchor1);
     Button btn2 = (Button) findViewById(R.id.anchor2);
     Button distance = (Button) findViewById(R.id.distance);
-    Button raise = (Button) findViewById(R.id.raise);
     Button clear = (Button)findViewById(R.id.clear);
     TextView data = (TextView) findViewById(R.id.tv_distance);
-    SeekBar height = (SeekBar) findViewById(R.id.height);
+    SeekBar z_axis = (SeekBar) findViewById(R.id.z_axis);
+    SeekBar y_axis = (SeekBar) findViewById(R.id.y_axis);
+    SeekBar x_axis = (SeekBar) findViewById(R.id.x_axis);
     List<AnchorNode> anchorNodes = new ArrayList<>();
 
     clear.setOnClickListener(new View.OnClickListener() {
@@ -115,35 +116,52 @@ public class HelloSceneformActivity extends AppCompatActivity {
           }
       });
 
-      raise.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              ascend(myanchornode, 20);
-          }
-      });
-
-      height.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+      x_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
           @Override
           public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
               data.setText(Float.toString(progress/100f));
-              ascend(myanchornode, progress);
+              ascend(myanchornode, progress, 0, 0);
           }
 
           @Override
-          public void onStartTrackingTouch(SeekBar seekBar) {
+          public void onStartTrackingTouch(SeekBar seekBar) { }
 
+          @Override
+          public void onStopTrackingTouch(SeekBar seekBar) { }
+      });
+
+      y_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+          @Override
+          public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+              data.setText(Float.toString(progress/100f));
+              ascend(myanchornode, 0, progress, 0);
           }
 
           @Override
-          public void onStopTrackingTouch(SeekBar seekBar) {
+          public void onStartTrackingTouch(SeekBar seekBar) { }
 
+          @Override
+          public void onStopTrackingTouch(SeekBar seekBar) { }
+      });
+
+      z_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+          @Override
+          public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+              data.setText(Float.toString(progress/100f));
+              ascend(myanchornode, 0,0, progress);
           }
+
+          @Override
+          public void onStartTrackingTouch(SeekBar seekBar) { }
+
+          @Override
+          public void onStopTrackingTouch(SeekBar seekBar) { }
       });
 
     // When you build a Renderable, Sceneform loads its resources in the background while returning
     // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
     ModelRenderable.builder()
-        .setSource(this, R.raw.cubito)
+        .setSource(this, R.raw.silla)
         .build()
         .thenAccept(renderable -> andyRenderable = renderable)
         .exceptionally(
@@ -181,9 +199,9 @@ public class HelloSceneformActivity extends AppCompatActivity {
         });
   }
 
-  void ascend(AnchorNode an, int height){
+  void ascend(AnchorNode an, int x, int y, int z){
       Anchor anchor =  myhit.getTrackable().createAnchor(
-              myhit.getHitPose().compose(Pose.makeTranslation(0, height/100f, 0)));
+              myhit.getHitPose().compose(Pose.makeTranslation(x/100f, z/100f, y/100f)));
       an.setAnchor(anchor);
   }
 
