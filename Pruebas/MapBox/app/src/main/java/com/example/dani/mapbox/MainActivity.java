@@ -19,6 +19,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.style.layers.Layer;
+import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
@@ -80,14 +81,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         myLocation.getLocation(this, locationResult);
 
 
-
-
         mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
 
+                /*style.addImage(ICON_ID, BitmapFactory.decodeResource(
+                        MainActivity.this.getResources(), R.drawable.mapbox_marker_icon_default));*/
+
                 style.addImage(ICON_ID, BitmapFactory.decodeResource(
-                        MainActivity.this.getResources(), R.drawable.mapbox_marker_icon_default));
+                        MainActivity.this.getResources(), R.drawable.marker2));
 
                 geoJsonSource = new GeoJsonSource(SOURCE_ID, FeatureCollection.fromFeatures(col));
                 style.addSource(geoJsonSource);
@@ -95,9 +97,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 SymbolLayer symbolLayer = new SymbolLayer(LAYER_ID, SOURCE_ID);
 
-
                 symbolLayer.withProperties(
                         PropertyFactory.iconImage(ICON_ID),
+                        PropertyFactory.iconSize(0.15f),
+                        PropertyFactory.iconAnchor(Property.ICON_ANCHOR_BOTTOM),
                         PropertyFactory.iconAllowOverlap(true)
                 );
 
