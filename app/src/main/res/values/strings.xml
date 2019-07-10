@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">OnceRA</string>
+    <string name="aseosText">Aseo</string>
+    <string name="puertaText">Puertas</string>
+    <string name="ilumText">Iluminacion</string>
+    <string name="ascensorText">Ascensores</string>
+    <string name="mostradorText">Mostradores</string>
+    <string name="rampasText">Rampas</string>
+    <string name="cartelesText">Carteles</string>
+    <string name="salvaescalerasText">Salvaescaleras</string>
+    <string name="estanciasText">Estancias</string>
+    <string name="pasillosText">Pasillos</string>
+    <string name="emergenciaText">Emergencia</string>
+
 </resources>

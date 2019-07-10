@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageButton
+        android:id="@+id/BotonAseo"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="250px"
+        android:layout_marginRight="50px"
+        android:src="@drawable/aseo"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+
+        android:layout_toLeftOf="@+id/BotonPuerta"
+
+
+         />
+
+
+    <ImageButton
+        android:id="@+id/BotonPuerta"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="250px"
+        android:src="@drawable/puertas"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+
+        android:layout_centerInParent="true"/>
+
+    <ImageButton
+        android:id="@+id/BotonIluminacion"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/iluminación"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="250px"
+        android:layout_toRightOf="@+id/BotonPuerta"
+        android:layout_marginLeft="50px"/>
+
+
+    <ImageButton
+        android:id="@+id/BotonAscensor"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/ascensores"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_below="@+id/BotonAseo"
+        android:layout_marginRight="50px"
+        android:layout_marginTop="50px"
+        android:layout_toLeftOf="@+id/BotonMostrador"/>
+
+    <ImageButton
+        android:id="@+id/BotonMostrador"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/puntosinformacion"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_below="@+id/BotonPuerta"
+        android:layout_marginTop="50px"
+        android:layout_centerInParent="true"/>
+
+    <ImageButton
+        android:id="@+id/BotonRampa"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/rampas"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_marginTop="50px"
+        android:layout_below="@+id/BotonIluminacion"
+        android:layout_toRightOf="@+id/BotonMostrador"
+        android:layout_marginLeft="50px"/>
+
+
+
+
+
+    <ImageButton
+        android:id="@+id/BotonCartel"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/carteles"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_marginTop="50px"
+        android:layout_below="@+id/BotonAscensor"
+        android:layout_marginRight="50px"
+        android:layout_toLeftOf="@+id/BotonMostrador"/>
+
+    <ImageButton
+        android:id="@+id/BotonSalvaescaleras"
+
+        android:layout_marginTop="50px"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/salvaescaleras"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_below="@+id/BotonMostrador"
+        android:layout_centerInParent="true"/>
+
+    <ImageButton
+        android:id="@+id/BotonEstancias"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/estancias"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_marginTop="50px"
+
+        android:layout_below="@+id/BotonRampa"
+        android:layout_toRightOf="@+id/BotonMostrador"
+        android:layout_marginLeft="50px"/>
+
+
+    <ImageButton
+        android:id="@+id/BotonPasillo"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/pasillos"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_below="@+id/BotonCartel"
+        android:layout_marginRight="50px"
+        android:layout_marginTop="50px"
+        android:layout_toLeftOf="@+id/BotonMostrador"/>
+
+    <ImageButton
+        android:id="@+id/BotonEmergencia"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/emergencias"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_marginTop="50px"
+        android:layout_below="@+id/BotonSalvaescaleras"
+        android:layout_centerInParent="true"/>
+
+    <ImageButton
+        android:id="@+id/BotonSalir"
+        android:layout_width="272px"
+        android:layout_height="272px"
+        android:src="@drawable/Salir"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:backgroundTint="transparent"
+        android:layout_marginTop="50px"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="50px"/>
+
+</RelativeLayout>
