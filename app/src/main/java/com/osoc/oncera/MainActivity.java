@@ -9,13 +9,26 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button guestButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//ss
 
+        guestButton = (Button)findViewById(R.id.BotonInvitado);
 
+        guestButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+               changeToGuest();
+            }
+        });
+
+    }
+
+    void changeToGuest(){
+        Intent guestActivity = new Intent(this,GuestActivity.class);
+        startActivity(guestActivity);
     }
 }
