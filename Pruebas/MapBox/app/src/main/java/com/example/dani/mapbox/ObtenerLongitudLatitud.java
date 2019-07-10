@@ -37,17 +37,36 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
         tvLongitud = (TextView) findViewById( R.id.tvLongitud );
         tvLatitud = (TextView) findViewById( R.id.tvLatitud );
 
-        validacion();
+        //validacion();
+        gps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
+                    @Override
+                    public void gotLocation(Location location){
+                        longitud = location.getLongitude();
+                        latitud = location.getLatitude();
 
+                        Intent i = new Intent( ObtenerLongitudLatitud.this, MainActivity.class ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
+                        Bundle b = new Bundle();
+                        b.putDouble("longitud", longitud);
+                        b.putDouble("latitud", latitud);
+
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(b);
+                        startActivity(i);
+                    }
+                };
+                MyLocation myLocation = new MyLocation();
+                myLocation.getLocation(ObtenerLongitudLatitud.this, locationResult);
+            }
+        });
 
     }
 
     public void btnMapa(View v){
-
         obtenerUbi();
         gps.setEnabled( false );
-
-
     }
 
     private void validacion() {
@@ -104,18 +123,18 @@ public class ObtenerLongitudLatitud extends AppCompatActivity {
             public void onProviderDisabled(String provider) {
 
             }
+
         };
 
 
         int permissionCheck = ContextCompat.checkSelfPermission( ObtenerLongitudLatitud.this,
                 Manifest.permission.ACCESS_FINE_LOCATION );
 
-
         locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, locationListener );
     }
 
     public void end(){
-        locationManager.removeUpdates(locationListener);
+        //locationManager.removeUpdates(locationListener);
         this.finish();
     }
 }

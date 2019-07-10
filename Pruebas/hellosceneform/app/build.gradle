@@ -76,3 +76,9 @@ sceneform.asset('sampledata/cubito.fbx',
         'default',
         'sampledata/cubito.sfa',
         'src/main/assets/cubito')
+
+
+sceneform.asset('sampledata/silla.fbx',
+        'default',
+        'sampledata/silla.sfa',
+        'src/main/assets/silla')

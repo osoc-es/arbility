@@ -1,11 +1,15 @@
 package com.example.dani.mapbox;
 
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
 import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -14,9 +18,14 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.style.layers.Layer;
+import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -26,6 +35,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     double longitud;
     double latitud;
 
+    private static final String SOURCE_ID = "SOURCE_ID";
+    private static final String ICON_ID = "ICON_ID";
+    private static final String LAYER_ID = "LAYER_ID";
+
+    ArrayList<Feature> col = new ArrayList<>();
+    private GeoJsonSource geoJsonSource;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, "pk.eyJ1IjoiZm9uY2UiLCJhIjoiY2p4b3B1NG53MDhsbTNjbnYzMXNpbjRjYiJ9.MkBM2G0smC9aOJ_IS804xg");
@@ -33,40 +49,62 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        Button btn_location = (Button) findViewById(R.id.btn_location);
+        btn_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCurrentLocation();
+            }
+        });
     }
 
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
 
         MainActivity.this.mapboxMap = mapboxMap;
-        Bundle bu = getIntent().getExtras();
+       /* Bundle bu = getIntent().getExtras();
         longitud = bu.getDouble( "longitud" );
         latitud = bu.getDouble( "latitud" );
-        bu.clear();
+        bu.clear();*/
 
+        MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
+            @Override
+            public void gotLocation(Location location){
+                mapboxMap.setCameraPosition(new CameraPosition.Builder()
+                        .target(new LatLng(location.getLatitude(), location.getLongitude()))
+                        .zoom(16)
+                        .build());
+            }
+        };
+        MyLocation myLocation = new MyLocation();
+        myLocation.getLocation(this, locationResult);
 
-        mapboxMap.setCameraPosition(new CameraPosition.Builder()
-                .target(new LatLng(latitud, longitud))
-                .zoom(16)
-                .build());
 
         mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
 
-                style.addImage("marker-icon-id", BitmapFactory.decodeResource(
-                        MainActivity.this.getResources(), R.drawable.mapbox_marker_icon_default));
+                /*style.addImage(ICON_ID, BitmapFactory.decodeResource(
+                        MainActivity.this.getResources(), R.drawable.mapbox_marker_icon_default));*/
 
-                GeoJsonSource geoJsonSource = new GeoJsonSource("source-id", Feature.fromGeometry(
-                        Point.fromLngLat(longitud, latitud)));
+                style.addImage(ICON_ID, BitmapFactory.decodeResource(
+                        MainActivity.this.getResources(), R.drawable.marker2));
+
+                geoJsonSource = new GeoJsonSource(SOURCE_ID, FeatureCollection.fromFeatures(col));
                 style.addSource(geoJsonSource);
 
-                SymbolLayer symbolLayer = new SymbolLayer("layer-id", "source-id");
-                symbolLayer.withProperties(
-                        PropertyFactory.iconImage("marker-icon-id")
-                );
-                style.addLayer(symbolLayer);
 
+                SymbolLayer symbolLayer = new SymbolLayer(LAYER_ID, SOURCE_ID);
+
+                symbolLayer.withProperties(
+                        PropertyFactory.iconImage(ICON_ID),
+                        PropertyFactory.iconSize(0.15f),
+                        PropertyFactory.iconAnchor(Property.ICON_ANCHOR_BOTTOM),
+                        PropertyFactory.iconAllowOverlap(true)
+                );
+
+                style.addLayer(symbolLayer);
             }
         });
     }
@@ -112,6 +150,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+    }
+
+    public void displayCurrentLocation(){
+        MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
+            @Override
+            public void gotLocation(Location location){
+                col.add(Feature.fromGeometry(Point.fromLngLat(location.getLongitude(), location.getLatitude())));
+
+                geoJsonSource.setGeoJson(FeatureCollection.fromFeatures(col));
+            }
+        };
+        MyLocation myLocation = new MyLocation();
+        myLocation.getLocation(this, locationResult);
     }
 }
 
