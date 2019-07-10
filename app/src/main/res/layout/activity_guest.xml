@@ -168,8 +168,8 @@
         android:layout_height="173px"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="92dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginLeft="71dp"
+        android:layout_marginTop="21dp"
         android:layout_toRightOf="@+id/BotonPuerta"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_cruz" />
