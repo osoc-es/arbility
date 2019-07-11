@@ -2,7 +2,9 @@ package com.osoc.oncera;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,4 +29,11 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Usuarios");
     }
+    public void register(View v) {
+
+
+            Intent i= new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(i);
+
+        }
 }
