@@ -10,14 +10,16 @@ public class Centro implements Serializable {
     private String correo;
     private String ciudad;
     private String direccion;
+    private Boolean validar;
 
-    public Centro(String id, String codCentro, String nombre, String correo, String ciudad, String direccion) {
+    public Centro(String id, String codCentro, String nombre, String correo, String ciudad, String direccion, Boolean validar) {
         this.id = id;
         this.codCentro = codCentro;
         this.nombre = nombre;
         this.correo = correo;
         this.ciudad = ciudad;
         this.direccion = direccion;
+        this.validar = validar;
     }
 
     public Centro() {
@@ -69,5 +71,13 @@ public class Centro implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public Boolean getValidar() {
+        return validar;
+    }
+
+    public void setValidar(Boolean validar) {
+        this.validar = validar;
     }
 }

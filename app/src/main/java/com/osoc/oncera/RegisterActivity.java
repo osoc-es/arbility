@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.BoringLayout;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,12 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etDireccion;
     private EditText etPassword, etPasswordRepeat;
     private ProgressDialog progressDialog;
-    private CircleImageView foto;
 
-    private static final int PICK_IMAGE_REQUEST = 1;
-    final private int RC_PHOTO_ADJ = 1;
     private Uri mImageUri;
-
     private StorageReference mStorageRefInq;
     private StorageReference mStorageRefCas;
     private DatabaseReference mDatabaseRef;
@@ -55,11 +52,16 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseUser user;
 
     private String email;
+
     private String password;
     private String password2;
     private String nombre;
     private String ciudad;
     private String direccion;
+    private Boolean validar = false;
+
+    private String correo;
+
 
     private Centro centro;
 
@@ -90,12 +92,20 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPasswordReg);
         etPasswordRepeat = (EditText) findViewById(R.id.etPasswordRepeat);
 
-        foto = (CircleImageView) findViewById( R.id.imgvFotoPerfil);
 
 
 
         progressDialog = new ProgressDialog(this);
+        correo = "danisom1b@gmail.com";
     }
+
+
+public void validar(View v){
+    Intent i = new Intent( Intent.ACTION_VIEW, Uri.parse( "mailto:" + correo ) );
+    i.putExtra(Intent.EXTRA_SUBJECT,etNombre.getText().toString());
+    i.putExtra(Intent.EXTRA_TEXT,etDireccion.getText().toString());
+    startActivity( i );
+}
     public void registrar(View v) {
         String warning = validarDatos();
 
@@ -136,11 +146,11 @@ public class RegisterActivity extends AppCompatActivity {
                                                     task.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                         @Override
                                                         public void onSuccess(Uri uri) {
-                                                            centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString());
+                                                            centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validar);
                                                             mDatabaseRef.child(user.getUid()).setValue(centro);
 
-                                                            Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                                                            startActivity(i);
+                                                            /*Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                                            startActivity(i);*/
 
 
                                                             Query qq=mDatabaseRef.orderByChild("emailUsuario").equalTo(email);
@@ -171,11 +181,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 } else {
 
-                                    centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString());
+                                    centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validar);
                                     mDatabaseRef.child(user.getUid()).setValue(centro);
 
-                                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    startActivity(i);
+                                   /* Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                    startActivity(i);*/
 
                                 }
 
@@ -191,6 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, warning,
                     Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
+
         }
     }
 

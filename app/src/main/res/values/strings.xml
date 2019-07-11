@@ -9,6 +9,7 @@
     <string name="et_EmailReg">Introduce tu Email</string>
     <string name="et_PasswordReg">Introduce tu contraseña</string>
     <string name="btn_RegistrarUsuario">registrar</string>
+    <string name="btn_Validar">validar</string>
     <string name="et_NombreReg">Nombre del Centro</string>
     <string name="et_CiudadReg">Ciudad</string>
     <string name="et_PasswordRepeat">Repite la contraseña</string>
