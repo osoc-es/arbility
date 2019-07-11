@@ -53,6 +53,33 @@
       android:layout_marginLeft="300dp"
       android:text="Clear" />
 
+  <Button
+      android:id="@+id/accelerate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="130dp"
+      android:layout_gravity="bottom"
+      android:layout_marginBottom="200dp"
+      android:text="Accelerate" />
+
+  <Button
+      android:id="@+id/r_left"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="10dp"
+      android:layout_gravity="bottom"
+      android:layout_marginBottom="200dp"
+      android:text="Left" />
+
+  <Button
+      android:id="@+id/r_right"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="270dp"
+      android:layout_gravity="bottom"
+      android:layout_marginBottom="200dp"
+      android:text="Right" />
+
   <TextView
       android:id="@+id/tv_distance"
       android:layout_width="match_parent"
