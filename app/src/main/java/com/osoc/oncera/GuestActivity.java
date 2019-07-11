@@ -46,7 +46,7 @@ public class GuestActivity extends AppCompatActivity {
         botonSimulacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO:ir a la simulacion
+                changeWindowTo(MeasureActivity.class);
             }
         });
 
