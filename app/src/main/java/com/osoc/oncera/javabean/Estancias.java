@@ -9,13 +9,19 @@ public class Estancias implements Serializable {
     private Float diametroManiobra;
     private Boolean sistemaMejoraAudicion;
     private Boolean tarimaConRampa;
+    private Boolean accesible;
+    private String codCentro;
+    private String id;
 
-    public Estancias(Boolean asientosReservados, Float separacionMobiliario, Float diametroManiobra, Boolean sistemaMejoraAudicion, Boolean tarimaConRampa) {
+    public Estancias(Boolean asientosReservados, Float separacionMobiliario, Float diametroManiobra, Boolean sistemaMejoraAudicion, Boolean tarimaConRampa, Boolean accesible, String codCentro, String id) {
         this.asientosReservados = asientosReservados;
         this.separacionMobiliario = separacionMobiliario;
         this.diametroManiobra = diametroManiobra;
         this.sistemaMejoraAudicion = sistemaMejoraAudicion;
         this.tarimaConRampa = tarimaConRampa;
+        this.accesible = accesible;
+        this.codCentro = codCentro;
+        this.id = id;
     }
 
     public Estancias() {
@@ -59,5 +65,29 @@ public class Estancias implements Serializable {
 
     public void setTarimaConRampa(Boolean tarimaConRampa) {
         this.tarimaConRampa = tarimaConRampa;
+    }
+
+    public Boolean getAccesible() {
+        return accesible;
+    }
+
+    public void setAccesible(Boolean accesible) {
+        this.accesible = accesible;
+    }
+
+    public String getCodCentro() {
+        return codCentro;
+    }
+
+    public void setCodCentro(String codCentro) {
+        this.codCentro = codCentro;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

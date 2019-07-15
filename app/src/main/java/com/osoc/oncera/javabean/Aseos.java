@@ -17,8 +17,11 @@ public class Aseos implements Serializable {
     private Float anchuraAsientoDucha;
     private Float alturaAsientoDucha;
     private Float distanciaBarraApoyoAEsquina;
+    private Boolean accesible;
+    private String codCentro;
+    private String id;
 
-    public Aseos(Float diametroManiobra, Float separacionBarrasApoyo, Float alturaBarrasApoyo, Float longitudBarraApoyo, Float diametroBarraApoyo, Float anchuraEspacioTransferenciaLavabo, Float fondoEspacionTransferencia, Float alturaHuecoLibreLavabo, Boolean dispositivoLlamadaAsistencia, Boolean accesoNivelDuchas, Float anchuraEspacioTransferenciaDucha, Float anchuraAsientoDucha, Float alturaAsientoDucha, Float distanciaBarraApoyoAEsquina) {
+    public Aseos(Float diametroManiobra, Float separacionBarrasApoyo, Float alturaBarrasApoyo, Float longitudBarraApoyo, Float diametroBarraApoyo, Float anchuraEspacioTransferenciaLavabo, Float fondoEspacionTransferencia, Float alturaHuecoLibreLavabo, Boolean dispositivoLlamadaAsistencia, Boolean accesoNivelDuchas, Float anchuraEspacioTransferenciaDucha, Float anchuraAsientoDucha, Float alturaAsientoDucha, Float distanciaBarraApoyoAEsquina, Boolean accesible, String codCentro, String id) {
         this.diametroManiobra = diametroManiobra;
         this.separacionBarrasApoyo = separacionBarrasApoyo;
         this.alturaBarrasApoyo = alturaBarrasApoyo;
@@ -33,6 +36,9 @@ public class Aseos implements Serializable {
         this.anchuraAsientoDucha = anchuraAsientoDucha;
         this.alturaAsientoDucha = alturaAsientoDucha;
         this.distanciaBarraApoyoAEsquina = distanciaBarraApoyoAEsquina;
+        this.accesible = accesible;
+        this.codCentro = codCentro;
+        this.id = id;
     }
 
     public Aseos() {
@@ -148,5 +154,29 @@ public class Aseos implements Serializable {
 
     public void setDistanciaBarraApoyoAEsquina(Float distanciaBarraApoyoAEsquina) {
         this.distanciaBarraApoyoAEsquina = distanciaBarraApoyoAEsquina;
+    }
+
+    public Boolean getAccesible() {
+        return accesible;
+    }
+
+    public void setAccesible(Boolean accesible) {
+        this.accesible = accesible;
+    }
+
+    public String getCodCentro() {
+        return codCentro;
+    }
+
+    public void setCodCentro(String codCentro) {
+        this.codCentro = codCentro;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

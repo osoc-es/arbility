@@ -9,13 +9,19 @@ public class PuntosAtencion implements Serializable {
     private Float alturaEspacioInferiorLibre;
     private Float anchuraEspacioInferiorLibre;
     private Float profundidadEspacioInferiorLibre;
+    private Boolean accesible;
+    private String codCentro;
+    private String id;
 
-    public PuntosAtencion(Float anchuraPlanoTrabajo, Float alturaPlanoTrabajo, Float alturaEspacioInferiorLibre, Float anchuraEspacioInferiorLibre, Float profundidadEspacioInferiorLibre) {
+    public PuntosAtencion(Float anchuraPlanoTrabajo, Float alturaPlanoTrabajo, Float alturaEspacioInferiorLibre, Float anchuraEspacioInferiorLibre, Float profundidadEspacioInferiorLibre, Boolean accesible, String codCentro, String id) {
         this.anchuraPlanoTrabajo = anchuraPlanoTrabajo;
         this.alturaPlanoTrabajo = alturaPlanoTrabajo;
         this.alturaEspacioInferiorLibre = alturaEspacioInferiorLibre;
         this.anchuraEspacioInferiorLibre = anchuraEspacioInferiorLibre;
         this.profundidadEspacioInferiorLibre = profundidadEspacioInferiorLibre;
+        this.accesible = accesible;
+        this.codCentro = codCentro;
+        this.id = id;
     }
 
     public PuntosAtencion() {
@@ -59,5 +65,29 @@ public class PuntosAtencion implements Serializable {
 
     public void setProfundidadEspacioInferiorLibre(Float profundidadEspacioInferiorLibre) {
         this.profundidadEspacioInferiorLibre = profundidadEspacioInferiorLibre;
+    }
+
+    public Boolean getAccesible() {
+        return accesible;
+    }
+
+    public void setAccesible(Boolean accesible) {
+        this.accesible = accesible;
+    }
+
+    public String getCodCentro() {
+        return codCentro;
+    }
+
+    public void setCodCentro(String codCentro) {
+        this.codCentro = codCentro;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
