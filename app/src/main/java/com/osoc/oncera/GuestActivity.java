@@ -24,6 +24,7 @@ public class GuestActivity extends AppCompatActivity {
     LinearLayout botonEmergencias;
 
     LinearLayout botonIluminacion;
+    LinearLayout botonSimulacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +130,7 @@ public class GuestActivity extends AppCompatActivity {
                 changeWindowTo(Luxometro.class);
             }
 
-       
+        });
 
     }
 
