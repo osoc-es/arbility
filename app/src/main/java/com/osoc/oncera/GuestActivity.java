@@ -3,20 +3,20 @@ package com.osoc.oncera;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 
 public class GuestActivity extends AppCompatActivity {
     ImageButton botonSalir;
 
     LinearLayout botonAseos;
+    LinearLayout botonPuertas;
+    LinearLayout botonMostradores;
 
-    LinearLayout botonSimulacion;
+    LinearLayout botonIluminacion;
 
 
 
@@ -28,6 +28,9 @@ public class GuestActivity extends AppCompatActivity {
         botonSalir = (ImageButton)findViewById(R.id.BotonSalir);
         botonAseos = (LinearLayout)findViewById(R.id.BotonAseos);
         botonSimulacion = (LinearLayout)findViewById(R.id.BotonSimulacion);
+        botonIluminacion = (LinearLayout) findViewById(R.id.BotonIluminacion);
+        botonPuertas = (LinearLayout)findViewById(R.id.BotonPuertas);
+        botonMostradores = (LinearLayout)findViewById(R.id.BotonMostradores);
 
         botonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,11 +46,22 @@ public class GuestActivity extends AppCompatActivity {
             }
         });
 
-        botonSimulacion.setOnClickListener(new View.OnClickListener() {
+        botonPuertas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(MeasureActivity.class);
             }
+        });
+
+        botonIluminacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeWindowTo(Luxometro.class);
+            }
+
+        botonMostradores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { changeWindowTo(MedirMostradorActivity.class);}
         });
 
     }
