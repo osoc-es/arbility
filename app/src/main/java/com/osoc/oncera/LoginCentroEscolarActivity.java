@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginCentroEscolarActivity extends AppCompatActivity {
     private EditText correo;
     private EditText password;
     private FirebaseAuth auth;
@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     public void register(View v) {
 
 
-            Intent i= new Intent(LoginActivity.this, RegisterActivity.class);
+            Intent i= new Intent( LoginCentroEscolarActivity.this, RegisterCentroEscolarActivity.class);
             startActivity(i);
 
         }

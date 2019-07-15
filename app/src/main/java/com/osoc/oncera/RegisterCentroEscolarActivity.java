@@ -1,7 +1,6 @@
 package com.osoc.oncera;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -9,8 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.BoringLayout;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,9 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.osoc.oncera.javabean.Centro;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterCentroEscolarActivity extends AppCompatActivity {
 
     private EditText etNombre;
     private EditText etCiudad;
@@ -42,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etDireccion;
     private EditText etPassword, etPasswordRepeat;
     private ProgressDialog progressDialog;
+    private Button btnRegistrar;
+    private Button btnValidar;
 
     private Uri mImageUri;
     private StorageReference mStorageRefInq;
@@ -58,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String nombre;
     private String ciudad;
     private String direccion;
-    private Boolean validar = false;
+    private Boolean validarCentro;
 
     private String correo;
 
@@ -84,18 +83,20 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         mStorageRefInq = FirebaseStorage.getInstance().getReference("FotosCentro");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Usuarios");
-
+        validarCentro = false;
         etNombre = (EditText) findViewById(R.id.etNombreReg);
         etCiudad = (EditText) findViewById(R.id.etCiudadReg);
         etDireccion = (EditText) findViewById( R.id.etDireccion );
         etEmail = (EditText) findViewById(R.id.etEmailReg);
         etPassword = (EditText) findViewById(R.id.etPasswordReg);
         etPasswordRepeat = (EditText) findViewById(R.id.etPasswordRepeat);
+        btnRegistrar = (Button) findViewById( R.id.btnRegistrar);
+        btnValidar = (Button) findViewById( R.id.btnValidar );
 
 
 
 
-        progressDialog = new ProgressDialog(this);
+        //progressDialog = new ProgressDialog(this);
         correo = "danisom1b@gmail.com";
     }
 
@@ -111,8 +112,8 @@ public void validar(View v){
 
 
         if (warning == null) {
-            progressDialog.setMessage( "Realizando registro en linea. . ." );
-            progressDialog.show();
+           // progressDialog.setMessage( "Realizando registro en linea. . ." );
+            //progressDialog.show();
 
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -139,17 +140,17 @@ public void validar(View v){
                                     handler.postDelayed(new Runnable() {
                                         public void run() {
 
-                                            ut.addOnSuccessListener(RegisterActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            ut.addOnSuccessListener( RegisterCentroEscolarActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                 @Override
                                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                     Task<Uri> task = taskSnapshot.getStorage().getDownloadUrl();
                                                     task.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                         @Override
                                                         public void onSuccess(Uri uri) {
-                                                            centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validar);
+                                                            centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
                                                             mDatabaseRef.child(user.getUid()).setValue(centro);
 
-                                                            /*Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                                            /*Intent i = new Intent(RegisterCentroEscolarActivity.this, LoginCentroEscolarActivity.class);
                                                             startActivity(i);*/
 
 
@@ -181,16 +182,16 @@ public void validar(View v){
 
                                 } else {
 
-                                    centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validar);
+                                    centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
                                     mDatabaseRef.child(user.getUid()).setValue(centro);
 
-                                   /* Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                   /* Intent i = new Intent(RegisterCentroEscolarActivity.this, LoginCentroEscolarActivity.class);
                                     startActivity(i);*/
 
                                 }
 
                             } else {
-                                Toast.makeText(RegisterActivity.this, getString(R.string.msj_no_registrado), Toast.LENGTH_SHORT).show();
+                                Toast.makeText( RegisterCentroEscolarActivity.this, getString(R.string.msj_no_registrado), Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -200,9 +201,11 @@ public void validar(View v){
         } else {
             Toast.makeText(this, warning,
                     Toast.LENGTH_LONG).show();
-            progressDialog.dismiss();
+            btnRegistrar.setVisibility(View.INVISIBLE);
+
 
         }
+        btnRegistrar.setVisibility(View.INVISIBLE);
     }
 
     private String validarDatos() {
