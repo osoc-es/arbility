@@ -36,4 +36,19 @@ La frase inicial del narrador —«Call me Ishmael» en inglés, traducido al es
 
 
     <string name="msj_no_registrado">No se ha podido registrar</string>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////
+    Luxometro
+    ////////////////////////////////////////////////////////////////////////////
+    -->
+
+    <string name="lux_exterior">Exterior </string>
+    <string name="lux_interior_escalera">Interior con rampa y/o escalera </string>
+    <string name="lux_interior_habitable">Interior habitable </string>
+
+
+
+
+
 </resources>

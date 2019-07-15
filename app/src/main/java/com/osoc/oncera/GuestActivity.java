@@ -3,13 +3,11 @@ package com.osoc.oncera;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 
 public class GuestActivity extends AppCompatActivity {
     ImageButton botonSalir;
@@ -17,6 +15,8 @@ public class GuestActivity extends AppCompatActivity {
     LinearLayout botonAseos;
 
     LinearLayout botonSimulacion;
+
+    LinearLayout botonIluminacion;
 
 
 
@@ -28,6 +28,7 @@ public class GuestActivity extends AppCompatActivity {
         botonSalir = (ImageButton)findViewById(R.id.BotonSalir);
         botonAseos = (LinearLayout)findViewById(R.id.BotonAseos);
         botonSimulacion = (LinearLayout)findViewById(R.id.BotonSimulacion);
+        botonIluminacion = (LinearLayout) findViewById(R.id.BotonIluminacion);
 
         botonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +48,13 @@ public class GuestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeWindowTo(MeasureActivity.class);
+            }
+        });
+
+        botonIluminacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeWindowTo(Luxometro.class);
             }
         });
 
