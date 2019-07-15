@@ -95,6 +95,14 @@ public class MeasureActivity extends AppCompatActivity {
             }
         });
 
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MeasureActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
+                //TODO create door model and send accesibility status to next activity
+            }
+        });
+
 
         z_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
