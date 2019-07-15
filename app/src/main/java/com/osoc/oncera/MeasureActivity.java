@@ -62,7 +62,8 @@ public class MeasureActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_measure);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-        Button clear = (Button)findViewById(R.id.clear);
+        Button restart = (Button)findViewById(R.id.btn_restart);
+        Button confirm = (Button)findViewById(R.id.btn_ok);
         TextView data = (TextView) findViewById(R.id.tv_distance);
         TextView width = (TextView) findViewById(R.id.width);
         TextView height = (TextView) findViewById(R.id.height);
@@ -70,9 +71,10 @@ public class MeasureActivity extends AppCompatActivity {
         List<AnchorNode> anchorNodes = new ArrayList<>();
 
         z_axis.setEnabled(false);
+        confirm.setEnabled(false);
 
 
-        clear.setOnClickListener(new View.OnClickListener() {
+        restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -80,6 +82,7 @@ public class MeasureActivity extends AppCompatActivity {
                 anchor2=null;
                 z_axis.setProgress(0);
                 z_axis.setEnabled(false);
+                confirm.setEnabled(false);
                 data.setText("Haz click en las esquinas inferiores de la puerta tras calibrar");
                 width.setText("Anchura: --");
                 height.setText("Altura: --");
@@ -100,6 +103,7 @@ public class MeasureActivity extends AppCompatActivity {
                 ascend(myanchornode, upDistance);
                 height.setText("Altura: " +
                         form_numbers.format(progress/100f));
+                confirm.setEnabled(true);
             }
 
             @Override
