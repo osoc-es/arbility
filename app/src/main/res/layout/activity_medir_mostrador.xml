@@ -12,14 +12,14 @@
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/ancho_trabajo"
+        android:id="@+id/ancho_util"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Anchura trabajo: --" />
+        android:text="Anchura util: --" />
 
     <TextView
         android:id="@+id/alto_trabajo"
@@ -32,34 +32,25 @@
         android:text="Altura trabajo: --" />
 
     <TextView
-        android:id="@+id/ancho_inferior"
+        android:id="@+id/profundo_repisa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="75dp"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Anchura inferior: --" />
+        android:text="Profundidad repisa: --" />
 
     <TextView
-        android:id="@+id/profundidad_inferior"
+        android:id="@+id/alto_repisa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="100dp"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Profundidad inferior: --" />
+        android:text="Altura repisa: --" />
 
-    <TextView
-        android:id="@+id/altura_inferior"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="125dp"
-        android:textSize="20sp"
-        android:textColor="#fff"
-        android:text="Altura inferior: --" />
 
 
 
@@ -74,7 +65,7 @@
         android:textSize="25sp"
         android:padding="5dp"
         android:textColor="#fff"
-        android:text="Haz click en las esquinas inferiores de la puerta tras calibrar"
+        android:text="Haz click en las esquinas inferiores del mostrador tras calibrar"
         />
 
 
