@@ -18,12 +18,12 @@ public class Alumno implements Serializable {
     public Alumno() {
     }
 
-    public int getIdAlumno() {
+    public int getId() {
         return id;
     }
 
-    public void setIdAlumno(int idAlumno) {
-        this.id = idAlumno;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {

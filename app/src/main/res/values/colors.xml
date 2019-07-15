@@ -10,4 +10,7 @@
     <color name="blue">#2F4862</color>
 
 
+    <color name="red">#F00</color>
+    <color name="colorSecundario">#F2A922</color>
+    <color name="blanco">#FFFFFF</color>
 </resources>

@@ -7,17 +7,19 @@ public class Centro implements Serializable {
     private String id;
     private String codCentro;
     private String nombre;
-    private String direccion;
+    private String correo;
     private String ciudad;
-    private String codPostal;
+    private String direccion;
+    private Boolean validar;
 
-    public Centro(String id, String codCentro, String nombre, String direccion, String ciudad, String codPostal) {
+    public Centro(String id, String codCentro, String nombre, String correo, String ciudad, String direccion, Boolean validar) {
         this.id = id;
         this.codCentro = codCentro;
         this.nombre = nombre;
-        this.direccion = direccion;
+        this.correo = correo;
         this.ciudad = ciudad;
-        this.codPostal = codPostal;
+        this.direccion = direccion;
+        this.validar = validar;
     }
 
     public Centro() {
@@ -63,11 +65,19 @@ public class Centro implements Serializable {
         this.ciudad = ciudad;
     }
 
-    public String getCodPostal() {
-        return codPostal;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setCodPostal(String codPostal) {
-        this.codPostal = codPostal;
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public Boolean getValidar() {
+        return validar;
+    }
+
+    public void setValidar(Boolean validar) {
+        this.validar = validar;
     }
 }
