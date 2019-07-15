@@ -10,6 +10,7 @@ import android.widget.Button;
 public class WelcomeActivity extends AppCompatActivity {
 
     private Button guestButton;
+    private Button btnProfesor;
 
 
     @Override
@@ -18,12 +19,18 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         guestButton = (Button)findViewById(R.id.BotonInvitado);
+        btnProfesor = (Button) findViewById( R.id.BotonProfesor );
 
         guestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 changeWindowTo(GuestActivity.class);
             }
         });
+
+        btnProfesor.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { changeWindowTo(LoginCentroEscolarActivity.class); }
+        } );
 
 
     }
