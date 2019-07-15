@@ -36,6 +36,8 @@ import com.google.ar.core.Plane;
 import com.google.ar.core.Pose;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
@@ -43,20 +45,24 @@ import com.google.ar.sceneform.ux.TransformableNode;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.atan2;
+
 /**
  * This is an example activity that uses the Sceneform UX package to make common AR tasks easier.
  */
 public class HelloSceneformActivity extends AppCompatActivity {
   private static final String TAG = HelloSceneformActivity.class.getSimpleName();
   private static final double MIN_OPENGL_VERSION = 3.0;
-
+  private float x=0f, y=0f, z=0f;
   private ArFragment arFragment;
   private ModelRenderable andyRenderable;
   private Anchor myanchor;
   private AnchorNode myanchornode;
+  TransformableNode mytranode;
   private Anchor anchor1, anchor2;
 
   private HitResult myhit;
+  private float mytravel=0.01f, distance_x=0f, distance_z=0f, myangle=0f;
 
   @Override
   @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -75,6 +81,9 @@ public class HelloSceneformActivity extends AppCompatActivity {
     Button btn2 = (Button) findViewById(R.id.anchor2);
     Button distance = (Button) findViewById(R.id.distance);
     Button clear = (Button)findViewById(R.id.clear);
+    Button r_left = (Button)findViewById(R.id.r_left);
+      Button r_right = (Button)findViewById(R.id.r_right);
+      Button accelerate = (Button)findViewById(R.id.accelerate);
     TextView data = (TextView) findViewById(R.id.tv_distance);
     SeekBar z_axis = (SeekBar) findViewById(R.id.z_axis);
     SeekBar y_axis = (SeekBar) findViewById(R.id.y_axis);
@@ -85,6 +94,8 @@ public class HelloSceneformActivity extends AppCompatActivity {
         @Override
         public void onClick(View v)
         {
+            distance_x=0f;
+            distance_z=0f;
             for(AnchorNode n : anchorNodes){
                 arFragment.getArSceneView().getScene().removeChild(n);
                 n.getAnchor().detach();
@@ -116,11 +127,62 @@ public class HelloSceneformActivity extends AppCompatActivity {
           }
       });
 
+      /*rotate.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              forward(myanchornode);
+              data.setText(Double.toString(Math.toDegrees(set(mytranode.getLocalRotation()).x))+" "+
+                      Double.toString(Math.toDegrees(set(mytranode.getLocalRotation()).y))+" "+
+                      Double.toString(Math.toDegrees(set(mytranode.getLocalRotation()).z)));
+          }
+      });*/
+
+      accelerate.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+              if(event.getAction() == MotionEvent.ACTION_DOWN){
+                  myangle = set(mytranode.getLocalRotation());
+                  data.setText("Pressed");
+              }
+              if(event.getAction() == MotionEvent.ACTION_UP){
+                  data.setText(""); //finger was lifted
+              }
+              forward(myanchornode);
+              return true;
+          }
+      });
+
+      r_left.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+              Quaternion q1 = mytranode.getLocalRotation();
+              Quaternion q2 = Quaternion.axisAngle(new Vector3(0, 1f, 0f), .5f);
+              mytranode.setLocalRotation(Quaternion.multiply(q1, q2));
+              myangle = set(mytranode.getLocalRotation());
+              return true;
+          }
+
+      });
+
+      r_right.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+              myangle+=0.01f;
+              Quaternion q1 = mytranode.getLocalRotation();
+              Quaternion q2 = Quaternion.axisAngle(new Vector3(0, 1f, 0f), -.5f);
+              mytranode.setLocalRotation(Quaternion.multiply(q1, q2));
+              myangle = set(mytranode.getLocalRotation());
+              return true;
+          }
+
+      });
+
       x_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
           @Override
           public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
               data.setText(Float.toString(progress/100f));
-              ascend(myanchornode, progress, 0, 0);
+              x = progress;
+              ascend(myanchornode, x, y, z);
           }
 
           @Override
@@ -134,7 +196,8 @@ public class HelloSceneformActivity extends AppCompatActivity {
           @Override
           public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
               data.setText(Float.toString(progress/100f));
-              ascend(myanchornode, 0, progress, 0);
+              y = progress;
+              ascend(myanchornode, x, y, z);
           }
 
           @Override
@@ -148,7 +211,8 @@ public class HelloSceneformActivity extends AppCompatActivity {
           @Override
           public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
               data.setText(Float.toString(progress/100f));
-              ascend(myanchornode, 0,0, progress);
+              z = progress;
+              ascend(myanchornode, x, y, z);
           }
 
           @Override
@@ -182,9 +246,10 @@ public class HelloSceneformActivity extends AppCompatActivity {
 
           // Create the Anchor.
           Anchor anchor = hitResult.createAnchor();
-           /*Anchor anchor =  hitResult.getTrackable().createAnchor(
-                    hitResult.getHitPose().compose(Pose.makeTranslation(0, 0.2f, 0)));*/
-            AnchorNode anchorNode = new AnchorNode(anchor);
+
+           AnchorNode anchorNode = new AnchorNode(anchor);
+
+
           anchorNode.setParent(arFragment.getArSceneView().getScene());
           anchorNodes.add(anchorNode);
 
@@ -196,12 +261,80 @@ public class HelloSceneformActivity extends AppCompatActivity {
           andy.setParent(anchorNode);
           andy.setRenderable(andyRenderable);
           andy.select();
+          andy.getScaleController().setEnabled(false);
+          mytranode = andy;
         });
   }
 
-  void ascend(AnchorNode an, int x, int y, int z){
+  void ascend(AnchorNode an, float x, float y, float z){
       Anchor anchor =  myhit.getTrackable().createAnchor(
               myhit.getHitPose().compose(Pose.makeTranslation(x/100f, z/100f, y/100f)));
+
+      an.setAnchor(anchor);
+  }
+
+  Quaternion rotate(AnchorNode an, float angle) {
+      //mytranode.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 1f, 0), angle));
+
+      return mytranode.getLocalRotation();
+  }
+
+   /* public double set(Quaternion q1) {
+      float a, b, c;
+        if (q1.w > 1) q1.normalize(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
+        double angle = 2 * Math.acos(q1.w);
+        double s = Math.sqrt(1-q1.w*q1.w); // assuming quaternion normalised then w is less than 1, so term always positive.
+        if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
+            // if s close to zero then direction of axis not important
+            a = q1.x; // if it is important that axis is normalised then replace with x=1; y=z=0;
+            b = q1.y;
+            c = q1.z;
+        } else {
+            a = (float) (q1.x / s); // normalise axis
+            b = (float) (q1.y / s);
+            c = (float) (q1.z / s);
+        }
+        return angle;
+    }*/
+
+
+    public float set(Quaternion q1) {
+        Vector3 angles = new Vector3();
+        double sqw = q1.w*q1.w;
+        double sqx = q1.x*q1.x;
+        double sqy = q1.y*q1.y;
+        double sqz = q1.z*q1.z;
+        double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+        double test = q1.x*q1.y + q1.z*q1.w;
+        if (test > 0.499*unit) { // singularity at north pole
+            angles.x = (float) (2 * atan2(q1.x,q1.w));
+            angles.y = (float) Math.PI/2;
+            angles.z = 0;
+            return angles.x;
+        }
+        if (test < -0.499*unit) { // singularity at south pole
+            angles.x = (float) (-2 * atan2(q1.x,q1.w));
+            angles.y = (float) (-Math.PI/2);
+            angles.z = 0;
+            return angles.x;
+        }
+        angles.x = (float) atan2(2*q1.y*q1.w-2*q1.x*q1.z , sqx - sqy - sqz + sqw);
+        angles.y = (float) Math.asin(2*test/unit);
+        angles.z = (float) atan2(2*q1.x*q1.w-2*q1.y*q1.z , -sqx + sqy - sqz + sqw);
+        return angles.x;
+    }
+
+
+  void forward(AnchorNode an){
+      //Vector3 forw = mytranode.getForward();
+      //System.out.println("Volando voy: "+forw.toString());
+      distance_x+=Math.sin(myangle)*mytravel;
+      distance_z+=Math.cos(myangle)*mytravel;
+
+      Anchor anchor =  myhit.getTrackable().createAnchor(
+         myhit.getHitPose().compose(Pose.makeTranslation(-distance_x, 0f, -distance_z)));
+
+
       an.setAnchor(anchor);
   }
 

@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">OnceRA</string>
+    <string name="aseosText">ASEOS</string>
+    <string name="puertaText">PUERTAS</string>
+    <string name="ilumText">ILUMINACION</string>
+    <string name="ascensorText">ASCENSORES</string>
+    <string name="mostradorText">MOSTRADORES</string>
+    <string name="rampasText">RAMPAS</string>
+    <string name="salvaescalerasText">SALVAESCALERAS</string>
+    <string name="estanciasText">ESTANCIAS</string>
+    <string name="pasillosText">PASILLOS</string>
+    <string name="emergenciaText">EMERGENCIAS</string>
+    <string name="simulacionText">SIMULACION</string>
+    <string name="textoDescrip">
+        Al margen de la persecución y evolución de sus personajes, el tema de la novela es eminentemente enciclopédico al incluir detalladas y extensas descripciones de la caza de las ballenas en el siglo XIX y multitud de otros detalles sobre la vida marinera de la época. Quizá por ello la novela no tuvo ningún éxito comercial en su primera publicación, aunque con posterioridad haya servido para cimentar la reputación del autor y situarlo entre los mejores escritores estadounidenses.
+
+La frase inicial del narrador —«Call me Ishmael» en inglés, traducido al español a veces como «Llamadme Ismael», otras veces como «Pueden ustedes llamarme Ismael»—,1​ se ha convertido en una de las citas más conocidas de la literatura en lengua inglesa.
+    </string>
+
+
 </resources>
