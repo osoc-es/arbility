@@ -13,8 +13,8 @@ public class GuestActivity extends AppCompatActivity {
     ImageButton botonSalir;
 
     LinearLayout botonAseos;
-
-    LinearLayout botonSimulacion;
+    LinearLayout botonPuertas;
+    LinearLayout botonMostradores;
 
     LinearLayout botonIluminacion;
 
@@ -29,6 +29,8 @@ public class GuestActivity extends AppCompatActivity {
         botonAseos = (LinearLayout)findViewById(R.id.BotonAseos);
         botonSimulacion = (LinearLayout)findViewById(R.id.BotonSimulacion);
         botonIluminacion = (LinearLayout) findViewById(R.id.BotonIluminacion);
+        botonPuertas = (LinearLayout)findViewById(R.id.BotonPuertas);
+        botonMostradores = (LinearLayout)findViewById(R.id.BotonMostradores);
 
         botonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +46,7 @@ public class GuestActivity extends AppCompatActivity {
             }
         });
 
-        botonSimulacion.setOnClickListener(new View.OnClickListener() {
+        botonPuertas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(MeasureActivity.class);
@@ -56,6 +58,10 @@ public class GuestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 changeWindowTo(Luxometro.class);
             }
+
+        botonMostradores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { changeWindowTo(MedirMostradorActivity.class);}
         });
 
     }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MeasureActivity">
+    tools:context=".MedirMostradorActivity">
 
     <fragment
         android:id="@+id/ux_fragment"
@@ -12,24 +12,55 @@
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/width"
+        android:id="@+id/ancho_trabajo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Anchura: --" />
+        android:text="Anchura trabajo: --" />
 
     <TextView
-        android:id="@+id/height"
+        android:id="@+id/alto_trabajo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:text="Altura trabajo: --" />
+
+    <TextView
+        android:id="@+id/ancho_inferior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="75dp"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Altura: --" />
+        android:text="Anchura inferior: --" />
+
+    <TextView
+        android:id="@+id/profundidad_inferior"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="100dp"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:text="Profundidad inferior: --" />
+
+    <TextView
+        android:id="@+id/altura_inferior"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="125dp"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:text="Altura inferior: --" />
+
 
 
     <TextView
