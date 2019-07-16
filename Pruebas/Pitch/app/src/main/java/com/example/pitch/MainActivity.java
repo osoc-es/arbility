@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
-    /*register the sensor listener to listen to the gyroscope sensor, use the
-    callbacks defined in this class, and gather the sensor information as quick
-    as possible*/
 
         sManager.registerListener(mySensorEventListener, sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),SensorManager.SENSOR_DELAY_NORMAL);
         sManager.registerListener(mySensorEventListener, sManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),SensorManager.SENSOR_DELAY_NORMAL);
