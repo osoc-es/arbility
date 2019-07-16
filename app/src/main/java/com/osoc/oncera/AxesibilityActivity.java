@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.osoc.oncera.javabean.Ascensores;
 import com.osoc.oncera.javabean.Iluminacion;
 
 public class AxesibilityActivity extends AppCompatActivity {
@@ -36,8 +37,8 @@ public class AxesibilityActivity extends AppCompatActivity {
     private void parseType(Bundle b){
        // if(type == TypesManager.obsType.ASEOS) parseIlum
        // else if (type == TypesManager.obsType.PUERTAS)  descText = getString(R.string.descPuertas);
-         if (type == TypesManager.obsType.ILUM)  parseIlum((Iluminacion)b.get("ilumObs"));
-       // else if (type == TypesManager.obsType.ASCENSORES)  descText = getString(R.string.descAscensor);
+         if (type == TypesManager.obsType.ILUM)  parseIlum((Iluminacion)b.get(TypesManager.ILUM_OBS));
+       else if (type == TypesManager.obsType.ASCENSORES)  parseAscensor((Ascensores)b.get(TypesManager.ASCENSOR_OBS));
         //else if (type == TypesManager.obsType.MOSTRADORES)  descText = getString(R.string.descMostrador);
        // else if (type == TypesManager.obsType.RAMPAS)  descText = getString(R.string.descRampa);
         //else if (type == TypesManager.obsType.SALVAESCALERAS)  descText = getString(R.string.descSalvaescaleras);
@@ -50,5 +51,9 @@ public class AxesibilityActivity extends AppCompatActivity {
         Boolean b = ilum.getAccesible();
         if(b) accText.setText("ES VALIDO");
         else accText.setText("NO ES VALIDO");
+    }
+
+    private void parseAscensor( Ascensores a){
+
     }
 }
