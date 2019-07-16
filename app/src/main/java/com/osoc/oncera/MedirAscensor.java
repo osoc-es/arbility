@@ -30,6 +30,7 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 import com.osoc.oncera.adapters.ImageTitleAdapter;
+import com.osoc.oncera.javabean.Ascensores;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -51,6 +52,8 @@ public class MedirAscensor extends AppCompatActivity {
     private boolean medir_profundidad = false;
 
     private boolean braile = false, automatico = false, sonido = false, hueco = false, escalon = false;
+
+    private Ascensores ascensor = new Ascensores(null,null,null,null,null,null,null,null,null,null);
 
     Button restart;
     Button confirm;
@@ -121,6 +124,8 @@ public class MedirAscensor extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(MedirAscensor.this, "Confirmado", Toast.LENGTH_SHORT).show();
+                    validateEvaluation();
+
                 }
             }
         });
@@ -166,10 +171,12 @@ public class MedirAscensor extends AppCompatActivity {
                         if(!medir_profundidad){
                             ancho_ascensor.setText("Anchura ascensor: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
+                            ascensor.setAnchuraCabina((getMetersBetweenAnchors(anchor1, anchor2)));
                         }
                         else {
                             profundo_ascensor.setText("Profundidad ascensor: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
+                            ascensor.setProfundidadCabina(getMetersBetweenAnchors(anchor1, anchor2));
                         }
                     }
                     myanchornode = anchorNode;
@@ -229,6 +236,11 @@ public class MedirAscensor extends AppCompatActivity {
                 sonido = chkSonido.isChecked();
                 hueco = chkHueco.isChecked();
                 escalon = chkEscalon.isChecked();
+
+                ascensor.setBotoneraBraile(braile);
+                ascensor.setPuertasAutomaticas(automatico);
+                ascensor.setSenialAudible(sonido);
+
             }
         });
 
@@ -236,8 +248,26 @@ public class MedirAscensor extends AppCompatActivity {
         AlertDialog dialog = mBuilder.create();
 
         dialog.show();
+
     }
 
+    void validateEvaluation(){
+
+    Boolean anchura = Evaluator.IsGreaterThan(ascensor.getAnchuraCabina(),
+            GetDataFromDatabase.FloatData("Estandares/Ascensores/Anchura"));
+
+    Boolean prof = Evaluator.IsGreaterThan(ascensor.getProfundidadCabina(),
+        GetDataFromDatabase.FloatData("Estandares/Ascensores/Profundidad"));
+
+    ascensor.setAccesible(anchura && prof && braile && automatico && sonido && hueco && escalon);
+
+        Intent i = new Intent(this,AxesibilityActivity.class);
+        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ASCENSORES.getValue());
+        i.putExtra(TypesManager.ASCENSOR_OBS, ascensor);
+
+        startActivity(i);
+        finish();
+    }
     void resetMedirAnchura(){
         anchor1=null;
         anchor2=null;

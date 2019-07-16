@@ -180,7 +180,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
             Intent i = new Intent(this,AxesibilityActivity.class);
             i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ILUM.getValue());
-            i.putExtra("ilumObs", iluminacion);
+            i.putExtra(TypesManager.ILUM_OBS, iluminacion);
 
             startActivity(i);
             finish();

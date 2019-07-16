@@ -67,7 +67,7 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
     private UploadTask ut;
     private Boolean imagenSubida = false;
 
-    private String codCasa;
+    private String codCentro;
 
     private char[] conjunto = new char[6];
     char[] elementos={'0','1','2','3','4','5','6','7','8','9' ,'a',
@@ -112,8 +112,8 @@ public void validar(View v){
 
 
         if (warning == null) {
-           // progressDialog.setMessage( "Realizando registro en linea. . ." );
-            //progressDialog.show();
+           //progressDialog.setMessage( "Realizando registro en linea. . ." );
+         //  progressDialog.show();
 
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -121,7 +121,7 @@ public void validar(View v){
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                codCasa=crearCodCasa();
+                                codCentro=crearcodCentro();
 
 
                                 mDatabaseRef=FirebaseDatabase.getInstance().getReference().child("Usuarios");
@@ -129,7 +129,7 @@ public void validar(View v){
                                 user = firebaseAuth.getCurrentUser();
 
 
-                                final String clave = mDatabaseRef.push().getKey();
+                                String clave = user.getUid();
                                 if (imagenSubida) {
                                     Uri selectedUri = mImageUri;
 
@@ -147,8 +147,8 @@ public void validar(View v){
                                                     task.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                         @Override
                                                         public void onSuccess(Uri uri) {
-                                                            centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
-                                                            mDatabaseRef.child(user.getUid()).setValue(centro);
+                                                            centro = new Centro(clave, codCentro,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
+                                                            mDatabaseRef.child(clave).setValue(centro);
 
                                                             /*Intent i = new Intent(RegisterCentroEscolarActivity.this, LoginCentroEscolarActivity.class);
                                                             startActivity(i);*/
@@ -170,7 +170,7 @@ public void validar(View v){
 
                                                                 }
                                                             });
-                                                                mDatabaseRef.child("codCasa").setValue(codCasa);
+                                                                mDatabaseRef.child("codCentro").setValue(codCentro);
 
 
                                                         }
@@ -182,8 +182,9 @@ public void validar(View v){
 
                                 } else {
 
-                                    centro = new Centro(clave, codCasa,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
+                                    centro = new Centro(clave, codCentro,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
                                     mDatabaseRef.child(user.getUid()).setValue(centro);
+                                    Toast.makeText( RegisterCentroEscolarActivity.this, "Registrado Correcto, Valídalo para porder Loguearte", Toast.LENGTH_LONG ).show();
 
                                    /* Intent i = new Intent(RegisterCentroEscolarActivity.this, LoginCentroEscolarActivity.class);
                                     startActivity(i);*/
@@ -201,7 +202,9 @@ public void validar(View v){
         } else {
             Toast.makeText(this, warning,
                     Toast.LENGTH_LONG).show();
+            //progressDialog.dismiss();
             btnRegistrar.setVisibility(View.INVISIBLE);
+
 
 
         }
@@ -231,7 +234,7 @@ public void validar(View v){
         return msj;
     }
 
-    public String crearCodCasa(){
+    public String crearcodCentro(){
 
         for(int i=0;i<6;i++){
             int el = (int)(Math.random()*36);
