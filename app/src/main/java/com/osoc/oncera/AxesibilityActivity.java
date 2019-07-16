@@ -2,7 +2,9 @@ package com.osoc.oncera;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ public class AxesibilityActivity extends AppCompatActivity {
 
     TextView accText;
     int typeID;
+    RelativeLayout layout;
     TypesManager.obsType type;
 
     @Override
@@ -21,6 +24,7 @@ public class AxesibilityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_axesibility);
 
+        layout = (RelativeLayout) findViewById(R.id.layout);
         accText = (TextView)findViewById(R.id.accText);
 
         Bundle bundle = getIntent().getExtras();
@@ -51,13 +55,41 @@ public class AxesibilityActivity extends AppCompatActivity {
         Boolean b = ilum.getAccesible();
 
 
-        if(b) accText.setText("ES VALIDO");
-        else {accText.setText("NO ES VALIDO");}
+        if(b) {
+            accText.setText("ES ACCESIBLE");
+            ChangeColorWhenValid();
+        }
+        else {
+            accText.setText("NO ES ACCESIBLE");
+            ChangeColorWhenNotValid();
+        }
     }
 
     private void parseAscensor( Ascensores a){
         Boolean b = a.getAccesible();
-        if(b) accText.setText("ES VALIDO");
-        else accText.setText("NO ES VALIDO");
+        if(b){
+            accText.setText("ES ACCESIBLE");
+            ChangeColorWhenValid();
+        }
+        else {
+            accText.setText("NO ES ACCESIBLE");
+            ChangeColorWhenNotValid();
+        }
+
     }
+
+    private void ChangeColorWhenNotValid()
+    {
+        layout.setBackgroundTintList(getResources().getColorStateList(R.color.red));
+        layout.setBackgroundTintMode(PorterDuff.Mode.MULTIPLY);
+        accText.setTextColor(getResources().getColor(R.color.white));
+    }
+
+    private void ChangeColorWhenValid()
+    {
+        layout.setBackgroundTintList(getResources().getColorStateList(R.color.greenMain));
+        layout.setBackgroundTintMode(PorterDuff.Mode.OVERLAY);
+        accText.setTextColor(getResources().getColor(R.color.black));
+    }
+
 }

@@ -160,19 +160,21 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
         if(iluminacion.getLuz() != null) {
 
+            UpdateDatabaseValues();
             if (type == getString(R.string.lux_exterior))
             {
-                UpdateDatabaseValues();
+                f = GetDataFromDatabase.FloatData("Estandares/Iluminacion/Exterior");
                 accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), f);
             }
             else if (type == getString(R.string.lux_interior_habitable))
             {
-                UpdateDatabaseValues();
+                F = GetDataFromDatabase.FloatData("Estandares/Iluminacion/InteriorHab");
                 accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), F);
             }
             else if (type == getString(R.string.lux_interior_escalera))
             {
-               UpdateDatabaseValues();
+                m = GetDataFromDatabase.FloatData("Estandares/Iluminacion/minInteriorRE");
+                M = GetDataFromDatabase.FloatData("Estandares/Iluminacion/maxInteriorRE");
                 accesible = Evaluator.IsInRange(iluminacion.getLuz(), m, M);
             }
 
