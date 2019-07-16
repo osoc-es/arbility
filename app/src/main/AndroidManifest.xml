@@ -20,7 +20,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MedirAscensor"></activity>
+        <activity
+            android:name=".MedirSalvaescaleras"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MedirAscensor"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MedirInclinacion"
             android:screenOrientation="portrait" />
