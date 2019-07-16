@@ -52,7 +52,7 @@ public class AxesibilityActivity extends AppCompatActivity {
 
 
         if(b) accText.setText("ES VALIDO");
-        else accText.setText("NO ES VALIDO");
+        else {accText.setText("NO ES VALIDO");}
     }
 
     private void parseAscensor( Ascensores a){

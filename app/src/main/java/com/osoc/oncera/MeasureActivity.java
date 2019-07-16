@@ -46,14 +46,14 @@ public class MeasureActivity extends AppCompatActivity {
 
     private static final String TAG = MeasureActivity.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
-    private float upDistance=0f;
+    private float upDistance = 0f;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
     private Anchor myanchor;
     private AnchorNode myanchornode;
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
-    private Anchor anchor1=null, anchor2=null;
+    private Anchor anchor1 = null, anchor2 = null;
 
     private HitResult myhit;
 
@@ -76,8 +76,8 @@ public class MeasureActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_measure);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-        Button restart = (Button)findViewById(R.id.btn_restart);
-        Button confirm = (Button)findViewById(R.id.btn_ok);
+        Button restart = (Button) findViewById(R.id.btn_restart);
+        Button confirm = (Button) findViewById(R.id.btn_ok);
         TextView data = (TextView) findViewById(R.id.tv_distance);
         TextView width = (TextView) findViewById(R.id.width);
         TextView mechanism = (TextView) findViewById(R.id.height_mecha);
@@ -91,10 +91,9 @@ public class MeasureActivity extends AppCompatActivity {
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                anchor1=null;
-                anchor2=null;
+            public void onClick(View v) {
+                anchor1 = null;
+                anchor2 = null;
                 z_axis.setProgress(0);
                 z_axis.setEnabled(false);
                 confirm.setEnabled(false);
@@ -104,7 +103,7 @@ public class MeasureActivity extends AppCompatActivity {
                 mechanism.setText("Altura mecanismo: --");
                 height.setText("Altura puerta: --");
                 measure_height = false;
-                for(AnchorNode n : anchorNodes){
+                for (AnchorNode n : anchorNodes) {
                     arFragment.getArSceneView().getScene().removeChild(n);
                     n.getAnchor().detach();
                     n.setParent(null);
@@ -117,13 +116,12 @@ public class MeasureActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MeasureActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
-                if(!measure_height) {
+                if (!measure_height) {
                     measure_height = true;
                     data.setText("Sube el cubo con el deslizador hasta que su base de con el marco de la puerta");
                     confirm.setEnabled(false);
                     confirm.setText("Confirm");
-                }
-                else
+                } else
                     Confirmar();
             }
         });
@@ -134,12 +132,11 @@ public class MeasureActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 upDistance = progress;
                 ascend(myanchornode, upDistance);
-                if(measure_height) {
+                if (measure_height) {
                     height.setText("Altura puerta: " +
                             form_numbers.format(progress / 100f));
                     puerta.setAltura(progress / 100f);
-                }
-                else {
+                } else {
                     mechanism.setText("Altura mecanismo: " +
                             form_numbers.format(progress / 100f));
                     puerta.setAlturaPomo(progress / 100f);
@@ -148,10 +145,12 @@ public class MeasureActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
         // When you build a Renderable, Sceneform loads its resources in the background while returning
@@ -185,10 +184,9 @@ public class MeasureActivity extends AppCompatActivity {
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
                     anchorNodes.add(anchorNode);
 
-                    if(anchor1 == null) {
+                    if (anchor1 == null) {
                         anchor1 = anchor;
-                    }
-                    else {
+                    } else {
                         anchor2 = anchor;
                         width.setText("Anchura puerta: " +
                                 form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
@@ -211,26 +209,24 @@ public class MeasureActivity extends AppCompatActivity {
         puertaDialog();
     }
 
-    void ascend(AnchorNode an, float up){
-        Anchor anchor =  myhit.getTrackable().createAnchor(
-                myhit.getHitPose().compose(Pose.makeTranslation(0, up/100f, 0)));
+    void ascend(AnchorNode an, float up) {
+        Anchor anchor = myhit.getTrackable().createAnchor(
+                myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
 
         an.setAnchor(anchor);
     }
-
 
 
     float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
         float totalDistanceSquared = 0;
-        for(int i=0; i<3; ++i)
-            totalDistanceSquared += distance_vector[i]*distance_vector[i];
+        for (int i = 0; i < 3; ++i)
+            totalDistanceSquared += distance_vector[i] * distance_vector[i];
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void Confirmar()
-    {
+    void Confirmar() {
         boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Altura"));
         boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura"));
         boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, puerta.getTipoPuerta());
@@ -239,15 +235,15 @@ public class MeasureActivity extends AppCompatActivity {
 
         puerta.setAccesible(cumple_alto_mecanismo && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta);
 
-        Intent i = new Intent(this,AxesibilityActivity.class);
-        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.PUERTAS.getValue());
+        Intent i = new Intent(this, AxesibilityActivity.class);
+        i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.PUERTAS.getValue());
         i.putExtra(TypesManager.PUERTAS_OBS, puerta);
 
         startActivity(i);
         finish();
     }
 
-    void puertaDialog(){
+    void puertaDialog() {
         int[] spinnerImages = new int[]{R.drawable.puerta_giratoria, R.drawable.puerta_corredera
                 , R.drawable.puerta_abatible, R.drawable.puerta_torno};
 
@@ -269,9 +265,9 @@ public class MeasureActivity extends AppCompatActivity {
         mSpinnerMecha.setAdapter(mCustomAdapter2);
 
 
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i){
+            public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });

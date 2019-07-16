@@ -101,7 +101,7 @@
 
     <string name="et_CorreoLogin"> Email Ej: ejemplo@ejemplo.es</string>
     <string name="et_PasswordLogin"> Contraseña</string>
-    <string name="btn_Registrarse">¿No tienes cuenta? Regístrate Aquí</string>
+    <string name="btn_Registrarse">¿No tienes cuenta? Regístrate aquí</string>
     <string name="tvLogIn">Log In</string>
     <string name="btn_Iniciar_Sesion">Iniciar Sesión</string>
     <string name="tv_logo">rbility</string>
@@ -132,5 +132,5 @@
         \nUna vez tengas la medición deseada, presiona el botón \"Ok\". \n\n
     Presiona este recuadro para continuar.</string>
 
-    <string name="btnCopiarCodCentro">Copiar</string>
+    <string name="btnCopiarCodCentro">Copiar código centro</string>
 </resources>

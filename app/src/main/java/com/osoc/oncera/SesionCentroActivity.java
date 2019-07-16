@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class SesionCentroActivity extends AppCompatActivity {
 
     private String emailPersona;
     private String codCentro;
+    private ImageButton atras;
 
     private final Centro[] cen = new Centro[1];
     private DatabaseReference mDatabaseRef;
@@ -50,6 +52,7 @@ public class SesionCentroActivity extends AppCompatActivity {
 
         codigo = (TextView) findViewById( R.id.tvCodCentro );
         copiar = (Button) findViewById( R.id.btnCopiarCod );
+        atras = (ImageButton) findViewById(R.id.btnAtras);
 
         cargarCodCentro();
 
@@ -65,6 +68,13 @@ public class SesionCentroActivity extends AppCompatActivity {
 
             }
         } );
+
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
     public void cargarCodCentro(){
 

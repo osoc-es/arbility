@@ -52,6 +52,7 @@ public class LoginCentroEscolarActivity extends AppCompatActivity {
             Intent i= new Intent( LoginCentroEscolarActivity.this, RegisterCentroEscolarActivity.class);
             startActivity(i);
 
+            finish();
         }
 
     public void loguearse(View v){
@@ -80,6 +81,7 @@ public class LoginCentroEscolarActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Intent i = new Intent( LoginCentroEscolarActivity.this, SesionCentroActivity.class );
                             startActivity( i );
+                            finish();
 
                         } else {
                             Toast.makeText( LoginCentroEscolarActivity.this, "El email o la contraseña no es correcta", Toast.LENGTH_LONG ).show();
