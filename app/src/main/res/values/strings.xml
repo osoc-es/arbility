@@ -11,12 +11,93 @@
     <string name="pasillosText">PASILLOS</string>
     <string name="emergenciaText">EMERGENCIAS</string>
     <string name="simulacionText">SIMULACION</string>
-    <string name="textoDescrip">
-        Al margen de la persecución y evolución de sus personajes, el tema de la novela es eminentemente enciclopédico al incluir detalladas y extensas descripciones de la caza de las ballenas en el siglo XIX y multitud de otros detalles sobre la vida marinera de la época. Quizá por ello la novela no tuvo ningún éxito comercial en su primera publicación, aunque con posterioridad haya servido para cimentar la reputación del autor y situarlo entre los mejores escritores estadounidenses.
 
-La frase inicial del narrador —«Call me Ishmael» en inglés, traducido al español a veces como «Llamadme Ismael», otras veces como «Pueden ustedes llamarme Ismael»—,1​ se ha convertido en una de las citas más conocidas de la literatura en lengua inglesa.
+    <string name="descAseos">Un aseo es accesible si:
+        \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
+        \t\n•La altura de las barras de apoyo está comprendida entre 70 y 75 centímetros.\n
+        \t\n•La longitud de la barra de apoyo es 70 centímetros.\n
+        \t\n•El diámetro de la barra de apoyo está comprendido entre 3 y 5 centímetros.\n
+        \t\n•La anchura del espacio de transferencia al lavabo es mayor a 80 centímetros.\n
+        \t\n•El fondo del espacio de transferencia es mayor a 75 centímetros.\n
+        \t\n•La altura del hueco libre del lavabo está entre 65 y 70 centímetros.\n
+        \t\n•Tiene dispositivo de llamada de asistencia.\n
+        \t\n•Tiene acceso de nivel a las duchas.\n
+        \t\n•La anchura del espacio de transferencia a la ducha es mayor a 80 centímetros.\n
+        \t\n•La anchura del asiento de la ducha es mayor a 45 centímetros.\n
+        \t\n•La altura del asiento de la ducha está entre 45 y 48 centímetros.\n
+        \t\n •La distancia de la barra de apoyo a la esquina es de 60 centímetros.\n
+        \t\n • La separación de la barra de apoyo al paramento está entre 4,5 y 5,5 centímetros.\n
+
     </string>
 
+    <string name="descPuertas">Una puerta es accesible si:
+            \t\n•Su anchura es mayor a 80 centímetros.\n
+           \t\n•Su altura es mayor a 200 centímetros.\n
+            \t\n•La altura de su mecanismo de apertura esté entre 80 centímetros y 120 centímetros.\n
+    </string>
+
+    <string name="descIlum">Una estancia está correctamente iluminada si:
+            \t\n•En el exterior el valor del luxómetro es mayor a 100 lux.\n
+           \t\n•En interior con rampa o escalera el valor está comprendido entre 150 y 200 lux.\n
+            \t\n•En interior habitable es mayor a 300 lux.\n
+    </string>
+
+    <string name="descAscensor">Un ascensor es accesible si:
+            \t\n•La anchura de la cabina es mayor a 110 centímetros.\n
+            \t\n•La profundidad de la cabina es mayor a 140 centímetros.\n
+            \t\n•La altura del resalte es menor a 1 centímetro.\n
+           \t\n•La distancia de la cabina es menor a 2 centímetros.\n
+            \t\n•Tiene apertura/cierre de puertas automático.\n
+        \t\n•Tiene señal audible de apertura/cierre.\n
+            \t\n•Tiene botonera de Braile.\n
+    </string>
+
+    <string name="descMostrador">Un mostrador es accesible si:
+            \t\n•La anchura del plano de trabajo es mayor a 80 centímetros.\n
+            \t\n•La altura del plano de trabajo es menor a 85 centímetros.\n
+            \t\n•La altura del espacio inferior libre es mayor a 70 centímetros.\n
+        \t\n•La profundidad del espacio inferior libre es mayor a 50 centímetros.\n
+    </string>
+
+    <string name="descRampa">Una rampa es accesible si:
+            \t\n•Su anchura es mayor a 120 centímetros.\n
+            \t\n•La longitud es menor a 3 metros y la pendiente es menor o igual a 10.\n
+        \t\n•La longitud está entre 3 y 6 metros y la pendiente es menor o igual a 8.\n
+        \t\n•La longitud está entre 6 y 9 metros y la pendiente es menor o igual a 6.\n
+        \t\n•La altura del pasamanos superior está comprendida entre 85 y 100 centímetros.\n
+            \t\n•La altura del pasamanos inferior está entre 60 y 75 centímetros.\n
+                    \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
+    </string>
+
+    <string name="descSalvaescaleras">Un salvaescaleras es accesible si:
+            \t\n•La anchura de la plataforma es mayor a 70 centímetros.\n
+           \t\n•El largo de la plataforma es mayor a 100 centímetros.\n
+            \t\n•Existen mandos en la plataforma, en el embarque y en el desembarque.\n
+        \t\n•La carga es mayor a 250kg.\n
+                \t\n•La velocidad es mayor a 0,15 m/s.\n
+    </string>
+
+    <string name="descEstancias">Una estancia es accesible si:
+            \t\n•Tiene asientos reservados ( 2 cada 50).\n
+           \t\n•La separación del mobiliario es de 80 centímetros.\n
+            \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
+        \t\n•Cuenta con un sistema de mejora de audición.\n
+        \t\n•Tiene tarima con rampa.\n
+    </string>
+
+    <string name="descPasillos">Un pasillo es accesible si:
+            \t\n•Su anchura es mayor a 120 centímetros.\n
+           \t\n•La altura es mayor a 210 centímetros.\n
+            \t\n•La anchura de los salientes es menor a 10 centímetros.\n
+        \t\n•Los salientes miden entre 15 y 220 centímetros.\n
+        \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
+                \t\n•Existe señalización entre 90 y 140 centímetros de altura en cristales.\n
+    </string>
+
+    <string name="descEmergencias">Se cumplen los parámetros de evacuación si:
+            \t\n•Existen simulacros de emergencia.\n
+           \t\n•Hay alumbrado de emergencia.\n
+    </string>
 
     <string name="et_CorreoLogin"> Email Ej: ejemplo@ejemplo.es</string>
     <string name="et_PasswordLogin"> Contraseña</string>
