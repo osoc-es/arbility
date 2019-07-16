@@ -3,9 +3,12 @@ package com.osoc.oncera;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.icu.util.Measure;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ public class LegalInfoActivity extends AppCompatActivity {
 
     ImageButton botonSalir;
     TextView desc;
+    Button botonEvaluar;
     String descText;
     TypesManager.obsType type;
 
@@ -26,6 +30,7 @@ public class LegalInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_legal_info);
 
         botonSalir = (ImageButton)findViewById(R.id.BotonSalir);
+        botonEvaluar = (Button)findViewById(R.id.BotonEvaluar);
         desc = (TextView)findViewById(R.id.descText);
 
         botonSalir.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +40,7 @@ public class LegalInfoActivity extends AppCompatActivity {
             }
         });
 
+
         int typeID = getIntent().getIntExtra("obsType",-1);
 
         Toast.makeText(this,Integer.toString(typeID),Toast.LENGTH_SHORT).show();
@@ -42,6 +48,22 @@ public class LegalInfoActivity extends AppCompatActivity {
         type = TypesManager.obsType.valueOf(typeID);
         selectText();
 
+
+        botonEvaluar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //if(type == TypesManager.obsType.ASEOS) changeWindowTo(#Aseos);
+                if (type == TypesManager.obsType.PUERTAS)  changeWindowTo(MeasureActivity.class);
+                else if (type == TypesManager.obsType.ILUM) changeWindowTo(Luxometro.class);
+                //else if (type == TypesManager.obsType.ASCENSORES)
+                else if (type == TypesManager.obsType.MOSTRADORES) changeWindowTo(MedirMostradorActivity.class);
+                else if (type == TypesManager.obsType.RAMPAS) changeWindowTo(MedirRampa.class);
+                /*else if (type == TypesManager.obsType.SALVAESCALERAS)
+                else if (type == TypesManager.obsType.ESTANCIAS)
+                else if (type == TypesManager.obsType.PASILLOS)
+                else if (type == TypesManager.obsType.EMERGENCIAS)  */
+            }
+        });
     }
 
     private void selectText(){
@@ -59,5 +81,10 @@ public class LegalInfoActivity extends AppCompatActivity {
 
         desc.setText(descText);
 
+    }
+
+    public void changeWindowTo(Class activity){
+        Intent guestActivity = new Intent(this,activity);
+        startActivity(guestActivity);
     }
 }
