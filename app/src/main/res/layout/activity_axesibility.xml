@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:textSize="60dp"
         android:layout_centerInParent="true"
-        android:id="@+id/accText"/>
+        android:id="@+id/accText"
+        android:textAlignment="center"/>
 
 </RelativeLayout>

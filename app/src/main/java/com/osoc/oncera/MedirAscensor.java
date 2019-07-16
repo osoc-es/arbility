@@ -263,7 +263,7 @@ public class MedirAscensor extends AppCompatActivity {
 
         Intent i = new Intent(this,AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ASCENSORES.getValue());
-        i.putExtra(TypesManager.ILUM_OBS, ascensor);
+        i.putExtra(TypesManager.ASCENSOR_OBS, ascensor);
 
         startActivity(i);
         finish();
