@@ -20,21 +20,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MedirInclinacion"></activity>
-        <activity android:name=".MedirRampa" />
-        <activity android:name=".Luxometro" />
-        <activity android:name=".MedirMostradorActivity" />
+        <activity android:name=".MedirInclinacion" android:screenOrientation="portrait"></activity>
+        <activity android:name=".MedirRampa" android:screenOrientation="portrait"/>
+        <activity android:name=".Luxometro" android:screenOrientation="portrait"/>
+        <activity android:name=".MedirMostradorActivity" android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
 
-        <activity android:name=".MeasureActivity" />
-        <activity android:name=".LegalInfoActivity" />
-        <activity android:name=".GuestActivity" />
-        <activity android:name=".RegisterCentroEscolarActivity" />
-        <activity android:name=".LoginCentroEscolarActivity" />
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".MeasureActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LegalInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".GuestActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".RegisterCentroEscolarActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LoginCentroEscolarActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".WelcomeActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
