@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.osoc.oncera.javabean.Puerta;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public class MeasureActivity extends AppCompatActivity {
     private Anchor anchor1=null, anchor2=null;
 
     private HitResult myhit;
+
+    private Puerta puerta = new Puerta(null, null, null, null, null, null, null, null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -99,7 +103,9 @@ public class MeasureActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MeasureActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
-                //TODO create door model and send accesibility status to next activity
+
+                Confirmar();
+
             }
         });
 
@@ -111,6 +117,7 @@ public class MeasureActivity extends AppCompatActivity {
                 ascend(myanchornode, upDistance);
                 height.setText("Altura: " +
                         form_numbers.format(progress/100f));
+                puerta.setAltura(progress/100f);
                 confirm.setEnabled(true);
             }
 
@@ -160,6 +167,8 @@ public class MeasureActivity extends AppCompatActivity {
                         width.setText("Anchura: " +
                                 form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
+                        puerta.setAnchura(getMetersBetweenAnchors(anchor1, anchor2));
+
                         data.setText("Sube el cubo con el deslizador hasta que su base de con el tope de la puerta");
 
                         z_axis.setEnabled(true);
@@ -193,7 +202,27 @@ public class MeasureActivity extends AppCompatActivity {
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
+    void Confirmar()
+    {
+        //TODO: Faltan por meter las evaluaciones de altura de pomos y tipos de puerta y tipos de pomos
+        // Una vez hechas las evaluaciones hay que meter el dato correspondiente en el objeto puerta
+        // por medio de sus métodos setter
 
+        boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Altura"));
+        boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura"));
+        boolean cumple_tipo_puerta = false;
+        boolean cumple_tipo_mecanismos = false;
+        boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), GetDataFromDatabase.FloatData("Estandares/Puertas/minMecApertura"), GetDataFromDatabase.FloatData("Estandares/Puertas/maxMecApertura"));
+
+        puerta.setAccesible(cumple_alto_mecanismo && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta);
+
+        Intent i = new Intent(this,AxesibilityActivity.class);
+        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.PUERTAS.getValue());
+        i.putExtra(TypesManager.PUERTAS_OBS, puerta);
+
+        startActivity(i);
+        finish();
+    }
 
     public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
         if (Build.VERSION.SDK_INT < VERSION_CODES.N) {

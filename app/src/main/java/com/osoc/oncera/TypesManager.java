@@ -6,6 +6,10 @@ import java.util.Map;
 public final class TypesManager {
 
     public static final  String OBS_TYPE = "obsType";
+    public static final String ILUM_OBS = "ilumObs";
+    public static final String ASCENSOR_OBS = "ascensorObs";
+    public static final String PUERTAS_OBS = "puertaObs";
+
 
     public enum obsType {
         ASEOS(1),
