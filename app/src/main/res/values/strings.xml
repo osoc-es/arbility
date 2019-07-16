@@ -127,9 +127,7 @@
     <string name="lux_exterior">Exterior </string>
     <string name="lux_interior_escalera">Interior con rampa y/o escalera </string>
     <string name="lux_interior_habitable">Interior habitable </string>
-
-
-
-
+    <string name="lux_instrucciones">En el menú desplegable superior selecciona en qué tipo de espacio estás y orienta
+    la pantalla del móvil hacia la fuente de lux antes de darle al botón de medir. </string>
 
 </resources>

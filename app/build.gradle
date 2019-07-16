@@ -51,7 +51,6 @@ apply plugin: 'com.google.ar.sceneform.plugin'
 apply plugin: 'com.google.gms.google-services'
 
 
-
 sceneform.asset('sampledata/cubito.fbx',
         'default',
         'sampledata/cubito.sfa',
