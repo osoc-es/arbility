@@ -20,21 +20,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MedirInclinacion" android:screenOrientation="portrait"></activity>
-        <activity android:name=".MedirRampa" android:screenOrientation="portrait"/>
-        <activity android:name=".Luxometro" android:screenOrientation="portrait"/>
-        <activity android:name=".MedirMostradorActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".MedirAscensor"></activity>
+        <activity
+            android:name=".MedirInclinacion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MedirRampa"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Luxometro"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MedirMostradorActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
 
-        <activity android:name=".MeasureActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".LegalInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".GuestActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".RegisterCentroEscolarActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".LoginCentroEscolarActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".WelcomeActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".MeasureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LegalInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GuestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegisterCentroEscolarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginCentroEscolarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -53,7 +53,7 @@ public class LegalInfoActivity extends AppCompatActivity {
                 //if(type == TypesManager.obsType.ASEOS) changeWindowTo(#Aseos);
                 if (type == TypesManager.obsType.PUERTAS)  changeWindowTo(MeasureActivity.class);
                 else if (type == TypesManager.obsType.ILUM) changeWindowTo(Luxometro.class);
-                //else if (type == TypesManager.obsType.ASCENSORES)
+                else if (type == TypesManager.obsType.ASCENSORES) changeWindowTo(MedirAscensor.class);
                 else if (type == TypesManager.obsType.MOSTRADORES) changeWindowTo(MedirMostradorActivity.class);
                 else if (type == TypesManager.obsType.RAMPAS) changeWindowTo(MedirRampa.class);
                 /*else if (type == TypesManager.obsType.SALVAESCALERAS)
