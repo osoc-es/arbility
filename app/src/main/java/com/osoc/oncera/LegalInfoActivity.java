@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.osoc.oncera.javabean.SalvaEscaleras;
+
 import org.w3c.dom.Text;
 
 public class LegalInfoActivity extends AppCompatActivity {
@@ -56,8 +58,8 @@ public class LegalInfoActivity extends AppCompatActivity {
                 else if (type == TypesManager.obsType.ASCENSORES) changeWindowTo(MedirAscensor.class);
                 else if (type == TypesManager.obsType.MOSTRADORES) changeWindowTo(MedirMostradorActivity.class);
                 else if (type == TypesManager.obsType.RAMPAS) changeWindowTo(MedirRampa.class);
-                /*else if (type == TypesManager.obsType.SALVAESCALERAS)
-                else if (type == TypesManager.obsType.ESTANCIAS)
+                else if (type == TypesManager.obsType.SALVAESCALERAS) changeWindowTo(MedirSalvaescaleras.class);
+                /*else if (type == TypesManager.obsType.ESTANCIAS)
                 else if (type == TypesManager.obsType.PASILLOS)
                 else if (type == TypesManager.obsType.EMERGENCIAS)  */
             }
