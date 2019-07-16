@@ -1,6 +1,6 @@
 package com.osoc.oncera;
 
-public class Evaluator {
+public final class Evaluator {
 
     static public boolean IsGreaterThan(float to_evaluate, float other)
     {

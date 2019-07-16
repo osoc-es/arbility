@@ -1,5 +1,6 @@
 package com.osoc.oncera;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.hardware.Sensor;
@@ -15,8 +16,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.Evaluator;
 import com.osoc.oncera.R;
 import com.osoc.oncera.javabean.Iluminacion;
@@ -42,7 +49,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
     private float max_value;
-    private Iluminacion iluminacion = new Iluminacion();
+    private Iluminacion iluminacion = new Iluminacion(null, null, null, null);
 
 
     @Override
@@ -89,8 +96,6 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
             public void onClick(View view) {
 
                 Confirmar();
-
-                finish();
 
             }
         });
@@ -148,20 +153,26 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     public void Confirmar()
     {
 
-        if(type == getString(R.string.lux_exterior))
-        {
-            //accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), );
-        }
-        else if(type == getString(R.string.lux_exterior))
-        {
-            //accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), );
-        }
-        else if(type == getString(R.string.lux_exterior))
-        {
-            //accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), );
+        if(iluminacion.getLuz() != null) {
+
+            if (type == getString(R.string.lux_exterior)) {
+                float f = GetDataFromDatabase.FloatData("Estandares/Iluminacion/Exterior");
+                accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), f);
+
+            } else if (type == getString(R.string.lux_interior_habitable)) {
+                float f = GetDataFromDatabase.FloatData("Estandares/Iluminacion/InteriorHab");
+                accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), f);
+            } else if (type == getString(R.string.lux_interior_escalera)) {
+                float m = GetDataFromDatabase.FloatData("Estandares/Iluminacion/minInteriorRE");
+                float M = GetDataFromDatabase.FloatData("Estandares/Iluminacion/maxInteriorRE");
+
+                accesible = Evaluator.IsInRange(iluminacion.getLuz(), m, M);
+            }
+
+            iluminacion.setAccesible(accesible);
         }
 
-        //TODO: Modificar valores del objeto en la BBDD con el objeto iluminacion
+        //TODO: Pasar a activity de mostar si es o no accesible
 
     }
 
@@ -169,4 +180,5 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     {
         instrucciones.setVisibility(View.INVISIBLE);
     }
+
 }
