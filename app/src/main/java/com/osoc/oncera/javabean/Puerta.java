@@ -65,7 +65,7 @@ public class Puerta implements Serializable {
     }
 
     public void setTipoMecanismo(String tipoMecanismo) {
-        tipoMecanismo = tipoMecanismo;
+        this.tipoMecanismo = tipoMecanismo;
     }
 
     public Boolean getAccesible() {

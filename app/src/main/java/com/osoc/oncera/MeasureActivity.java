@@ -20,6 +20,8 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
@@ -57,6 +59,7 @@ public class MeasureActivity extends AppCompatActivity {
 
     private String[] tipoPuerta = new String[]{"Giratoria", "Corredera", "Abatible", "Tornos"};
     private String[] tipoMecanismo = new String[]{"Manibela", "Pomo", "Barra", "Agarrador"};
+    private boolean measure_height = false;
 
     private Puerta puerta = new Puerta(null, null, null, null, null, null, null, null);
 
@@ -77,6 +80,7 @@ public class MeasureActivity extends AppCompatActivity {
         Button confirm = (Button)findViewById(R.id.btn_ok);
         TextView data = (TextView) findViewById(R.id.tv_distance);
         TextView width = (TextView) findViewById(R.id.width);
+        TextView mechanism = (TextView) findViewById(R.id.height_mecha);
         TextView height = (TextView) findViewById(R.id.height);
         SeekBar z_axis = (SeekBar) findViewById(R.id.z_axis);
         List<AnchorNode> anchorNodes = new ArrayList<>();
@@ -94,9 +98,12 @@ public class MeasureActivity extends AppCompatActivity {
                 z_axis.setProgress(0);
                 z_axis.setEnabled(false);
                 confirm.setEnabled(false);
+                confirm.setText("Next");
                 data.setText("Haz click en las esquinas inferiores de la puerta tras calibrar");
-                width.setText("Anchura: --");
-                height.setText("Altura: --");
+                width.setText("Anchura puerta: --");
+                mechanism.setText("Altura mecanismo: --");
+                height.setText("Altura puerta: --");
+                measure_height = false;
                 for(AnchorNode n : anchorNodes){
                     arFragment.getArSceneView().getScene().removeChild(n);
                     n.getAnchor().detach();
@@ -110,9 +117,14 @@ public class MeasureActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MeasureActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
-
-                Confirmar();
-
+                if(!measure_height) {
+                    measure_height = true;
+                    data.setText("Sube el cubo con el deslizador hasta que su base de con el marco de la puerta");
+                    confirm.setEnabled(false);
+                    confirm.setText("Confirm");
+                }
+                else
+                    Confirmar();
             }
         });
 
@@ -122,9 +134,16 @@ public class MeasureActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 upDistance = progress;
                 ascend(myanchornode, upDistance);
-                height.setText("Altura: " +
-                        form_numbers.format(progress/100f));
-                puerta.setAltura(progress/100f);
+                if(measure_height) {
+                    height.setText("Altura puerta: " +
+                            form_numbers.format(progress / 100f));
+                    puerta.setAltura(progress / 100f);
+                }
+                else {
+                    mechanism.setText("Altura mecanismo: " +
+                            form_numbers.format(progress / 100f));
+                    puerta.setAlturaPomo(progress / 100f);
+                }
                 confirm.setEnabled(true);
             }
 
@@ -171,12 +190,12 @@ public class MeasureActivity extends AppCompatActivity {
                     }
                     else {
                         anchor2 = anchor;
-                        width.setText("Anchura: " +
+                        width.setText("Anchura puerta: " +
                                 form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
                         puerta.setAnchura(getMetersBetweenAnchors(anchor1, anchor2));
 
-                        data.setText("Sube el cubo con el deslizador hasta que su base de con el tope de la puerta");
+                        data.setText("Sube el cubo con el deslizador hasta que su base de con el mecanismo de apertura");
 
                         z_axis.setEnabled(true);
                     }
@@ -214,8 +233,8 @@ public class MeasureActivity extends AppCompatActivity {
     {
         boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Altura"));
         boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura"));
-        boolean cumple_tipo_puerta = false;
-        boolean cumple_tipo_mecanismos = false;
+        boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, puerta.getTipoPuerta());
+        boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, puerta.getTipoMecanismo());
         boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), GetDataFromDatabase.FloatData("Estandares/Puertas/minMecApertura"), GetDataFromDatabase.FloatData("Estandares/Puertas/maxMecApertura"));
 
         puerta.setAccesible(cumple_alto_mecanismo && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta);
@@ -260,7 +279,7 @@ public class MeasureActivity extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                puerta.setTipoPuerta(tipoMecanismo[mSpinnerMecha.getSelectedItemPosition()]);
+                puerta.setTipoPuerta(tipoPuerta[mSpinnerDoor.getSelectedItemPosition()]);
                 puerta.setTipoMecanismo(tipoMecanismo[mSpinnerMecha.getSelectedItemPosition()]);
             }
         });
