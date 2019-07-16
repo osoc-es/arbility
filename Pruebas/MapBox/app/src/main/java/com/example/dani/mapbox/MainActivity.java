@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
 
         MainActivity.this.mapboxMap = mapboxMap;
-       /* Bundle bu = getIntent().getExtras();
+        Bundle bu = getIntent().getExtras();
         longitud = bu.getDouble( "longitud" );
         latitud = bu.getDouble( "latitud" );
-        bu.clear();*/
+        bu.clear();
 
         MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
             @Override

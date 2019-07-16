@@ -30,6 +30,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvValido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,13 +45,13 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnBorrarEvento"
+            android:id="@+id/btnNO"
             android:layout_width="44dp"
             android:layout_height="50dp"
             android:background="@android:drawable/ic_menu_delete" />
 
         <Button
-            android:id="@+id/btnModificarEvento"
+            android:id="@+id/btnSI"
             android:layout_width="44dp"
             android:layout_height="50dp"
             android:background="@android:drawable/ic_menu_edit" />

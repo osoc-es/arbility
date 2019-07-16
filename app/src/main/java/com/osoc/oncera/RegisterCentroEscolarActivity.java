@@ -129,7 +129,7 @@ public void validar(View v){
                                 user = firebaseAuth.getCurrentUser();
 
 
-                                final String clave = mDatabaseRef.push().getKey();
+                                String clave = user.getUid();
                                 if (imagenSubida) {
                                     Uri selectedUri = mImageUri;
 
@@ -148,7 +148,7 @@ public void validar(View v){
                                                         @Override
                                                         public void onSuccess(Uri uri) {
                                                             centro = new Centro(clave, codCentro,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
-                                                            mDatabaseRef.child(user.getUid()).setValue(centro);
+                                                            mDatabaseRef.child(clave).setValue(centro);
 
                                                             /*Intent i = new Intent(RegisterCentroEscolarActivity.this, LoginCentroEscolarActivity.class);
                                                             startActivity(i);*/

@@ -11,6 +11,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private Button guestButton;
     private Button btnProfesor;
+    private Button btnCentro;
 
 
     @Override
@@ -20,6 +21,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         guestButton = (Button)findViewById(R.id.BotonInvitado);
         btnProfesor = (Button) findViewById( R.id.BotonProfesor );
+        btnCentro = (Button)findViewById( R.id.BotonRegistrarColegio );
 
         guestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -27,7 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
-        btnProfesor.setOnClickListener( new View.OnClickListener() {
+        btnCentro.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) { changeWindowTo(LoginCentroEscolarActivity.class); }
         } );

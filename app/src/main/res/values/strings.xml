@@ -36,4 +36,5 @@ La frase inicial del narrador —«Call me Ishmael» en inglés, traducido al es
 
 
     <string name="msj_no_registrado">No se ha podido registrar</string>
+    <string name="btnCopiarCodCentro">Copiar</string>
 </resources>
