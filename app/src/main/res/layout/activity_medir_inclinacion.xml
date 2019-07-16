@@ -30,7 +30,7 @@
         android:textSize="50dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Coloca el movil en la rampa y pulsa medir"
+        android:text="Coloca el móvil en la rampa y pulsa medir"
         android:textAlignment="center"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
