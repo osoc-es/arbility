@@ -1,9 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MedirSalvaescaleras">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <fragment
+        android:id="@+id/ux_fragment"
+        android:name="com.google.ar.sceneform.ux.ArFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/ancho_plat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:text="Anchura plataforma: --" />
+
+    <TextView
+        android:id="@+id/largo_plat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:text="Longitud plataforma: --" />
+
+
+
+    <TextView
+        android:id="@+id/tv_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="125dp"
+        android:textAlignment="center"
+        android:background="#8000"
+        android:textSize="25sp"
+        android:padding="5dp"
+        android:textColor="#fff"
+        android:text="Toca en las esquinas de la plataforma a lo ancho"
+        />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/btn_restart"
+            android:layout_width="150dp"
+            android:layout_height="75dp"
+            android:text="restart"
+            android:background="@drawable/ic_button_red"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="20dp"/>
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="150dp"
+            android:layout_height="75dp"
+            android:text="Next"
+            android:background="@drawable/ic_button_green"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            />
+    </LinearLayout>
+
+</FrameLayout>

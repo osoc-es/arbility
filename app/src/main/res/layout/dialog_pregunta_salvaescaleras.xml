@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Para alguna información deberás consultar la etiqueta del salvaescaleras"/>
+
+    <CheckBox
+        android:id="@+id/chkMando"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:text="Hay mandos en embarque y desembarque" />
+
+
+    <CheckBox
+        android:id="@+id/chkCarga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:text="La carga soportada es mayor a 250" />
+
+    <CheckBox
+        android:id="@+id/chkVelocidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:text="La velocidad es mayor a 0,15 m/s" />
+
+</LinearLayout>
