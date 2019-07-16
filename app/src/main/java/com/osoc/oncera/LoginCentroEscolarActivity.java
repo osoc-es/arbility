@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +22,7 @@ public class LoginCentroEscolarActivity extends AppCompatActivity {
     private EditText correo;
     private EditText password;
     private FirebaseAuth auth;
+    private ImageButton atras;
     private DatabaseReference mDatabaseRef;
 
     private String email;
@@ -32,9 +34,17 @@ public class LoginCentroEscolarActivity extends AppCompatActivity {
 
         correo = (EditText) findViewById( R.id.etCorreoLogin );
         password = (EditText) findViewById( R.id.etPasswordLogin );
+        atras = (ImageButton) findViewById(R.id.btnAtras);
 
         auth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Usuarios");
+
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
     public void register(View v) {
 
