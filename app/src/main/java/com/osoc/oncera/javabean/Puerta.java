@@ -8,18 +8,18 @@ public class Puerta implements Serializable {
     private Float altura;
     private String tipoPuerta;
     private Float alturaPomo;
-    private String ImagenMecanismo;
+    private String tipoMecanismo;
     private Boolean accesible;
     private String codCentro;
     private String id;
 
 
-    public Puerta(Float anchura, Float altura, String tipoPuerta, Float alturaPomo, String imagenMecanismo, Boolean accesible, String codCentro, String id) {
+    public Puerta(Float anchura, Float altura, String tipoPuerta, Float alturaPomo, String tipoMecanismo, Boolean accesible, String codCentro, String id) {
         this.anchura = anchura;
         this.altura = altura;
         this.tipoPuerta = tipoPuerta;
         this.alturaPomo = alturaPomo;
-        ImagenMecanismo = imagenMecanismo;
+        this.tipoMecanismo = tipoMecanismo;
         this.accesible = accesible;
         this.codCentro = codCentro;
         this.id = id;
@@ -60,12 +60,12 @@ public class Puerta implements Serializable {
         this.alturaPomo = alturaPomo;
     }
 
-    public String getImagenMecanismo() {
-        return ImagenMecanismo;
+    public String getTipoMecanismo() {
+        return tipoMecanismo;
     }
 
-    public void setImagenMecanismo(String imagenMecanismo) {
-        ImagenMecanismo = imagenMecanismo;
+    public void setTipoMecanismo(String tipoMecanismo) {
+        tipoMecanismo = tipoMecanismo;
     }
 
     public Boolean getAccesible() {

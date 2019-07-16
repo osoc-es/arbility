@@ -1,10 +1,12 @@
 package com.osoc.oncera;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
@@ -15,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.ar.core.Anchor;
@@ -28,6 +31,7 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.osoc.oncera.adapters.ImageTitleAdapter;
 import com.osoc.oncera.javabean.Puerta;
 
 import java.text.DecimalFormat;
@@ -50,6 +54,9 @@ public class MeasureActivity extends AppCompatActivity {
     private Anchor anchor1=null, anchor2=null;
 
     private HitResult myhit;
+
+    private String[] tipoPuerta = new String[]{"Giratoria", "Corredera", "Abatible", "Tornos"};
+    private String[] tipoMecanismo = new String[]{"Manibela", "Pomo", "Barra", "Agarrador"};
 
     private Puerta puerta = new Puerta(null, null, null, null, null, null, null, null);
 
@@ -182,6 +189,7 @@ public class MeasureActivity extends AppCompatActivity {
                     andy.select();
                     andy.getScaleController().setEnabled(false);
                 });
+        puertaDialog();
     }
 
     void ascend(AnchorNode an, float up){
@@ -204,10 +212,6 @@ public class MeasureActivity extends AppCompatActivity {
 
     void Confirmar()
     {
-        //TODO: Faltan por meter las evaluaciones de altura de pomos y tipos de puerta y tipos de pomos
-        // Una vez hechas las evaluaciones hay que meter el dato correspondiente en el objeto puerta
-        // por medio de sus métodos setter
-
         boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Altura"));
         boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura"));
         boolean cumple_tipo_puerta = false;
@@ -223,6 +227,50 @@ public class MeasureActivity extends AppCompatActivity {
         startActivity(i);
         finish();
     }
+
+    void puertaDialog(){
+        int[] spinnerImages = new int[]{R.drawable.puerta_giratoria, R.drawable.puerta_corredera
+                , R.drawable.puerta_abatible, R.drawable.puerta_torno};
+
+
+        int[] spinnerImages2 = new int[]{R.drawable.mecanismo_manibela, R.drawable.mecanismo_pomo
+                , R.drawable.mecanismo_barra, R.drawable.mecanismo_agarrador};
+
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_puerta_pomo, null);
+        mBuilder.setTitle("Selecciona puerta y pomo");
+        Spinner mSpinnerDoor = (Spinner) mView.findViewById(R.id.spinner_puerta);
+        Spinner mSpinnerMecha = (Spinner) mView.findViewById(R.id.spinner_mecanismo);
+
+        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MeasureActivity.this, spinnerImages, tipoPuerta);
+        mSpinnerDoor.setAdapter(mCustomAdapter);
+
+        ImageTitleAdapter mCustomAdapter2 = new ImageTitleAdapter(MeasureActivity.this, spinnerImages2, tipoMecanismo);
+        mSpinnerMecha.setAdapter(mCustomAdapter2);
+
+
+        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i){
+                dialogInterface.dismiss();
+            }
+        });
+
+        mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                puerta.setTipoPuerta(tipoMecanismo[mSpinnerMecha.getSelectedItemPosition()]);
+                puerta.setTipoMecanismo(tipoMecanismo[mSpinnerMecha.getSelectedItemPosition()]);
+            }
+        });
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+
+        dialog.show();
+    }
+
 
     public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
         if (Build.VERSION.SDK_INT < VERSION_CODES.N) {
