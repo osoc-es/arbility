@@ -65,6 +65,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
         ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_item,spinner_options);
         aa.setDropDownViewResource(R.layout.spinner_item_dropdown);
         spinner.setAdapter(aa);
+        instrucciones.setText(getString(R.string.lux_instrucciones));
 
         sensor_manager = (SensorManager)getSystemService(SENSOR_SERVICE);
         luxometer = sensor_manager.getDefaultSensor(Sensor.TYPE_LIGHT);

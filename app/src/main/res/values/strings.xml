@@ -128,6 +128,8 @@
     <string name="lux_interior_escalera">Interior con rampa y/o escalera </string>
     <string name="lux_interior_habitable">Interior habitable </string>
     <string name="lux_instrucciones">En el menú desplegable superior selecciona en qué tipo de espacio estás y orienta
-    la pantalla del móvil hacia la fuente de lux antes de darle al botón de medir. </string>
+    la pantalla del móvil hacia la fuente de luz antes de darle al botón de medir.
+        \nUna vez tengas la medición deseada, presiona el botón \"Ok\". \n\n
+    Presiona este recuadro para continuar.</string>
 
 </resources>

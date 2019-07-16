@@ -108,10 +108,10 @@
         android:layout_gravity="bottom"
         android:layout_centerVertical="true"
         android:layout_marginBottom="150dp"
-        android:textAlignment="center"
+
         android:background="#8000"
         android:textSize="25sp"
-        android:padding="5dp"
+        android:padding="10dp"
         android:textColor="#fff"
         android:text=""
         />
