@@ -20,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MedirSalvaescaleras"
             android:screenOrientation="portrait" />
@@ -38,6 +39,11 @@
         <activity
             android:name=".MedirMostradorActivity"
             android:screenOrientation="portrait" />
+
+            <activity
+            android:name=".AxesibilityActivity"
+            android:screenOrientation="portrait" />
+
 
         <meta-data
             android:name="com.google.ar.core"

@@ -3,6 +3,7 @@ package com.osoc.oncera;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -170,6 +171,13 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
             }
 
             iluminacion.setAccesible(accesible);
+
+            Intent i = new Intent(this,AxesibilityActivity.class);
+            i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ILUM.getValue());
+            i.putExtra("ilumObs", iluminacion);
+
+            startActivity(i);
+            finish();
         }
 
         //TODO: Pasar a activity de mostar si es o no accesible

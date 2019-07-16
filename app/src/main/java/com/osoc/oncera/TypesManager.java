@@ -5,6 +5,8 @@ import java.util.Map;
 
 public final class TypesManager {
 
+    public static final  String OBS_TYPE = "obsType";
+
     public enum obsType {
         ASEOS(1),
         PUERTAS(2),
