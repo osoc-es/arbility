@@ -31,10 +31,13 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     private String[] spinner_options = new String[3];
     private TextView lux_text;
     private Button button;
+    private Button bt_confirmar;
     private ImageButton exit_button;
+    private TextView instrucciones;
 
     private boolean accesible;
     private float value;
+    private String type;
 
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
@@ -52,8 +55,10 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
         spinner_options[2] = getString(R.string.lux_interior_habitable);
 
         lux_text = (TextView) findViewById(R.id.lux);
+        instrucciones = (TextView) findViewById(R.id.tv_instrucciones);
         spinner = (Spinner) findViewById(R.id.lux_spinner);
         button = (Button) findViewById(R.id.BotonLuxometroMedir);
+        bt_confirmar = (Button) findViewById(R.id.BotonConfirmar);
         exit_button = (ImageButton) findViewById(R.id.BotonSalir);
         spinner.setOnItemSelectedListener(this);
 
@@ -78,6 +83,24 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
             }
         });
 
+        bt_confirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Confirmar();
+
+                finish();
+
+            }
+        });
+
+        instrucciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HideInstructions();
+            }
+        });
+
     }
 
     @Override
@@ -91,7 +114,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        
+
         if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT)
         {
             value = sensorEvent.values[0];
@@ -106,20 +129,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-
-        if (spinner_options[i] == getString(R.string.lux_exterior)) {
-            //accesible = Evaluator.IsGreaterThan(value, )
-
-        }
-        else if (spinner_options[i] == getString(R.string.lux_interior_escalera)) {
-            //accesible = Evaluator.IsGreaterThan(value, )
-
-        }
-        else if (spinner_options[i] == getString(R.string.lux_interior_habitable)) {
-            //accesible = Evaluator.IsGreaterThan(value, )
-
-        }
-
+        type = spinner_options[i];
     }
 
     @Override
@@ -132,7 +142,30 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     {
         lux_text.setText(form_numbers.format(value) + " lx");
         iluminacion.setLuz(value);
+    }
 
-        //TODO: Modificar valores del objeto en la BBDD
+    public void Confirmar()
+    {
+
+        if(type == getString(R.string.lux_exterior))
+        {
+            //accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), );
+        }
+        else if(type == getString(R.string.lux_exterior))
+        {
+            //accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), );
+        }
+        else if(type == getString(R.string.lux_exterior))
+        {
+            //accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), );
+        }
+
+        //TODO: Modificar valores del objeto en la BBDD con el objeto iluminacion
+
+    }
+
+    public void HideInstructions()
+    {
+        instrucciones.setVisibility(View.INVISIBLE);
     }
 }
