@@ -18,7 +18,7 @@
         android:layout_marginBottom="30dp"
         android:layout_marginTop="40dp"
         android:id="@+id/cajaScroll"
-        android:background="@drawable/ic_roundback"
+        android:background="@drawable/ic_round_desc"
         android:padding="15dp"
         >
 

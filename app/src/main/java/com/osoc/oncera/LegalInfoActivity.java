@@ -37,8 +37,6 @@ public class LegalInfoActivity extends AppCompatActivity {
 
         int typeID = getIntent().getIntExtra("obsType",-1);
 
-        Toast.makeText(this,Integer.toString(typeID),Toast.LENGTH_SHORT).show();
-
         type = TypesManager.obsType.valueOf(typeID);
         selectText();
 
@@ -60,4 +58,5 @@ public class LegalInfoActivity extends AppCompatActivity {
         desc.setText(descText);
 
     }
+
 }
