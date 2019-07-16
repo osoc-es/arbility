@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         rv.setLayoutManager( new LinearLayoutManager( this ) );
 
-        centros = new ArrayList<>(  );
+        centros = new ArrayList<>();
 
         FirebaseDatabase databse = FirebaseDatabase.getInstance();
 
@@ -49,18 +49,18 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-        databse.getReference().child("Usuarios").addValueEventListener( new ValueEventListener() {
+        databse.getReference().child( "Usuarios" ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 centros.removeAll( centros );
-                for (DataSnapshot snapshost: dataSnapshot.getChildren()){
-                    Centro centro = snapshost.getValue(Centro.class);
+                for (DataSnapshot snapshost : dataSnapshot.getChildren()) {
+                    Centro centro = snapshost.getValue( Centro.class );
                     centros.add( centro );
                 }
                 adapter.notifyDataSetChanged();
 
 
-                }
+            }
 
 
             @Override

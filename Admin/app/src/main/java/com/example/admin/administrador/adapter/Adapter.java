@@ -4,10 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.admin.administrador.R;
 import com.example.admin.administrador.javabean.Centro;
+
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
@@ -24,7 +27,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
     @NonNull
     @Override
     public CentroViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_centro, parent,false);
+        View v = LayoutInflater.from( parent.getContext() ).inflate( R.layout.item_centro, parent, false );
         CentroViewHolder holder = new CentroViewHolder( v );
         return holder;
     }
@@ -32,7 +35,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CentroViewHolder holder, int position) {
 
-        Centro centro = centros.get(position);
+        Centro centro = centros.get( position );
 
         clave = centro.getId();
         Nombre = centro.getNombre();
@@ -71,7 +74,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
         return centros.size();
     }
 
-    public static class CentroViewHolder extends RecyclerView.ViewHolder{
+    public static class CentroViewHolder extends RecyclerView.ViewHolder {
         TextView nombre;
         TextView ciudad;
         TextView direccion;
@@ -80,10 +83,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
         Button si;*/
 
         public CentroViewHolder(View itemView) {
-            super(itemView);
+            super( itemView );
             nombre = (TextView) itemView.findViewById( R.id.tvNombre );
             ciudad = (TextView) itemView.findViewById( R.id.tvCiudad );
-            direccion =(TextView) itemView.findViewById( R.id.tvDireccion );
+            direccion = (TextView) itemView.findViewById( R.id.tvDireccion );
             valido = (TextView) itemView.findViewById( R.id.tvValido );
             /*no = (Button) itemView.findViewById( R.id.btnNO );
             si = (Button) itemView.findViewById( R.id.btnSI );*/
