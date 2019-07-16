@@ -61,7 +61,9 @@ public class MeasureActivity extends AppCompatActivity {
     private String[] tipoMecanismo = new String[]{"Manibela", "Pomo", "Barra", "Agarrador"};
     private boolean measure_height = false;
 
-    private Puerta puerta = new Puerta(null, null, null, null, null, null, null, null);
+    private float paramAltura,paramAnchura,minMecApertura,maxMecApertura;
+
+    private Puerta puerta = new Puerta(-1, -1, null, -1, null, null, null, null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -75,6 +77,14 @@ public class MeasureActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_measure);
+
+        paramAltura = GetDataFromDatabase.FloatData("Estandares/Puertas/Altura");
+        paramAnchura = GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura");
+
+        paramAltura = GetDataFromDatabase.FloatData("Estandares/Puertas/Altura");
+        minMecApertura = GetDataFromDatabase.FloatData("Estandares/Puertas/minMecApertura");
+        maxMecApertura = GetDataFromDatabase.FloatData("Estandares/Puertas/maxMecApertura");
+
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         Button restart = (Button) findViewById(R.id.btn_restart);
         Button confirm = (Button) findViewById(R.id.btn_ok);
@@ -135,11 +145,12 @@ public class MeasureActivity extends AppCompatActivity {
                 if (measure_height) {
                     height.setText("Altura puerta: " +
                             form_numbers.format(progress / 100f));
-                    puerta.setAltura(progress / 100f);
-                } else {
+                    puerta.setAltura(progress);
+                }
+                else {
                     mechanism.setText("Altura mecanismo: " +
                             form_numbers.format(progress / 100f));
-                    puerta.setAlturaPomo(progress / 100f);
+                    puerta.setAlturaPomo(progress);
                 }
                 confirm.setEnabled(true);
             }
@@ -191,7 +202,7 @@ public class MeasureActivity extends AppCompatActivity {
                         width.setText("Anchura puerta: " +
                                 form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
-                        puerta.setAnchura(getMetersBetweenAnchors(anchor1, anchor2));
+                        puerta.setAnchura((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
 
                         data.setText("Sube el cubo con el deslizador hasta que su base de con el mecanismo de apertura");
 
@@ -226,14 +237,15 @@ public class MeasureActivity extends AppCompatActivity {
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void Confirmar() {
-        boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Altura"));
-        boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(), GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura"));
+    void Confirmar()
+    {
+        boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), paramAltura);
+        boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(),paramAnchura);
         boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, puerta.getTipoPuerta());
         boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, puerta.getTipoMecanismo());
-        boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), GetDataFromDatabase.FloatData("Estandares/Puertas/minMecApertura"), GetDataFromDatabase.FloatData("Estandares/Puertas/maxMecApertura"));
+        boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), minMecApertura, maxMecApertura);
 
-        puerta.setAccesible(cumple_alto_mecanismo && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta);
+        puerta.setAccesible(cumple_altura && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta);
 
         Intent i = new Intent(this, AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.PUERTAS.getValue());

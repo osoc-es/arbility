@@ -16,8 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +27,6 @@ import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
-import com.osoc.oncera.adapters.ImageTitleAdapter;
 import com.osoc.oncera.javabean.Ascensores;
 
 import java.text.DecimalFormat;
@@ -46,6 +43,8 @@ public class MedirAscensor extends AppCompatActivity {
     private Anchor myanchor;
     private AnchorNode myanchornode;
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
+    private float paramAnchura;
+    private float paramProf;
 
     private List<AnchorNode> anchorNodes;
 
@@ -77,6 +76,9 @@ public class MedirAscensor extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_medir_ascensor);
+
+        paramAnchura = GetDataFromDatabase.FloatData("Estandares/Ascensores/Anchura");
+        paramProf =  GetDataFromDatabase.FloatData("Estandares/Ascensores/Profundidad");
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         restart = (Button)findViewById(R.id.btn_restart);
@@ -254,10 +256,10 @@ public class MedirAscensor extends AppCompatActivity {
     void validateEvaluation(){
 
     Boolean anchura = Evaluator.IsGreaterThan(ascensor.getAnchuraCabina(),
-            GetDataFromDatabase.FloatData("Estandares/Ascensores/Anchura"));
+            paramAnchura);
 
     Boolean prof = Evaluator.IsGreaterThan(ascensor.getProfundidadCabina(),
-        GetDataFromDatabase.FloatData("Estandares/Ascensores/Profundidad"));
+            paramProf);
 
     ascensor.setAccesible(anchura && prof && braile && automatico && sonido && hueco && escalon);
 
