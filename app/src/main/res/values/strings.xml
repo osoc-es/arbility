@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">OnceRA</string>
-    <string name="aseosText">ASEOS</string>
-    <string name="puertaText">PUERTAS</string>
-    <string name="ilumText">ILUMINACION</string>
-    <string name="ascensorText">ASCENSORES</string>
-    <string name="mostradorText">MOSTRADORES</string>
-    <string name="rampasText">RAMPAS</string>
-    <string name="salvaescalerasText">SALVAESCALERAS</string>
-    <string name="estanciasText">ESTANCIAS</string>
-    <string name="pasillosText">PASILLOS</string>
-    <string name="emergenciaText">EMERGENCIAS</string>
-    <string name="simulacionText">SIMULACION</string>
+    <string name="app_name">arbility</string>
+    <string name="aseosText">Aseos</string>
+    <string name="puertaText">Puertas</string>
+    <string name="ilumText">Iluminación</string>
+    <string name="ascensorText">Ascensores</string>
+    <string name="mostradorText">Mostradores</string>
+    <string name="rampasText">Rampas</string>
+    <string name="salvaescalerasText">Salvaescaleras</string>
+    <string name="estanciasText">Estancias</string>
+    <string name="pasillosText">Pasillos</string>
+    <string name="emergenciaText">Emergencias</string>
+    <string name="simulacionText">Simulación</string>
 
     <string name="descAseos">Un aseo es accesible si:
         \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
@@ -101,9 +101,9 @@
 
     <string name="et_CorreoLogin"> Email Ej: ejemplo@ejemplo.es</string>
     <string name="et_PasswordLogin"> Contraseña</string>
-    <string name="btn_Registrarse">¿No tienes cuenta? Registrate Aquí</string>
+    <string name="btn_Registrarse">¿No tienes cuenta? Regístrate Aquí</string>
     <string name="tvLogIn">Log In</string>
-    <string name="btn_Iniciar_Sesion">Iniciar Sesion</string>
+    <string name="btn_Iniciar_Sesion">Iniciar Sesión</string>
     <string name="tv_logo">rbility</string>
     <string name="et_EmailReg">Introduce tu Email</string>
     <string name="et_PasswordReg">Introduce tu contraseña</string>
@@ -113,7 +113,7 @@
     <string name="et_CiudadReg">Ciudad</string>
     <string name="et_PasswordRepeat">Repite la contraseña</string>
     <string name="tvRegistro">Nuevo Centro Escolar</string>
-    <string name="et_Direccion">Direccion</string>
+    <string name="et_Direccion">Dirección</string>
 
 
     <string name="msj_no_registrado">No se ha podido registrar</string>

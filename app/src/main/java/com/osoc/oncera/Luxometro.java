@@ -43,9 +43,10 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     private ImageButton exit_button;
     private TextView instrucciones;
 
-    private boolean accesible;
+    private boolean accesible = false;
     private float value;
     private String type;
+    float f, F, m, M;
 
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
@@ -57,6 +58,8 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_luxometro);
+
+        UpdateDatabaseValues();
 
         spinner_options[0] = getString(R.string.lux_exterior);
         spinner_options[1] = getString(R.string.lux_interior_escalera);
@@ -137,6 +140,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         type = spinner_options[i];
+
     }
 
     @Override
@@ -156,17 +160,19 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
         if(iluminacion.getLuz() != null) {
 
-            if (type == getString(R.string.lux_exterior)) {
-                float f = GetDataFromDatabase.FloatData("Estandares/Iluminacion/Exterior");
+            if (type == getString(R.string.lux_exterior))
+            {
+                UpdateDatabaseValues();
                 accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), f);
-
-            } else if (type == getString(R.string.lux_interior_habitable)) {
-                float f = GetDataFromDatabase.FloatData("Estandares/Iluminacion/InteriorHab");
-                accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), f);
-            } else if (type == getString(R.string.lux_interior_escalera)) {
-                float m = GetDataFromDatabase.FloatData("Estandares/Iluminacion/minInteriorRE");
-                float M = GetDataFromDatabase.FloatData("Estandares/Iluminacion/maxInteriorRE");
-
+            }
+            else if (type == getString(R.string.lux_interior_habitable))
+            {
+                UpdateDatabaseValues();
+                accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), F);
+            }
+            else if (type == getString(R.string.lux_interior_escalera))
+            {
+               UpdateDatabaseValues();
                 accesible = Evaluator.IsInRange(iluminacion.getLuz(), m, M);
             }
 
@@ -180,13 +186,20 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
             finish();
         }
 
-        //TODO: Pasar a activity de mostar si es o no accesible
-
     }
 
     public void HideInstructions()
     {
         instrucciones.setVisibility(View.INVISIBLE);
+    }
+
+    private void UpdateDatabaseValues()
+    {
+        f = GetDataFromDatabase.FloatData("Estandares/Iluminacion/Exterior");
+        F = GetDataFromDatabase.FloatData("Estandares/Iluminacion/InteriorHab");
+        m = GetDataFromDatabase.FloatData("Estandares/Iluminacion/minInteriorRE");
+        M = GetDataFromDatabase.FloatData("Estandares/Iluminacion/maxInteriorRE");
+
     }
 
 }

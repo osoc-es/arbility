@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
+    android:background="@drawable/fondo_login"
     tools:context=".RegisterCentroEscolarActivity">
 
     <Button
@@ -14,7 +15,7 @@
         android:layout_below="@+id/etPasswordRepeat"
         android:layout_centerInParent="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/custom_button4"
+        android:background="@drawable/ic_button_red"
         android:onClick="validar"
         android:text="@string/btn_Validar"
         android:textColor="@color/blanco"
@@ -27,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
         android:text="@string/tvRegistro"
-        android:textColor="@color/colorSecundario"
+        android:textColor="@color/red"
         android:textSize="36sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -53,6 +54,7 @@
         android:drawableLeft="@drawable/ic_name"
         android:drawablePadding="10dp"
         android:hint="@string/et_NombreReg"
+        android:textColorHint="@color/blue"
         android:inputType="textPersonName"
         android:paddingLeft="10dp" />
 
@@ -67,6 +69,7 @@
         android:drawableLeft="@drawable/ic_name"
         android:drawablePadding="10dp"
         android:hint="@string/et_Direccion"
+        android:textColorHint="@color/blue"
         android:inputType="textPersonName"
         android:paddingLeft="10dp" />
 
@@ -80,6 +83,7 @@
         android:drawableLeft="@drawable/ic_dog_tag"
         android:drawablePadding="10dp"
         android:hint="@string/et_CiudadReg"
+        android:textColorHint="@color/blue"
         android:inputType="textPersonName" />
 
     <EditText
@@ -93,6 +97,7 @@
         android:drawablePadding="10dp"
         android:ems="10"
         android:hint="@string/et_EmailReg"
+        android:textColorHint="@color/blue"
         android:inputType="textPersonName" />
 
     <EditText
@@ -105,6 +110,7 @@
         android:drawableLeft="@drawable/ic_key"
         android:drawablePadding="10dp"
         android:hint="@string/et_PasswordReg"
+        android:textColorHint="@color/blue"
         android:inputType="textPassword"
         android:paddingLeft="10dp" />
 
@@ -117,6 +123,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_key"
+        android:textColorHint="@color/blue"
         android:drawablePadding="10dp"
         android:hint="@string/et_PasswordRepeat"
         android:inputType="textPassword" />
@@ -129,7 +136,7 @@
         android:layout_below="@+id/etPasswordRepeat"
         android:layout_centerVertical="true"
         android:layout_marginTop="92dp"
-        android:background="@drawable/custom_button4"
+        android:background="@drawable/ic_button_red"
         android:onClick="registrar"
         android:text="@string/btn_RegistrarUsuario"
         android:textColor="@color/blanco"

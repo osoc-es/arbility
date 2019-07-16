@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:fontFamily">@font/london_between</item>
+        <item name="fontFamily">@font/london_between</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 
 </resources>

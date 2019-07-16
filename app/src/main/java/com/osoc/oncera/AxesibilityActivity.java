@@ -48,6 +48,8 @@ public class AxesibilityActivity extends AppCompatActivity {
 
     private void parseIlum( Iluminacion ilum){
         Boolean b = ilum.getAccesible();
+
+
         if(b) accText.setText("ES VALIDO");
         else accText.setText("NO ES VALIDO");
     }
