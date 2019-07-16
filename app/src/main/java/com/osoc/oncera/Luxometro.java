@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.osoc.oncera.Evaluator;
 import com.osoc.oncera.R;
+import com.osoc.oncera.javabean.Iluminacion;
 
 import java.text.DecimalFormat;
 
@@ -38,7 +39,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
     private float max_value;
-
+    private Iluminacion iluminacion = new Iluminacion();
 
 
     @Override
@@ -90,8 +91,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
-
+        
         if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT)
         {
             value = sensorEvent.values[0];
@@ -131,7 +131,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     public void Medir()
     {
         lux_text.setText(form_numbers.format(value) + " lx");
-
+        iluminacion.setLuz(value);
 
         //TODO: Modificar valores del objeto en la BBDD
     }
