@@ -20,14 +20,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SesionCentroActivity"></activity>
-
+        <activity android:name=".Register.RegisterProfesorActivity"></activity>
+        <activity android:name=".LogIn.LoginProfesorActivity" />
+        <activity android:name=".SesionCentroActivity" />
         <activity
             android:name=".MedirSalvaescaleras"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MedirAscensor"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MedirInclinacion"
             android:screenOrientation="portrait" />
@@ -40,15 +41,13 @@
         <activity
             android:name=".MedirMostradorActivity"
             android:screenOrientation="portrait" />
-
-            <activity
+        <activity
             android:name=".AxesibilityActivity"
             android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
-
-
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
@@ -63,10 +62,10 @@
             android:name=".GuestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegisterCentroEscolarActivity"
+            android:name=".Register.RegisterCentroEscolarActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginCentroEscolarActivity"
+            android:name=".LogIn.LoginCentroEscolarActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".WelcomeActivity"

@@ -111,9 +111,14 @@
     <string name="btn_Validar">validar</string>
     <string name="et_NombreReg">Nombre del Centro</string>
     <string name="et_CiudadReg">Ciudad</string>
+    <string name="et_Direccion">Dirección</string>
     <string name="et_PasswordRepeat">Repite la contraseña</string>
     <string name="tvRegistro">Nuevo Centro Escolar</string>
-    <string name="et_Direccion">Dirección</string>
+
+    <string name="et_Alias">Alias del Profesor</string>
+    <string name="et_CodigoCentro">Inserte su Codigo centro</string>
+    <string name="tvRegistroP">Nuevo Profesor</string>
+
 
 
     <string name="msj_no_registrado">No se ha podido registrar</string>
