@@ -15,7 +15,7 @@ public class GuestActivity extends AppCompatActivity {
     LinearLayout botonAseos;
     LinearLayout botonPuertas;
     LinearLayout botonMostradores;
-
+    LinearLayout botonSimulacion;
     LinearLayout botonIluminacion;
 
 
@@ -55,9 +55,9 @@ public class GuestActivity extends AppCompatActivity {
 
         botonIluminacion.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                changeWindowTo(Luxometro.class);
-            }
+            public void onClick(View view) { changeWindowTo(Luxometro.class);
+          }
+        });
 
         botonMostradores.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +66,8 @@ public class GuestActivity extends AppCompatActivity {
 
     }
 
-    void changeWindowTo(Class activity){
+
+    public void changeWindowTo(Class activity){
         Intent guestActivity = new Intent(this,activity);
         startActivity(guestActivity);
     }
