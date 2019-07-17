@@ -1,5 +1,6 @@
 package com.osoc.oncera;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +28,11 @@ import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.javabean.Ascensores;
 
 import java.text.DecimalFormat;
@@ -77,8 +83,33 @@ public class MedirAscensor extends AppCompatActivity {
 
         setContentView(R.layout.activity_medir_ascensor);
 
-        paramAnchura = GetDataFromDatabase.FloatData("Estandares/Ascensores/Anchura");
-        paramProf =  GetDataFromDatabase.FloatData("Estandares/Ascensores/Profundidad");
+        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Ascensores/Anchura");
+
+        anch.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                paramAnchura = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference prof = FirebaseDatabase.getInstance().getReference("Estandares/Ascensores/Profundidad");
+
+        prof.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                paramProf = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         restart = (Button)findViewById(R.id.btn_restart);
@@ -173,12 +204,12 @@ public class MedirAscensor extends AppCompatActivity {
                         if(!medir_profundidad){
                             ancho_ascensor.setText("Anchura ascensor: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            ascensor.setAnchuraCabina((getMetersBetweenAnchors(anchor1, anchor2)));
+                            ascensor.setAnchuraCabina((getMetersBetweenAnchors(anchor1, anchor2))*100);
                         }
                         else {
                             profundo_ascensor.setText("Profundidad ascensor: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            ascensor.setProfundidadCabina(getMetersBetweenAnchors(anchor1, anchor2));
+                            ascensor.setProfundidadCabina(getMetersBetweenAnchors(anchor1, anchor2)*100);
                         }
                     }
                     myanchornode = anchorNode;

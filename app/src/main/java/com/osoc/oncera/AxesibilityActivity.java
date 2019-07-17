@@ -13,6 +13,7 @@ import com.osoc.oncera.javabean.Aseos;
 import com.osoc.oncera.javabean.Iluminacion;
 import com.osoc.oncera.javabean.Puerta;
 import com.osoc.oncera.javabean.PuntosAtencion;
+import com.osoc.oncera.javabean.Rampas;
 import com.osoc.oncera.javabean.SalvaEscaleras;
 
 public class AxesibilityActivity extends AppCompatActivity {
@@ -48,11 +49,16 @@ public class AxesibilityActivity extends AppCompatActivity {
        else if (type == TypesManager.obsType.ILUM)  parseIlum((Iluminacion)b.get(TypesManager.ILUM_OBS));
        else if (type == TypesManager.obsType.ASCENSORES)  parseAscensor((Ascensores)b.get(TypesManager.ASCENSOR_OBS));
        else if (type == TypesManager.obsType.MOSTRADORES)  parseMostrador((PuntosAtencion)b.get(TypesManager.MOSTRADOR_OBS));
-       // else if (type == TypesManager.obsType.RAMPAS)  descText = getString(R.string.descRampa);
+       else if (type == TypesManager.obsType.RAMPAS)  parseRampa((Rampas)b.get(TypesManager.RAMPA_OBS));
         else if (type == TypesManager.obsType.SALVAESCALERAS) parseSalvaescaleras((SalvaEscaleras)b.get(TypesManager.SALVAESC_OBS));
        // else if (type == TypesManager.obsType.ESTANCIAS)  descText = getString(R.string.descEstancias);
        // else if (type == TypesManager.obsType.PASILLOS)  descText = getString(R.string.descPasillos);
        // else if (type == TypesManager.obsType.EMERGENCIAS)  descText = getString(R.string.descEmergencias);
+    }
+
+    private void parseRampa( Rampas r){
+        if(r.getAccesible()) accText.setText("ES VALIDO");
+        else accText.setText("NO ES VALIDO");
     }
 
     private void parseAseos( ){
