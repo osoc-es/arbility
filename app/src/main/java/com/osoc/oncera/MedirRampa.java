@@ -1,5 +1,6 @@
 package com.osoc.oncera;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.data.model.User;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
@@ -33,7 +35,13 @@ import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.ImageTitleAdapter;
+import com.osoc.oncera.javabean.Rampas;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -63,9 +71,12 @@ public class MedirRampa extends AppCompatActivity {
     TextView largo_rampa;
     SeekBar z_axis;
 
+
     private Anchor anchor1=null, anchor2=null;
 
     private HitResult myhit;
+
+    private Rampas rampa = new Rampas(null,null,null,null,null,null,null,null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -129,8 +140,10 @@ public class MedirRampa extends AppCompatActivity {
                     medir_anchura = true;
                     resetMedirAnchura();
                 }
-                else{
+                else
+                    {
                     Intent guestActivity = new Intent(MedirRampa.this, MedirInclinacion.class);
+                    guestActivity.putExtra("rampaIntermedio",rampa);
                     startActivity(guestActivity);
                     finish();
                 }
@@ -146,6 +159,7 @@ public class MedirRampa extends AppCompatActivity {
                 confirm.setEnabled(true);
                 alto_barandilla.setText("Altura barandilla: " +
                             form_numbers.format(progress/100f));
+                rampa.setAlturaPasamanosSuperior((float)progress*100);
             }
 
             @Override
@@ -195,10 +209,13 @@ public class MedirRampa extends AppCompatActivity {
                             largo_rampa.setText("Longitud rampa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
                             confirm.setEnabled(true);
+                            rampa.setLongitud(getMetersBetweenAnchors(anchor1, anchor2)*100);
                         }
                         else {
                             ancho_rampa.setText("Anchura rampa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
+                            rampa.setAnchura(getMetersBetweenAnchors(anchor1, anchor2)*100);
+
 
                             if(!barandilla)
                                 confirm.setEnabled(true);
@@ -219,6 +236,8 @@ public class MedirRampa extends AppCompatActivity {
                 });
         barandillaDialog();
     }
+
+
 
     void ascend(AnchorNode an, float up){
         Anchor anchor =  myhit.getTrackable().createAnchor(
@@ -311,4 +330,7 @@ public class MedirRampa extends AppCompatActivity {
         return true;
     }
 
+    private void validate(){
+
+    }
 }

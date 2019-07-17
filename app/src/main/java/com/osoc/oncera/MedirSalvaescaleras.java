@@ -1,5 +1,6 @@
 package com.osoc.oncera;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +28,11 @@ import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.javabean.SalvaEscaleras;
 
 import java.text.DecimalFormat;
@@ -77,8 +83,33 @@ public class MedirSalvaescaleras extends AppCompatActivity {
 
         setContentView(R.layout.activity_medir_salvaescaleras);
 
-        paramAnch = GetDataFromDatabase.FloatData("Estandares/Salvaescaleras/Anchura");
-        paramLargo = GetDataFromDatabase.FloatData("Estandares/Salvaescaleras/Largo");
+        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Salvaescaleras/Anchura");
+
+        anch.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                paramAnch = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference larg = FirebaseDatabase.getInstance().getReference("Estandares/Salvaescaleras/Largo");
+
+        larg.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                paramLargo = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         restart = (Button) findViewById(R.id.btn_restart);
@@ -172,12 +203,12 @@ public class MedirSalvaescaleras extends AppCompatActivity {
                         if (!medir_profundidad) {
                             ancho_plat.setText("Anchura plataforma: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            salvaEscaleras.setAnchuraPlataforma(getMetersBetweenAnchors(anchor1, anchor2));
+                            salvaEscaleras.setAnchuraPlataforma(getMetersBetweenAnchors(anchor1, anchor2)*100);
 
                         } else {
                             largo_plat.setText("Longitud plataforma: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            salvaEscaleras.setLargoPlataforma(getMetersBetweenAnchors(anchor1, anchor2));
+                            salvaEscaleras.setLargoPlataforma(getMetersBetweenAnchors(anchor1, anchor2)*100);
                         }
                     }
                     myanchornode = anchorNode;

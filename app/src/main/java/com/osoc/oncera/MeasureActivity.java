@@ -1,5 +1,6 @@
 package com.osoc.oncera;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +34,11 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.ImageTitleAdapter;
 import com.osoc.oncera.javabean.Puerta;
 
@@ -216,14 +222,63 @@ public class MeasureActivity extends AppCompatActivity {
     }
 
     private void GetDBValues() {
-        paramAltura = GetDataFromDatabase.FloatData("Estandares/Puertas/Altura");
-        paramAnchura = GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura");
 
-        paramAltura = GetDataFromDatabase.FloatData("Estandares/Puertas/Altura");
-        minMecApertura = GetDataFromDatabase.FloatData("Estandares/Puertas/minMecApertura");
-        maxMecApertura = GetDataFromDatabase.FloatData("Estandares/Puertas/maxMecApertura");
+        final DatabaseReference alt = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/Altura");
 
-        
+        alt.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                paramAltura = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/Anchura");
+
+        anch.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                paramAnchura = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference minMec = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/minMecApertura");
+
+        minMec.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                minMecApertura = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference maxMec = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/maxMecApertura");
+
+        maxMec.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                maxMecApertura = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     void ascend(AnchorNode an, float up) {

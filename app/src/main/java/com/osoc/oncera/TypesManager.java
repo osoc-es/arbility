@@ -10,6 +10,8 @@ public final class TypesManager {
     public static final String ASCENSOR_OBS = "ascensorObs";
     public static final String PUERTAS_OBS = "puertaObs";
     public static final String SALVAESC_OBS = "salvaObs";
+    public static final String RAMPA_OBS = "rampaObs";
+
 
 
 
