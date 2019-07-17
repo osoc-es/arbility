@@ -51,7 +51,7 @@ public class MedirRampa extends AppCompatActivity {
 
     private static final String TAG = MeasureActivity.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
-    private float upDistance=0f;
+    private float upDistance = 0f;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
     private Anchor myanchor;
@@ -72,11 +72,11 @@ public class MedirRampa extends AppCompatActivity {
     SeekBar z_axis;
 
 
-    private Anchor anchor1=null, anchor2=null;
+    private Anchor anchor1 = null, anchor2 = null;
 
     private HitResult myhit;
 
-    private Rampas rampa = new Rampas(null,null,null,null,null,null,null,null);
+    private Rampas rampa = new Rampas(null, null, null, null, null, null, null, null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -91,8 +91,8 @@ public class MedirRampa extends AppCompatActivity {
 
         setContentView(R.layout.activity_medir_rampa);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-        restart = (Button)findViewById(R.id.btn_restart);
-        confirm = (Button)findViewById(R.id.btn_ok);
+        restart = (Button) findViewById(R.id.btn_restart);
+        confirm = (Button) findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
 
         ancho_rampa = (TextView) findViewById(R.id.ancho_rampa);
@@ -108,10 +108,9 @@ public class MedirRampa extends AppCompatActivity {
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                anchor1=null;
-                anchor2=null;
+            public void onClick(View v) {
+                anchor1 = null;
+                anchor2 = null;
                 medir_anchura = false;
                 z_axis.setProgress(0);
                 z_axis.setEnabled(false);
@@ -124,7 +123,7 @@ public class MedirRampa extends AppCompatActivity {
                 alto_barandilla.setText("Altura barandilla: --");
 
 
-                for(AnchorNode n : anchorNodes){
+                for (AnchorNode n : anchorNodes) {
                     arFragment.getArSceneView().getScene().removeChild(n);
                     n.getAnchor().detach();
                     n.setParent(null);
@@ -136,14 +135,13 @@ public class MedirRampa extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!medir_anchura){
+                if (!medir_anchura) {
                     medir_anchura = true;
                     resetMedirAnchura();
-                }
-                else
-                    {
+                } else {
                     Intent guestActivity = new Intent(MedirRampa.this, MedirInclinacion.class);
-                    guestActivity.putExtra("rampaIntermedio",rampa);
+                    guestActivity.putExtra("rampaIntermedio", rampa);
+                    guestActivity.putExtra("barandilla", barandilla);
                     startActivity(guestActivity);
                     finish();
                 }
@@ -158,15 +156,17 @@ public class MedirRampa extends AppCompatActivity {
                 ascend(myanchornode, upDistance);
                 confirm.setEnabled(true);
                 alto_barandilla.setText("Altura barandilla: " +
-                            form_numbers.format(progress/100f));
-                rampa.setAlturaPasamanosSuperior((float)progress*100);
+                        form_numbers.format(progress / 100f));
+                rampa.setAlturaPasamanosSuperior((float) progress * 100);
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
         // When you build a Renderable, Sceneform loads its resources in the background while returning
@@ -200,26 +200,24 @@ public class MedirRampa extends AppCompatActivity {
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
                     anchorNodes.add(anchorNode);
 
-                    if(anchor1 == null) {
+                    if (anchor1 == null) {
                         anchor1 = anchor;
-                    }
-                    else {
+                    } else {
                         anchor2 = anchor;
-                        if(!medir_anchura){
+                        if (!medir_anchura) {
                             largo_rampa.setText("Longitud rampa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
                             confirm.setEnabled(true);
-                            rampa.setLongitud(getMetersBetweenAnchors(anchor1, anchor2)*100);
-                        }
-                        else {
+                            rampa.setLongitud(getMetersBetweenAnchors(anchor1, anchor2) * 100);
+                        } else {
                             ancho_rampa.setText("Anchura rampa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            rampa.setAnchura(getMetersBetweenAnchors(anchor1, anchor2)*100);
+                            rampa.setAnchura(getMetersBetweenAnchors(anchor1, anchor2) * 100);
 
 
-                            if(!barandilla)
+                            if (!barandilla)
                                 confirm.setEnabled(true);
-                            else{
+                            else {
                                 z_axis.setEnabled(true);
                                 data.setText("Sube el cubo con el deslizador hasta que su base de con el lado inferior de la barandilla");
                             }
@@ -238,10 +236,9 @@ public class MedirRampa extends AppCompatActivity {
     }
 
 
-
-    void ascend(AnchorNode an, float up){
-        Anchor anchor =  myhit.getTrackable().createAnchor(
-                myhit.getHitPose().compose(Pose.makeTranslation(0, up/100f, 0)));
+    void ascend(AnchorNode an, float up) {
+        Anchor anchor = myhit.getTrackable().createAnchor(
+                myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
 
         an.setAnchor(anchor);
     }
@@ -251,12 +248,12 @@ public class MedirRampa extends AppCompatActivity {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
         float totalDistanceSquared = 0;
-        for(int i=0; i<3; ++i)
-            totalDistanceSquared += distance_vector[i]*distance_vector[i];
+        for (int i = 0; i < 3; ++i)
+            totalDistanceSquared += distance_vector[i] * distance_vector[i];
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void barandillaDialog(){
+    void barandillaDialog() {
         int[] spinnerImages = new int[]{R.drawable.rampa_barandilla
                 , R.drawable.rampa};
 
@@ -271,9 +268,9 @@ public class MedirRampa extends AppCompatActivity {
         mSpinner.setAdapter(mCustomAdapter);
 
 
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i){
+            public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });
@@ -281,7 +278,7 @@ public class MedirRampa extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if(mSpinner.getSelectedItemPosition() == 1) {
+                if (mSpinner.getSelectedItemPosition() == 1) {
                     barandilla = false;
                     alto_barandilla.setVisibility(View.INVISIBLE);
                 }
@@ -294,13 +291,13 @@ public class MedirRampa extends AppCompatActivity {
         dialog.show();
     }
 
-    void resetMedirAnchura(){
-        anchor1=null;
-        anchor2=null;
+    void resetMedirAnchura() {
+        anchor1 = null;
+        anchor2 = null;
         confirm.setEnabled(false);
         confirm.setText("Confirm");
         data.setText("Toca en los extremos inferiores de la rampa a lo ancho");
-        for(AnchorNode n : anchorNodes){
+        for (AnchorNode n : anchorNodes) {
             arFragment.getArSceneView().getScene().removeChild(n);
             n.getAnchor().detach();
             n.setParent(null);
@@ -330,7 +327,4 @@ public class MedirRampa extends AppCompatActivity {
         return true;
     }
 
-    private void validate(){
-
-    }
 }

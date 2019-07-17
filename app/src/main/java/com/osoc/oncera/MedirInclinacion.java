@@ -33,6 +33,8 @@ public class MedirInclinacion extends AppCompatActivity {
     private Button button;
     private ImageButton exit_button;
 
+    private boolean barandilla;
+
     private DecimalFormat df = new DecimalFormat("#0.00º");
 
 
@@ -40,6 +42,8 @@ public class MedirInclinacion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medir_inclinacion);
+
+        getDBValues();
 
         sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
@@ -62,6 +66,7 @@ public class MedirInclinacion extends AppCompatActivity {
         });
 
         _rampa = (Rampas) getIntent().getExtras().get("rampaIntermedio");
+        barandilla = getIntent().getBooleanExtra("barandilla",false);
 
     }
 
@@ -159,7 +164,7 @@ public class MedirInclinacion extends AppCompatActivity {
         pitch_text.setText(df.format(pitch));
         _rampa.setPendiente(pitch);
 
-        evaluate();
+       evaluate();
     }
 
     private void getDBValues() {
@@ -184,7 +189,7 @@ public class MedirInclinacion extends AppCompatActivity {
                 List<Float> data = new ArrayList<>();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    data.add(dataSnapshot.getValue(Float.class));
+                    data.add(snapshot.getValue(Float.class));
                 }
                 rampa1 = new casos(data.get(0), data.get(1), -1, -1);
             }
@@ -203,7 +208,7 @@ public class MedirInclinacion extends AppCompatActivity {
                 List<Float> data = new ArrayList<>();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    data.add(dataSnapshot.getValue(Float.class));
+                    data.add(snapshot.getValue(Float.class));
                 }
                 rampa2 = new casos(-1, data.get(0), data.get(1), data.get(2));
             }
@@ -222,7 +227,7 @@ public class MedirInclinacion extends AppCompatActivity {
                 List<Float> data = new ArrayList<>();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    data.add(dataSnapshot.getValue(Float.class));
+                    data.add(snapshot.getValue(Float.class));
                 }
                 rampa3 = new casos(-1, data.get(0), data.get(1), data.get(2));
             }
@@ -264,7 +269,7 @@ public class MedirInclinacion extends AppCompatActivity {
     }
 
     private void evaluate() {
-        boolean cumpleAnch = Evaluator.IsGreaterThan(_rampa.getAnchura(), paramAnch);
+       boolean cumpleAnch = Evaluator.IsGreaterThan(_rampa.getAnchura(), paramAnch);
 
         casos aux;
 
@@ -276,7 +281,12 @@ public class MedirInclinacion extends AppCompatActivity {
 
         boolean cumpleIncl = Evaluator.IsLowerThan(_rampa.getPendiente(),aux.getPendiente());
 
-        boolean cumplePasamanos = Evaluator.IsInRange(_rampa.getAlturaPasamanosSuperior(),minParamPomo,maxParamPomo);
+        boolean cumplePasamanos;
+
+        if(barandilla)
+            cumplePasamanos = Evaluator.IsInRange(_rampa.getAlturaPasamanosSuperior(),minParamPomo,maxParamPomo);
+
+        else cumplePasamanos = true;
 
         _rampa.setAccesible(cumpleAnch && cumpleIncl && cumplePasamanos);
 
