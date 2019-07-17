@@ -18,9 +18,9 @@ public final class GetDataFromDatabase {
     public static float FloatData(String path)
     {
 
-        mDatabase = FirebaseDatabase.getInstance().getReference(path);
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(path);
 
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
