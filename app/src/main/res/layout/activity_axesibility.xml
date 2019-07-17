@@ -14,4 +14,21 @@
         android:id="@+id/accText"
         android:textAlignment="center"/>
 
+    <Button
+        android:id="@+id/BotonConfirmar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="OK"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:padding="15dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_roundback"
+        android:backgroundTint="@color/red"
+        android:layout_marginTop="15dp"/>
+
 </RelativeLayout>
