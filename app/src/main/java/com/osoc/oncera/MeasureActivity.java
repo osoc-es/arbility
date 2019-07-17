@@ -78,12 +78,7 @@ public class MeasureActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_measure);
 
-        paramAltura = GetDataFromDatabase.FloatData("Estandares/Puertas/Altura");
-        paramAnchura = GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura");
-
-        paramAltura = GetDataFromDatabase.FloatData("Estandares/Puertas/Altura");
-        minMecApertura = GetDataFromDatabase.FloatData("Estandares/Puertas/minMecApertura");
-        maxMecApertura = GetDataFromDatabase.FloatData("Estandares/Puertas/maxMecApertura");
+       GetDBValues();
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         Button restart = (Button) findViewById(R.id.btn_restart);
@@ -218,6 +213,17 @@ public class MeasureActivity extends AppCompatActivity {
                     andy.getScaleController().setEnabled(false);
                 });
         puertaDialog();
+    }
+
+    private void GetDBValues() {
+        paramAltura = GetDataFromDatabase.FloatData("Estandares/Puertas/Altura");
+        paramAnchura = GetDataFromDatabase.FloatData("Estandares/Puertas/Anchura");
+
+        paramAltura = GetDataFromDatabase.FloatData("Estandares/Puertas/Altura");
+        minMecApertura = GetDataFromDatabase.FloatData("Estandares/Puertas/minMecApertura");
+        maxMecApertura = GetDataFromDatabase.FloatData("Estandares/Puertas/maxMecApertura");
+
+        
     }
 
     void ascend(AnchorNode an, float up) {
