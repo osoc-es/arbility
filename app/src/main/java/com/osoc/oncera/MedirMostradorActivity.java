@@ -1,5 +1,6 @@
 package com.osoc.oncera;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -30,7 +32,13 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.ImageTitleAdapter;
+import com.osoc.oncera.javabean.PuntosAtencion;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -67,6 +75,10 @@ public class MedirMostradorActivity extends AppCompatActivity {
 
     private HitResult myhit;
 
+    private PuntosAtencion mostrador = new PuntosAtencion(null, null, null, null, null, null, null, null);
+
+    float db_anch_plano_trabajo, db_alt_plano_trabajo, db_alt_esp_inf_libre, db_anch_esp_inf_libre, db_prof_esp_inf_libre;
+
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
     // CompletableFuture requires api level 24
@@ -77,6 +89,8 @@ public class MedirMostradorActivity extends AppCompatActivity {
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
+
+        UpdateDatabaseValues();
 
         setContentView(R.layout.activity_medir_mostrador);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
@@ -129,7 +143,7 @@ public class MedirMostradorActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(MedirMostradorActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
-                    //TODO create door model and send accesibility status to next activity
+                    Confirmar();
                 }
             }
         });
@@ -141,12 +155,16 @@ public class MedirMostradorActivity extends AppCompatActivity {
                 upDistance = progress;
                 ascend(myanchornode, upDistance);
                 confirm.setEnabled(true);
-                if(!medir_respisa)
+                if(!medir_respisa) {
                     alto_trabajo.setText("Altura trabajo: " +
-                            form_numbers.format(progress/100f));
-                else
+                            form_numbers.format(progress / 100f));
+                    mostrador.setAlturaPlanoTrabajo((float) progress);
+                }
+                else {
                     alto_repisa.setText("Altura repisa: " +
-                            form_numbers.format(progress/100f));
+                            form_numbers.format(progress / 100f));
+                    mostrador.setAlturaEspacioInferiorLibre((float) progress);
+                }
             }
 
             @Override
@@ -196,12 +214,16 @@ public class MedirMostradorActivity extends AppCompatActivity {
                         if(!medir_respisa){
                             ancho_util.setText("Anchura util: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
+                            mostrador.setAnchuraPlanoTrabajo(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
+                            mostrador.setAnchuraEspacioInferiorLibre(mostrador.getAnchuraPlanoTrabajo() * 100f );
 
                             data.setText("Sube el cubo con el deslizador hasta que su base de con el tope del mostrador");
                         }
                         else {
                             profundo_repisa.setText("Profundidad repisa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
+
+                            mostrador.setProfundidadEspacioInferiorLibre(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
 
                             data.setText("Sube el cubo con el deslizador hasta que su base de con el lado inferior de la repisa");
                         }
@@ -313,4 +335,98 @@ public class MedirMostradorActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private void Confirmar()
+    {
+        boolean cumple_anpt = Evaluator.IsGreaterThan(mostrador.getAnchuraPlanoTrabajo(), db_anch_plano_trabajo);
+        boolean cumple_alpt = Evaluator.IsLowerThan(mostrador.getAlturaPlanoTrabajo(), db_alt_plano_trabajo);
+        boolean cumple_aleif = Evaluator.IsGreaterThan(mostrador.getAlturaEspacioInferiorLibre(), db_alt_esp_inf_libre);
+        boolean cumple_aneif = Evaluator.IsGreaterThan(mostrador.getAnchuraEspacioInferiorLibre(), db_anch_esp_inf_libre);
+        boolean cumple_peif = Evaluator.IsGreaterThan(mostrador.getProfundidadEspacioInferiorLibre(), db_prof_esp_inf_libre);
+
+        mostrador.setAccesible(cumple_aleif && cumple_anpt && cumple_alpt && cumple_aneif && cumple_peif);
+
+        Intent i = new Intent(this,AxesibilityActivity.class);
+        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.MOSTRADORES.getValue());
+        i.putExtra(TypesManager.MOSTRADOR_OBS, mostrador);
+
+        startActivity(i);
+        finish();
+
+    }
+
+    private void UpdateDatabaseValues()
+    {
+        final DatabaseReference anchuraPTDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AnchuraPlanoTrabajo");
+
+        anchuraPTDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                db_anch_plano_trabajo = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference alturaPTDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AlturaPlanoTrabajo");
+
+        alturaPTDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                db_alt_plano_trabajo = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference alturaEILDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AlturaEspacioInfLibre");
+
+        alturaEILDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                db_alt_esp_inf_libre = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference anchuraEILDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AnchuraEspacioInfLibre");
+
+        anchuraEILDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                db_anch_esp_inf_libre = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference profundidadEILDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/ProfundidadEspacioInfLibre");
+
+        profundidadEILDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                db_prof_esp_inf_libre = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 }
