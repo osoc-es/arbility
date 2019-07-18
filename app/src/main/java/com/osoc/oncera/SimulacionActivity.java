@@ -27,6 +27,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,10 +58,12 @@ public class SimulacionActivity extends AppCompatActivity {
     private float x=0f, y=0f, z=0f;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
-    private Anchor myanchor;
     private AnchorNode myanchornode;
     TransformableNode mytranode = null;
-    private Anchor anchor1, anchor2;
+
+    private SeekBar sb_size;
+    private TextView tv_width;
+    private ImageButton btnSalir;
 
     private HitResult myhit;
     private float mytravel=0.01f, distance_x=0f, distance_z=0f, myangle=0f;
@@ -82,17 +85,33 @@ public class SimulacionActivity extends AppCompatActivity {
         Button r_left = (Button)findViewById(R.id.r_left);
         Button r_right = (Button)findViewById(R.id.r_right);
         Button accelerate = (Button)findViewById(R.id.accelerate);
+        sb_size = (SeekBar) findViewById(R.id.sb_size);
+        tv_width = (TextView) findViewById(R.id.tv_width);
+        btnSalir = (ImageButton) findViewById(R.id.BotonSalir);
         List<AnchorNode> anchorNodes = new ArrayList<>();
 
-      /*rotate.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              forward(myanchornode);
-              data.setText(Double.toString(Math.toDegrees(set(mytranode.getLocalRotation()).x))+" "+
-                      Double.toString(Math.toDegrees(set(mytranode.getLocalRotation()).y))+" "+
-                      Double.toString(Math.toDegrees(set(mytranode.getLocalRotation()).z)));
-          }
-      });*/
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        sb_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                myanchornode.setLocalScale(new Vector3(progress/70f, progress/70f, progress/70f));
+                tv_width.setText(progress+" cm");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
 
         accelerate.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -172,7 +191,7 @@ public class SimulacionActivity extends AppCompatActivity {
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
                     anchorNodes.add(anchorNode);
 
-                    myanchor = anchor;
+                    //myanchor = anchor;
                     myanchornode = anchorNode;
 
                     // Create the transformable andy and add it to the anchor.
@@ -184,7 +203,7 @@ public class SimulacionActivity extends AppCompatActivity {
                     andy.setParent(anchorNode);
                     andy.setRenderable(andyRenderable);
                     andy.select();
-                    andy.getScaleController().setEnabled(false);
+                    //andy.getScaleController().setEnabled(false);
 
                     mytranode = andy;
                 });
@@ -257,7 +276,6 @@ public class SimulacionActivity extends AppCompatActivity {
 
         Anchor anchor =  myhit.getTrackable().createAnchor(
                 myhit.getHitPose().compose(Pose.makeTranslation(-distance_x, 0f, -distance_z)));
-
 
         an.setAnchor(anchor);
     }
