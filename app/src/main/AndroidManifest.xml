@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MedirEmergencias"></activity>
+        <activity android:name=".SimulacionActivity"></activity>
+        <activity android:name=".MedirEmergencias" />
         <activity android:name=".SesionCentroActivity" />
         <activity
             android:name=".MedirSalvaescaleras"
