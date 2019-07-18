@@ -22,14 +22,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SimulacionActivity"></activity>
-        <activity android:name=".MedirEmergencias" />
-        <activity android:name=".SesionCentroActivity" />
+        <activity android:name=".SimulacionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MedirEmergencias"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SesionCentroActivity"
+            android:screenOrientation="portrait"/>
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".RegisterProfesorActivity"></activity>
-        <activity android:name=".LoginProfesorActivity" />
-        <activity android:name=".SesionCentroActivity" />
+        <activity android:name=".RegisterProfesorActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LoginProfesorActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MedirSalvaescaleras"
             android:screenOrientation="portrait" />
