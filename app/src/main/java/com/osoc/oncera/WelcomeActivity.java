@@ -24,14 +24,17 @@ public class WelcomeActivity extends AppCompatActivity {
         btnCentro = (Button)findViewById( R.id.BotonRegistrarColegio );
 
         guestButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                changeWindowTo(GuestActivity.class);
-            }
+            public void onClick(View v) { changeWindowTo(GuestActivity.class); }
         });
 
         btnCentro.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View view) { changeWindowTo(LoginCentroEscolarActivity.class); }
+            public void onClick(View view) { changeWindowTo( LoginCentroEscolarActivity.class); }
+        } );
+
+        btnProfesor.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { changeWindowTo( LoginProfesorActivity.class); }
         } );
 
 

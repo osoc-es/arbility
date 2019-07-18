@@ -46,7 +46,6 @@ public class SesionCentroActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         usuario = firebaseAuth.getCurrentUser();
         emailPersona = usuario.getEmail();
-        System.out.println( "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
         System.out.println( emailPersona );
 
 

@@ -7,6 +7,7 @@ public class Alumno implements Serializable {
     private String nombre;
     private String correo;
     private String codCentro;
+    private String aliasProfesor;
 
     public Alumno(int idAlumno, String nombre, String correo, String codCentro) {
         this.id = idAlumno;

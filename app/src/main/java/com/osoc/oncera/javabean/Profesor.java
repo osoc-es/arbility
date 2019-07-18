@@ -4,25 +4,19 @@ import java.io.Serializable;
 
 public class Profesor implements Serializable {
 
-    private int id;
+    private String id;
     private String nombre;
     private String codCentro;
+    private String correo;
 
-    public Profesor(int id, String nombre, String codCentro) {
+    public Profesor(String id, String nombre, String codCentro, String correo) {
         this.id = id;
         this.nombre = nombre;
         this.codCentro = codCentro;
+        this.correo = correo;
     }
 
     public Profesor() {
-    }
-
-    public int getid() {
-        return id;
-    }
-
-    public void setid(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -39,5 +33,21 @@ public class Profesor implements Serializable {
 
     public void setCodCentro(String codCentro) {
         this.codCentro = codCentro;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }
