@@ -11,4 +11,9 @@
         <item name="fontFamily">@font/london_between</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 
+    <style name="etiqueta">
+        <item name="android:background">@drawable/fondo_eti_fab</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
 </resources>

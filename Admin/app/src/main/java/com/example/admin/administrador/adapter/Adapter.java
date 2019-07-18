@@ -47,26 +47,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
         holder.ciudad.setText( Ciudad );
         holder.direccion.setText( Direccion );
 
-        /*holder.si.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseDatabase databse = FirebaseDatabase.getInstance();
-                databse.getReference("Usuarios").child( clave ).child( "validar" ).setValue( true );
-                System.out.println( "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
-                System.out.println( Nombre+"  "+clave );
-            }
-        } );
 
-        holder.no.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FirebaseDatabase databse2 = FirebaseDatabase.getInstance();
-                databse2.getReference("Usuarios").child( clave ).child( "validar" ).setValue( false );
-                System.out.println( "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
-                System.out.println( Nombre+"  "+clave );
-            }
-        } );*/
     }
 
     @Override
@@ -79,8 +60,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
         TextView ciudad;
         TextView direccion;
         TextView valido;
-        /*Button no;
-        Button si;*/
 
         public CentroViewHolder(View itemView) {
             super( itemView );
@@ -88,8 +67,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
             ciudad = (TextView) itemView.findViewById( R.id.tvCiudad );
             direccion = (TextView) itemView.findViewById( R.id.tvDireccion );
             valido = (TextView) itemView.findViewById( R.id.tvValido );
-            /*no = (Button) itemView.findViewById( R.id.btnNO );
-            si = (Button) itemView.findViewById( R.id.btnSI );*/
+
 
 
         }

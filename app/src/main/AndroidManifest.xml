@@ -4,7 +4,7 @@
     package="com.osoc.oncera">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -22,11 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MedirEmergencias"></activity>
+        <activity android:name=".ItinerariosProfesorActivity"></activity>
+        <activity android:name=".MedirEmergencias" />
         <activity android:name=".SesionCentroActivity" />
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".RegisterProfesorActivity"></activity>
+        <activity android:name=".RegisterProfesorActivity" />
         <activity android:name=".LoginProfesorActivity" />
         <activity android:name=".SesionCentroActivity" />
         <activity
