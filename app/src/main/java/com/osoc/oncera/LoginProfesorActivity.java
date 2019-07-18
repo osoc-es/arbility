@@ -79,7 +79,7 @@ public class LoginProfesorActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent i = new Intent( LoginProfesorActivity.this, SesionCentroActivity.class );
+                            Intent i = new Intent( LoginProfesorActivity.this, ItinerariosProfesorActivity.class );
                             startActivity( i );
 
                         } else {

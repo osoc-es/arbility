@@ -26,14 +26,14 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".LoginAlumnoActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ItinerariosProfesorActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".SimulacionActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".MedirEmergencias"
             android:screenOrientation="portrait"/>
         <activity android:name=".SesionCentroActivity"
             android:screenOrientation="portrait"/>
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".RegisterProfesorActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".LoginProfesorActivity"
