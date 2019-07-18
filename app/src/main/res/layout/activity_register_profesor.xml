@@ -98,7 +98,7 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="92dp"
         android:background="@drawable/ic_button_red"
-        android:onClick="comprobarCodigo"
+        android:onClick="comprobarAlias"
         android:text="@string/btn_RegistrarUsuario"
         android:textColor="@color/blanco"
         android:textSize="18sp" />

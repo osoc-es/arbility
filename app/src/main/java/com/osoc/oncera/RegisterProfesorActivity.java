@@ -51,6 +51,7 @@ public class RegisterProfesorActivity extends AppCompatActivity {
     private String codigo;
 
     private final Centro[] prf = new Centro[1];
+    private final Profesor[] profesor = new Profesor[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,11 +119,11 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
 
 
-    public void comprobarCodigo(View v) {
+    public void comprobarCodigo() {
 
         RegisterProfesorActivity.this.codigo = codCentro.getText().toString();
-        Query qq = mDatabaseRef.orderByChild( "codCentro" ).equalTo( codigo ).limitToFirst( 1 );
-        qq.addListenerForSingleValueEvent( new ValueEventListener() {
+        Query qq2 = mDatabaseRef.orderByChild( "codCentro" ).equalTo( codigo ).limitToFirst( 1 );
+        qq2.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -144,7 +145,7 @@ public class RegisterProfesorActivity extends AppCompatActivity {
                     Toast.makeText( RegisterProfesorActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
                 }
 
-                qq.removeEventListener( this );
+                qq2.removeEventListener( this );
             }
 
             @Override
@@ -154,5 +155,40 @@ public class RegisterProfesorActivity extends AppCompatActivity {
             }
         } );
 
+    }
+    public void comprobarAlias(View v){
+        RegisterProfesorActivity.this.alias = etnombre.getText().toString().trim();
+        Query qq4 = mDatabaseRef.orderByChild( "alias" ).equalTo( alias ).limitToFirst( 1 );
+        qq4.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    profesor[0] = dataSnapshot1.getValue( Profesor.class );
+                }
+
+                if (profesor[0] != null) {
+
+                    if (profesor[0].getCodCentro().equals( alias ) && alias != null) {
+                        Toast.makeText( RegisterProfesorActivity.this, "Alias correcto", Toast.LENGTH_LONG ).show();
+                        comprobarCodigo();
+                    } else {
+                        Toast.makeText( RegisterProfesorActivity.this, "Alias Repetido, por favor introduzca otro Alias", Toast.LENGTH_LONG ).show();
+                    }
+
+                } else {
+                    Toast.makeText( RegisterProfesorActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
+                }
+
+                qq4.removeEventListener( this );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( RegisterProfesorActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+
+            }
+        } );
     }
 }
