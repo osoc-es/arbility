@@ -22,8 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapaItinerarioActivity"></activity>
-        <activity android:name=".LoginAlumnoActivity" />
+        <activity android:name=".MapaItinerarioActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LoginAlumnoActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".SimulacionActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".MedirEmergencias"
