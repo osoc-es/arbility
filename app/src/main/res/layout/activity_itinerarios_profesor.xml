@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ItinerariosProfesorActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvCompra"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        ></android.support.v7.widget.RecyclerView>
+
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/grupoFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:fab_addButtonColorNormal="@color/colorSecundario"
+        app:fab_labelStyle="@style/etiqueta"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="60dp"
+        >
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorSecundario"
+            app:fab_icon="@drawable/ic_repeat"
+            app:fab_size="mini"
+            app:fab_title="Nueva Lista" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorSecundario"
+            app:fab_icon="@drawable/ic_add"
+            app:fab_size="mini"
+            app:fab_title="Añadir artículo" />
+
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorSecundario"
+            app:fab_icon="@drawable/ic_history"
+            app:fab_size="mini"
+            app:fab_title="Historial" />
+
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</RelativeLayout>
