@@ -101,24 +101,26 @@
 
     <string name="et_CorreoLogin"> Email Ej: ejemplo@ejemplo.es</string>
     <string name="et_PasswordLogin"> Contraseña</string>
-    <string name="btn_Registrarse">¿No tienes cuenta? Regístrate aquí</string>
+    <string name="btn_IrItinerario">Ir al itinerario</string>
     <string name="tvLogIn">Log In</string>
     <string name="btn_Iniciar_Sesion">Iniciar Sesión</string>
     <string name="tv_logo">rbility</string>
     <string name="et_EmailReg">Introduce tu Email</string>
     <string name="et_PasswordReg">Introduce tu contraseña</string>
     <string name="btn_RegistrarUsuario">registrar</string>
+    <string name="btn_Registrarse">¿No tienes cuenta? Regístrate</string>
     <string name="btn_Validar">validar</string>
     <string name="et_NombreReg">Nombre del Centro</string>
     <string name="et_CiudadReg">Ciudad</string>
     <string name="et_Direccion">Dirección</string>
     <string name="et_PasswordRepeat">Repite la contraseña</string>
+    <string name="et_EscribirItinerario">Código del itinerario</string>
     <string name="tvRegistro">Nuevo Centro Escolar</string>
+    <string name="tvItinerario">Itinerario</string>
 
     <string name="et_Alias">Alias del Profesor</string>
     <string name="et_CodigoCentro">Inserte su Codigo centro</string>
     <string name="tvRegistroP">Nuevo Profesor</string>
-
 
 
     <string name="msj_no_registrado">No se ha podido registrar</string>
@@ -147,4 +149,5 @@
     Presiona este recuadro para continuar.</string>
 
     <string name="btnCopiarCodCentro">Copiar código centro</string>
+    <string name="btnEvaluarObst">Evaluar el obstáculo</string>
 </resources>

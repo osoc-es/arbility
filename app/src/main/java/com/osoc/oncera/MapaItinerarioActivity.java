@@ -1,20 +1,16 @@
-package com.example.dani.mapbox;
+package com.osoc.oncera;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
@@ -36,10 +32,13 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapaItinerarioActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mapView;
     private MapboxMap mapboxMap;
+
+    private Button btn_evaluar;
+    private Spinner sp_obstaculo;
 
     double longitud;
     double latitud;
@@ -60,25 +59,34 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, "pk.eyJ1IjoiZm9uY2UiLCJhIjoiY2p4b3B1NG53MDhsbTNjbnYzMXNpbjRjYiJ9.MkBM2G0smC9aOJ_IS804xg");
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mapa_itinerario);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        Button btn_location = (Button) findViewById(R.id.btn_location);
+        btn_evaluar = (Button) findViewById(R.id.btn_evaluar);
+        sp_obstaculo = (Spinner) findViewById(R.id.sp_obstaculo);
+
+        String[] list = new String[longitudeList.length];
+        for(int i = 0 ; i < longitudeList.length ; i++)
+            list[i] = "Obstáculo: "+Integer.toString(i+1);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item,list);
+
+        sp_obstaculo.setAdapter(adapter);
+
+        Button btn_location = (Button) findViewById(R.id.btn_evaluar);
     }
 
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
 
-        MainActivity.this.mapboxMap = mapboxMap;
+        MapaItinerarioActivity.this.mapboxMap = mapboxMap;
         /*Bundle bu = getIntent().getExtras();
         longitud = bu.getDouble( "longitud" );
         latitud = bu.getDouble( "latitud" );
         bu.clear();*/
-
-
-
 
         LatLng BOUND_CORNER_NW = new LatLng(latitudeList[0]+0.002, longitudeList[0]+0.002);
         LatLng BOUND_CORNER_SE = new LatLng(latitudeList[0]-0.002, longitudeList[0]-0.002);
@@ -102,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onStyleLoaded(@NonNull Style style) {
 
                 style.addImage(ICON_ID, BitmapFactory.decodeResource(
-                        MainActivity.this.getResources(), R.drawable.map_marker));
+                        MapaItinerarioActivity.this.getResources(), R.drawable.map_marker));
 
                 for(int i = 0; i<longitudeList.length; i++) {
                     col.add(Feature.fromGeometry(Point.fromLngLat(longitudeList[i], latitudeList[i])));
