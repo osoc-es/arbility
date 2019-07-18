@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     android:background="@drawable/fondo_login"
-    tools:context=".Register.RegisterCentroEscolarActivity">
+    tools:context=".RegisterCentroEscolarActivity">
 
     <Button
         android:id="@+id/btnValidar"
@@ -130,7 +130,7 @@
 
 
     <Button
-        android:id="@+id/btnRegistrar"
+        android:id="@+id/btnRegistrarCentro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etPasswordRepeat"

@@ -19,14 +19,6 @@ public class Profesor implements Serializable {
     public Profesor() {
     }
 
-    public String getid() {
-        return id;
-    }
-
-    public void setid(String id) {
-        this.id = id;
-    }
-
     public String getNombre() {
         return nombre;
     }

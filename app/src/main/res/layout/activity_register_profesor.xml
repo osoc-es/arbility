@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    tools:context=".Register.RegisterProfesorActivity">
+    tools:context=".RegisterProfesorActivity">
 
     <TextView
         android:id="@+id/tvRegistro"
@@ -17,23 +17,11 @@
         android:textColor="@color/red"
         android:textSize="36sp" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgvFotoPerfil"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:layout_below="@+id/tvRegistro"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:background="@drawable/custom_image_button"
-        android:textSize="22sp"
-        app:srcCompat="@drawable/ic_user"
-        tools:ignore="VectorDrawableCompat" />
-
     <EditText
         android:id="@+id/etAlias"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/imgvFotoPerfil"
+        android:layout_below="@+id/tvRegistro"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
@@ -45,7 +33,7 @@
         android:textColorHint="@color/blue" />
 
     <EditText
-        android:id="@+id/etCodigoCentro"
+        android:id="@+id/etCodigoCentroProfesor"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/etAlias"
@@ -60,10 +48,10 @@
         android:textColorHint="@color/blue" />
 
     <EditText
-        android:id="@+id/etEmailReg"
+        android:id="@+id/etEmailRegProfesor"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/etCodigoCentro"
+        android:layout_below="@+id/etCodigoCentroProfesor"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:drawableLeft="@drawable/ic_send"
@@ -74,10 +62,10 @@
         android:textColorHint="@color/blue" />
 
     <EditText
-        android:id="@+id/etPasswordReg"
+        android:id="@+id/etPasswordRegProfesor"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/etEmailReg"
+        android:layout_below="@+id/etEmailRegProfesor"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:drawableLeft="@drawable/ic_key"
@@ -89,10 +77,10 @@
 
 
     <EditText
-        android:id="@+id/etPasswordRepeat"
+        android:id="@+id/etPasswordRepeatProfesor"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/etPasswordReg"
+        android:layout_below="@+id/etPasswordRegProfesor"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:drawableLeft="@drawable/ic_key"
@@ -106,13 +94,15 @@
         android:id="@+id/btnRegistrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPasswordRepeat"
+        android:layout_below="@+id/etPasswordRepeatProfesor"
         android:layout_centerVertical="true"
         android:layout_marginTop="92dp"
         android:background="@drawable/ic_button_red"
-        android:onClick="registrar"
+        android:onClick="comprobarCodigo"
         android:text="@string/btn_RegistrarUsuario"
         android:textColor="@color/blanco"
         android:textSize="18sp" />
+
+
 
 </RelativeLayout>

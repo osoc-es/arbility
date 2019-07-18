@@ -1,4 +1,4 @@
-package com.osoc.oncera.LogIn;
+package com.osoc.oncera;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.osoc.oncera.R;
-import com.osoc.oncera.Register.RegisterCentroEscolarActivity;
-import com.osoc.oncera.Register.RegisterProfesorActivity;
-import com.osoc.oncera.SesionCentroActivity;
 
-public class LoginProfesorActivity extends AppCompatActivity {
-
+public class LoginCentroEscolarActivity extends AppCompatActivity {
     private EditText correo;
     private EditText password;
     private FirebaseAuth auth;
@@ -54,10 +49,10 @@ public class LoginProfesorActivity extends AppCompatActivity {
     public void register(View v) {
 
 
-        Intent i= new Intent( LoginProfesorActivity.this, RegisterProfesorActivity.class);
-        startActivity(i);
+            Intent i= new Intent( LoginCentroEscolarActivity.this, RegisterCentroEscolarActivity.class);
+            startActivity(i);
 
-    }
+        }
 
     public void loguearse(View v){
 
@@ -79,15 +74,15 @@ public class LoginProfesorActivity extends AppCompatActivity {
 
 
         auth.signInWithEmailAndPassword(email, contrasenia)
-                .addOnCompleteListener(LoginProfesorActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(LoginCentroEscolarActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent i = new Intent( LoginProfesorActivity.this, SesionCentroActivity.class );
+                            Intent i = new Intent( LoginCentroEscolarActivity.this, SesionCentroActivity.class );
                             startActivity( i );
 
                         } else {
-                            Toast.makeText( LoginProfesorActivity.this, "El email o la contraseña no es correcta", Toast.LENGTH_LONG ).show();
+                            Toast.makeText( LoginCentroEscolarActivity.this, "El email o la contraseña no es correcta", Toast.LENGTH_LONG ).show();
                         }
                     }
                 });
