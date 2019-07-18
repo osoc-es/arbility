@@ -52,16 +52,14 @@ public class LegalInfoActivity extends AppCompatActivity {
         botonEvaluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if(type == TypesManager.obsType.ASEOS) changeWindowTo(#Aseos);
+
                 if (type == TypesManager.obsType.PUERTAS)  changeWindowTo(MeasureActivity.class);
                 else if (type == TypesManager.obsType.ILUM) changeWindowTo(Luxometro.class);
                 else if (type == TypesManager.obsType.ASCENSORES) changeWindowTo(MedirAscensor.class);
                 else if (type == TypesManager.obsType.MOSTRADORES) changeWindowTo(MedirMostradorActivity.class);
                 else if (type == TypesManager.obsType.RAMPAS) changeWindowTo(MedirRampa.class);
                 else if (type == TypesManager.obsType.SALVAESCALERAS) changeWindowTo(MedirSalvaescaleras.class);
-                /*else if (type == TypesManager.obsType.ESTANCIAS)
-                else if (type == TypesManager.obsType.PASILLOS)
-                else if (type == TypesManager.obsType.EMERGENCIAS)  */
+                else if (type == TypesManager.obsType.EMERGENCIAS) changeWindowTo(MedirEmergencias.class);
             }
         });
     }

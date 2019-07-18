@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background"
+    android:paddingBottom="20dp"
     >
 
     <LinearLayout
@@ -31,46 +32,10 @@
 
     </LinearLayout>
 
-<LinearLayout
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:orientation="horizontal"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    android:id="@+id/BotonAseos"
-    android:background="@drawable/ic_roundback"
-    android:layout_marginBottom="5dp"
-    >
 
-    <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/aseos"
-        android:padding="0dp"
-        android:scaleType="fitCenter"
-        android:layout_gravity="center"
-        android:background="@android:color/transparent"
-        android:layout_weight="2"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/aseosText"
-        android:textColor="@color/blue"
-        android:textAlignment="center"
-        
-        android:textSize="25dp"
-        android:gravity="center"
-
-        android:layout_weight="1"/>
-
-
-</LinearLayout>
 
     <LinearLayout
+       android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
@@ -88,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/puertas"
-            android:padding="0dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
@@ -113,6 +78,7 @@
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
@@ -130,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/iluminacion"
-            android:padding="0dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:layout_gravity="center"
             android:background="@android:color/transparent"
@@ -153,14 +119,13 @@
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:id="@+id/BotonAscensores"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp">
@@ -169,7 +134,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/ascensores"
-            android:padding="0dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
@@ -192,14 +157,13 @@
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:id="@+id/BotonMostradores"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp">
@@ -208,7 +172,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/mostradores"
-            android:padding="0dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
@@ -230,23 +194,23 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:id="@+id/BotonRampas"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp">
 
         <ImageButton
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/rampas"
-            android:padding="0dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
@@ -268,14 +232,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:id="@+id/BotonSalvaescaleras"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp">
@@ -284,7 +247,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/salvaescaleras"
-            android:padding="0dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
@@ -305,93 +268,15 @@
 
     </LinearLayout>
 
+
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:id="@+id/BotonEstancias"
-        android:background="@drawable/ic_roundback"
-        android:layout_marginBottom="5dp">
-
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/estancias"
-            android:padding="0dp"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center"
-
-            android:layout_weight="2"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/estanciasText"
-            android:textColor="@color/blue"
-
-            android:textSize="25dp"
-            android:textAlignment="center"
-            android:gravity="center"
-
-            android:layout_weight="1"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:id="@+id/BotonPasillos"
-        android:background="@drawable/ic_roundback"
-        android:layout_marginBottom="5dp">
-
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/pasillos"
-            android:padding="0dp"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center"
-
-            android:layout_weight="2"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/pasillosText"
-            android:textColor="@color/blue"
-
-            android:textSize="25dp"
-            android:textAlignment="center"
-            android:gravity="center"
-
-            android:layout_weight="1"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:id="@+id/BotonEmergencias"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp"
@@ -401,7 +286,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/emergencias"
-            android:padding="0dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
@@ -422,14 +307,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:id="@+id/BotonSimulacion"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp"
@@ -439,7 +323,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/simulacion"
-            android:padding="0dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_gravity="center"

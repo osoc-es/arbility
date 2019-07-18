@@ -32,7 +32,7 @@ public class GuestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guest);
 
         botonSalir = (ImageButton)findViewById(R.id.BotonSalir);
-        botonAseos = (LinearLayout)findViewById(R.id.BotonAseos);
+
 
          botonPuertas= (LinearLayout)findViewById(R.id.BotonPuertas) ;
          botonIlum = (LinearLayout)findViewById(R.id.BotonIluminacion);
@@ -40,12 +40,11 @@ public class GuestActivity extends AppCompatActivity {
          botonMostrador= (LinearLayout)findViewById(R.id.BotonMostradores);
          botonRampa= (LinearLayout)findViewById(R.id.BotonRampas);
          botonSalvaescaleras= (LinearLayout)findViewById(R.id.BotonSalvaescaleras);
-         botonEstancias= (LinearLayout)findViewById(R.id.BotonEstancias);
-         botonPasillos= (LinearLayout)findViewById(R.id.BotonPasillos);
+
          botonEmergencias= (LinearLayout)findViewById(R.id.BotonEmergencias);
 
         botonSimulacion = (LinearLayout)findViewById(R.id.BotonSimulacion);
-        botonPuertas = (LinearLayout)findViewById(R.id.BotonPuertas);
+
 
         botonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,12 +53,7 @@ public class GuestActivity extends AppCompatActivity {
             }
         });
 
-        botonAseos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ASEOS);
-            }
-        });
+
 
         botonPuertas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,18 +89,7 @@ public class GuestActivity extends AppCompatActivity {
                 changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.SALVAESCALERAS);
             }
         });
-        botonEstancias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ESTANCIAS);
-            }
-        });
-        botonPasillos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.PASILLOS);
-            }
-        });
+
         botonEmergencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

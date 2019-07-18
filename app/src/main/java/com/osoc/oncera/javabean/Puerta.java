@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class Puerta implements Serializable {
 
-    private Float anchura;
-    private Float altura;
+    private int anchura;
+    private int altura;
     private String tipoPuerta;
-    private Float alturaPomo;
+    private int alturaPomo;
     private String tipoMecanismo;
     private Boolean accesible;
     private String codCentro;
     private String id;
 
 
-    public Puerta(Float anchura, Float altura, String tipoPuerta, Float alturaPomo, String tipoMecanismo, Boolean accesible, String codCentro, String id) {
+    public Puerta(int anchura, int altura, String tipoPuerta, int alturaPomo, String tipoMecanismo, Boolean accesible, String codCentro, String id) {
         this.anchura = anchura;
         this.altura = altura;
         this.tipoPuerta = tipoPuerta;
@@ -28,19 +28,19 @@ public class Puerta implements Serializable {
     public Puerta() {
     }
 
-    public Float getAnchura() {
+    public int getAnchura() {
         return anchura;
     }
 
-    public void setAnchura(Float anchura) {
+    public void setAnchura(int anchura) {
         this.anchura = anchura;
     }
 
-    public Float getAltura() {
+    public int getAltura() {
         return altura;
     }
 
-    public void setAltura(Float altura) {
+    public void setAltura(int altura) {
         this.altura = altura;
     }
 
@@ -52,11 +52,11 @@ public class Puerta implements Serializable {
         this.tipoPuerta = tipoPuerta;
     }
 
-    public Float getAlturaPomo() {
+    public int getAlturaPomo() {
         return alturaPomo;
     }
 
-    public void setAlturaPomo(Float alturaPomo) {
+    public void setAlturaPomo(int alturaPomo) {
         this.alturaPomo = alturaPomo;
     }
 

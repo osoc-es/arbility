@@ -8,31 +8,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="Para alguna información deberás consultar la etiqueta del salvaescaleras"/>
+        android:text="@string/emergencia_e"/>
 
     <CheckBox
-        android:id="@+id/chkMando"
+        android:id="@+id/chk1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="Hay mandos en embarque y desembarque" />
+        android:text="@string/emergencia_p1" />
 
 
     <CheckBox
-        android:id="@+id/chkCarga"
+        android:id="@+id/chk2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="La carga soportada es mayor a 250kg" />
-
-    <CheckBox
-        android:id="@+id/chkVelocidad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textSize="20sp"
-        android:text="La velocidad es mayor a 0,15 m/s" />
+        android:text="@string/emergencia_p2" />
 
 </LinearLayout>

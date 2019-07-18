@@ -22,5 +22,10 @@ public final class Evaluator {
         return to_evaluate == other;
     }
 
+    static public boolean IsEqualsTo(boolean to_evaluate, boolean other)
+    {
+        return to_evaluate == other;
+    }
+
 
 }

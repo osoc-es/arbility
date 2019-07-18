@@ -1,5 +1,6 @@
 package com.osoc.oncera;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,12 @@ import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.osoc.oncera.javabean.SalvaEscaleras;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -34,7 +42,7 @@ import java.util.List;
 public class MedirSalvaescaleras extends AppCompatActivity {
     private static final String TAG = MeasureActivity.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
-    private float upDistance=0f;
+    private float upDistance = 0f;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
     private Anchor myanchor;
@@ -47,15 +55,20 @@ public class MedirSalvaescaleras extends AppCompatActivity {
 
     private boolean mando = false, carga = false, velocidad = false;
 
+    private float paramAnch;
+    private float paramLargo;
+
     Button restart;
     Button confirm;
     TextView data;
     TextView ancho_plat;
     TextView largo_plat;
 
-    private Anchor anchor1=null, anchor2=null;
+    private Anchor anchor1 = null, anchor2 = null;
 
     private HitResult myhit;
+
+    private SalvaEscaleras salvaEscaleras = new SalvaEscaleras(null,null,null,null,null,null,null,null,null,null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -70,9 +83,37 @@ public class MedirSalvaescaleras extends AppCompatActivity {
 
         setContentView(R.layout.activity_medir_salvaescaleras);
 
+        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Salvaescaleras/Anchura");
+
+        anch.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                paramAnch = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference larg = FirebaseDatabase.getInstance().getReference("Estandares/Salvaescaleras/Largo");
+
+        larg.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                paramLargo = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-        restart = (Button)findViewById(R.id.btn_restart);
-        confirm = (Button)findViewById(R.id.btn_ok);
+        restart = (Button) findViewById(R.id.btn_restart);
+        confirm = (Button) findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
 
         ancho_plat = (TextView) findViewById(R.id.ancho_plat);
@@ -85,10 +126,9 @@ public class MedirSalvaescaleras extends AppCompatActivity {
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                anchor1=null;
-                anchor2=null;
+            public void onClick(View v) {
+                anchor1 = null;
+                anchor2 = null;
                 confirm.setEnabled(false);
                 confirm.setText("Next");
                 data.setText("Toca en las esquinas de la plataforma a lo ancho");
@@ -98,7 +138,7 @@ public class MedirSalvaescaleras extends AppCompatActivity {
 
                 medir_profundidad = false;
 
-                for(AnchorNode n : anchorNodes){
+                for (AnchorNode n : anchorNodes) {
                     arFragment.getArSceneView().getScene().removeChild(n);
                     n.getAnchor().detach();
                     n.setParent(null);
@@ -107,17 +147,20 @@ public class MedirSalvaescaleras extends AppCompatActivity {
             }
         });
 
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!medir_profundidad){
+                if (!medir_profundidad) {
                     medir_profundidad = true;
                     resetMedirAnchura();
-                }
-                else{
+                } else {
                     Toast.makeText(MedirSalvaescaleras.this, "Confirmado", Toast.LENGTH_SHORT).show();
+                    validate();
                 }
             }
+
+
         });
 
 
@@ -152,19 +195,20 @@ public class MedirSalvaescaleras extends AppCompatActivity {
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
                     anchorNodes.add(anchorNode);
 
-                    if(anchor1 == null) {
+                    if (anchor1 == null) {
                         anchor1 = anchor;
-                    }
-                    else {
+                    } else {
                         anchor2 = anchor;
                         confirm.setEnabled(true);
-                        if(!medir_profundidad){
+                        if (!medir_profundidad) {
                             ancho_plat.setText("Anchura plataforma: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                        }
-                        else {
+                            salvaEscaleras.setAnchuraPlataforma(getMetersBetweenAnchors(anchor1, anchor2)*100);
+
+                        } else {
                             largo_plat.setText("Longitud plataforma: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
+                            salvaEscaleras.setLargoPlataforma(getMetersBetweenAnchors(anchor1, anchor2)*100);
                         }
                     }
                     myanchornode = anchorNode;
@@ -178,10 +222,23 @@ public class MedirSalvaescaleras extends AppCompatActivity {
                 });
         barandillaDialog();
     }
+    private void validate() {
+        Boolean anch = Evaluator.IsGreaterThan(salvaEscaleras.getAnchuraPlataforma(),paramAnch);
+        Boolean largo = Evaluator.IsGreaterThan(salvaEscaleras.getLargoPlataforma(),paramLargo);
 
-    void ascend(AnchorNode an, float up){
-        Anchor anchor =  myhit.getTrackable().createAnchor(
-                myhit.getHitPose().compose(Pose.makeTranslation(0, up/100f, 0)));
+        salvaEscaleras.setAccesible(anch && largo && salvaEscaleras.getMandoEmbarque() && salvaEscaleras.getCarga() && salvaEscaleras.getVelocidad());
+
+        Intent i = new Intent(this,AxesibilityActivity.class);
+        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.SALVAESCALERAS.getValue());
+        i.putExtra(TypesManager.SALVAESC_OBS, salvaEscaleras);
+
+        startActivity(i);
+        finish();
+    }
+
+    void ascend(AnchorNode an, float up) {
+        Anchor anchor = myhit.getTrackable().createAnchor(
+                myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
 
         an.setAnchor(anchor);
     }
@@ -191,12 +248,12 @@ public class MedirSalvaescaleras extends AppCompatActivity {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
         float totalDistanceSquared = 0;
-        for(int i=0; i<3; ++i)
-            totalDistanceSquared += distance_vector[i]*distance_vector[i];
+        for (int i = 0; i < 3; ++i)
+            totalDistanceSquared += distance_vector[i] * distance_vector[i];
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void barandillaDialog(){
+    void barandillaDialog() {
 
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MedirSalvaescaleras.this);
@@ -208,9 +265,9 @@ public class MedirSalvaescaleras extends AppCompatActivity {
         CheckBox chkVelocidad = (CheckBox) mView.findViewById(R.id.chkVelocidad);
 
 
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i){
+            public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });
@@ -221,6 +278,12 @@ public class MedirSalvaescaleras extends AppCompatActivity {
                 mando = chkMando.isChecked();
                 carga = chkCarga.isChecked();
                 velocidad = chkVelocidad.isChecked();
+
+                salvaEscaleras.setMandoEmbarque(mando);
+                salvaEscaleras.setCarga(carga);
+                salvaEscaleras.setVelocidad(velocidad);
+
+
             }
         });
 
@@ -230,13 +293,13 @@ public class MedirSalvaescaleras extends AppCompatActivity {
         dialog.show();
     }
 
-    void resetMedirAnchura(){
-        anchor1=null;
-        anchor2=null;
+    void resetMedirAnchura() {
+        anchor1 = null;
+        anchor2 = null;
         confirm.setEnabled(false);
         confirm.setText("Confirm");
         data.setText("Toca en las esquinas de la plataforma a lo largo");
-        for(AnchorNode n : anchorNodes){
+        for (AnchorNode n : anchorNodes) {
             arFragment.getArSceneView().getScene().removeChild(n);
             n.getAnchor().detach();
             n.setParent(null);

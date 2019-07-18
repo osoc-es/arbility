@@ -29,6 +29,8 @@ import com.osoc.oncera.Evaluator;
 import com.osoc.oncera.R;
 import com.osoc.oncera.javabean.Iluminacion;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 
 public class Luxometro extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
@@ -52,7 +54,6 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
     private float max_value;
     private Iluminacion iluminacion = new Iluminacion(null, null, null, null);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +141,6 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         type = spinner_options[i];
-
     }
 
     @Override
@@ -160,19 +160,17 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
         if(iluminacion.getLuz() != null) {
 
+
             if (type == getString(R.string.lux_exterior))
             {
-                UpdateDatabaseValues();
                 accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), f);
             }
             else if (type == getString(R.string.lux_interior_habitable))
             {
-                UpdateDatabaseValues();
                 accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), F);
             }
             else if (type == getString(R.string.lux_interior_escalera))
             {
-               UpdateDatabaseValues();
                 accesible = Evaluator.IsInRange(iluminacion.getLuz(), m, M);
             }
 
@@ -195,10 +193,62 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
     private void UpdateDatabaseValues()
     {
-        f = GetDataFromDatabase.FloatData("Estandares/Iluminacion/Exterior");
-        F = GetDataFromDatabase.FloatData("Estandares/Iluminacion/InteriorHab");
-        m = GetDataFromDatabase.FloatData("Estandares/Iluminacion/minInteriorRE");
-        M = GetDataFromDatabase.FloatData("Estandares/Iluminacion/maxInteriorRE");
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Estandares/Iluminacion/Exterior");
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                f = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference interiorHabDB = FirebaseDatabase.getInstance().getReference("Estandares/Iluminacion/InteriorHab");
+
+        interiorHabDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                F = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference minRangeDB = FirebaseDatabase.getInstance().getReference("Estandares/Iluminacion/minInteriorRE");
+
+        minRangeDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                m = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference maxRangeDB = FirebaseDatabase.getInstance().getReference("Estandares/Iluminacion/maxInteriorRE");
+
+        maxRangeDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                M = dataSnapshot.getValue(Float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
