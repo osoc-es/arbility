@@ -11,6 +11,11 @@
     <string name="pasillosText">Pasillos</string>
     <string name="emergenciaText">Emergencias</string>
     <string name="simulacionText">Simulación</string>
+    <string name="sim_L">IZQUIERDA</string>
+    <string name="sim_R">DERECHA</string>
+    <string name="simAcelerar">ACELERAR</string>
+
+
 
     <string name="descAseos">Un aseo es accesible si:
         \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n

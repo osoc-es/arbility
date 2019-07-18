@@ -59,7 +59,7 @@ public class SimulacionActivity extends AppCompatActivity {
     private ModelRenderable andyRenderable;
     private Anchor myanchor;
     private AnchorNode myanchornode;
-    TransformableNode mytranode;
+    TransformableNode mytranode = null;
     private Anchor anchor1, anchor2;
 
     private HitResult myhit;
@@ -78,55 +78,11 @@ public class SimulacionActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_simulacion);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-        Button btn1 = (Button) findViewById(R.id.anchor1);
-        Button btn2 = (Button) findViewById(R.id.anchor2);
-        Button distance = (Button) findViewById(R.id.distance);
-        Button clear = (Button)findViewById(R.id.clear);
+
         Button r_left = (Button)findViewById(R.id.r_left);
         Button r_right = (Button)findViewById(R.id.r_right);
         Button accelerate = (Button)findViewById(R.id.accelerate);
-        TextView data = (TextView) findViewById(R.id.tv_distance);
-        SeekBar z_axis = (SeekBar) findViewById(R.id.z_axis);
-        SeekBar y_axis = (SeekBar) findViewById(R.id.y_axis);
-        SeekBar x_axis = (SeekBar) findViewById(R.id.x_axis);
         List<AnchorNode> anchorNodes = new ArrayList<>();
-
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                distance_x=0f;
-                distance_z=0f;
-                for(AnchorNode n : anchorNodes){
-                    arFragment.getArSceneView().getScene().removeChild(n);
-                    n.getAnchor().detach();
-                    n.setParent(null);
-                    n = null;
-                }
-                data.setText("Eliminando cosas");
-            }
-        });
-
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                anchor1 = myanchor;
-            }
-        });
-
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                anchor2 = myanchor;
-            }
-        });
-
-        distance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                data.setText(Float.toString(getMetersBetweenAnchors(anchor1, anchor2)));
-            }
-        });
 
       /*rotate.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -141,25 +97,29 @@ public class SimulacionActivity extends AppCompatActivity {
         accelerate.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    myangle = set(mytranode.getLocalRotation());
-                    data.setText("Pressed");
+                if (mytranode != null) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        myangle = set(mytranode.getLocalRotation());
+                    }
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                    }
+                    forward(myanchornode);
                 }
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    data.setText(""); //finger was lifted
-                }
-                forward(myanchornode);
                 return true;
+
             }
         });
 
         r_left.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Quaternion q1 = mytranode.getLocalRotation();
-                Quaternion q2 = Quaternion.axisAngle(new Vector3(0, 1f, 0f), .5f);
-                mytranode.setLocalRotation(Quaternion.multiply(q1, q2));
-                myangle = set(mytranode.getLocalRotation());
+                if(mytranode != null){
+                    Quaternion q1 = mytranode.getLocalRotation();
+                    Quaternion q2 = Quaternion.axisAngle(new Vector3(0, 1f, 0f), .5f);
+                    mytranode.setLocalRotation(Quaternion.multiply(q1, q2));
+                    myangle = set(mytranode.getLocalRotation());
+                }
+
                 return true;
             }
 
@@ -168,59 +128,17 @@ public class SimulacionActivity extends AppCompatActivity {
         r_right.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                myangle+=0.01f;
-                Quaternion q1 = mytranode.getLocalRotation();
-                Quaternion q2 = Quaternion.axisAngle(new Vector3(0, 1f, 0f), -.5f);
-                mytranode.setLocalRotation(Quaternion.multiply(q1, q2));
-                myangle = set(mytranode.getLocalRotation());
+                if(mytranode != null){
+                    myangle+=0.01f;
+                    Quaternion q1 = mytranode.getLocalRotation();
+                    Quaternion q2 = Quaternion.axisAngle(new Vector3(0, 1f, 0f), -.5f);
+                    mytranode.setLocalRotation(Quaternion.multiply(q1, q2));
+                    myangle = set(mytranode.getLocalRotation());
+                }
+
                 return true;
             }
 
-        });
-
-        x_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                data.setText(Float.toString(progress/100f));
-                x = progress;
-                ascend(myanchornode, x, y, z);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
-        });
-
-        y_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                data.setText(Float.toString(progress/100f));
-                y = progress;
-                ascend(myanchornode, x, y, z);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
-        });
-
-        z_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                data.setText(Float.toString(progress/100f));
-                z = progress;
-                ascend(myanchornode, x, y, z);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
 
         // When you build a Renderable, Sceneform loads its resources in the background while returning
@@ -258,11 +176,16 @@ public class SimulacionActivity extends AppCompatActivity {
                     myanchornode = anchorNode;
 
                     // Create the transformable andy and add it to the anchor.
-                    TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
+                    TransformableNode andy;
+                    if(mytranode == null)
+                    andy = new TransformableNode(arFragment.getTransformationSystem());
+                    else andy = mytranode;
+
                     andy.setParent(anchorNode);
                     andy.setRenderable(andyRenderable);
                     andy.select();
                     andy.getScaleController().setEnabled(false);
+
                     mytranode = andy;
                 });
     }
