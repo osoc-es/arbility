@@ -68,8 +68,10 @@ public class MeasureActivity extends AppCompatActivity {
     private boolean measure_height = false;
 
     private float paramAltura,paramAnchura,minMecApertura,maxMecApertura;
+    private String message;
 
-    private Puerta puerta = new Puerta(-1, -1, null, -1, null, null, null, null);
+    private Puerta puerta = new Puerta(-1, -1, null, -1, null, null, null, null, null);
+
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -300,13 +302,34 @@ public class MeasureActivity extends AppCompatActivity {
 
     void Confirmar()
     {
-        boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), paramAltura);
-        boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(),paramAnchura);
-        boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, puerta.getTipoPuerta());
-        boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, puerta.getTipoMecanismo());
-        boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), minMecApertura, maxMecApertura);
+        String s = "";
 
-        puerta.setAccesible(cumple_altura && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta);
+        boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), paramAltura);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura) + paramAltura, cumple_altura);
+
+        boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(),paramAnchura);
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_anchura);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_ancho) + paramAnchura, cumple_anchura);
+
+
+        boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, puerta.getTipoPuerta());
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_tipo_puerta);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_puerta), cumple_tipo_puerta);
+
+
+        boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, puerta.getTipoMecanismo());
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_tipo_mecanismos);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_mec), cumple_tipo_mecanismos);
+
+        boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), minMecApertura, maxMecApertura);
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_alto_mecanismo);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura_mec) + minMecApertura + " y " + maxMecApertura, cumple_alto_mecanismo);
+
+
+        puerta.setAccesible(cumple_altura && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta && cumple_alto_mecanismo);
+
+        UpdateMessage(puerta.getAccesible(), s);
+        puerta.setMensaje(message);
 
         Intent i = new Intent(this, AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.PUERTAS.getValue());
@@ -380,4 +403,16 @@ public class MeasureActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
+    {
+        return condition ? "" : base + " " + to_add;
+    }
+
+    private void UpdateMessage(boolean condition, String aux)
+    {
+        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message += aux;
+    }
+
 }

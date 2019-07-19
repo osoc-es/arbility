@@ -9,13 +9,15 @@ public class EvacuacionEmergencia implements Serializable {
     private Boolean accesible;
     private String codCentro;
     private String id;
+    private String mensaje;
 
-    public EvacuacionEmergencia(Boolean simulacros, Boolean alumbradoEmergencia, Boolean accesible, String codCentro, String id) {
+    public EvacuacionEmergencia(Boolean simulacros, Boolean alumbradoEmergencia, Boolean accesible, String codCentro, String id, String mensaje) {
         this.simulacros = simulacros;
         this.alumbradoEmergencia = alumbradoEmergencia;
         this.accesible = accesible;
         this.codCentro = codCentro;
         this.id = id;
+        this.mensaje = mensaje;
     }
 
     public EvacuacionEmergencia() {
@@ -60,4 +62,8 @@ public class EvacuacionEmergencia implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getMensaje(){return mensaje;}
+    public void setMensaje(String mensaje){this.mensaje = mensaje;}
+
 }

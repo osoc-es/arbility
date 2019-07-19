@@ -58,13 +58,14 @@ public class MedirAscensor extends AppCompatActivity {
 
     private boolean braile = false, automatico = false, sonido = false, hueco = false, escalon = false;
 
-    private Ascensores ascensor = new Ascensores(null,null,null,null,null,null,null,null,null,null);
+    private Ascensores ascensor = new Ascensores(null,null,null,null,null,null,null,null,null,null, null);
 
     Button restart;
     Button confirm;
     TextView data;
     TextView ancho_ascensor;
     TextView profundo_ascensor;
+    private String message;
 
     private Anchor anchor1=null, anchor2=null;
 
@@ -286,13 +287,40 @@ public class MedirAscensor extends AppCompatActivity {
 
     void validateEvaluation(){
 
+        String s = "";
+
     Boolean anchura = Evaluator.IsGreaterThan(ascensor.getAnchuraCabina(),
             paramAnchura);
+
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_anch) + paramAnchura, anchura);
 
     Boolean prof = Evaluator.IsGreaterThan(ascensor.getProfundidadCabina(),
             paramProf);
 
-    ascensor.setAccesible(anchura && prof && braile && automatico && sonido && hueco && escalon);
+        s = UpdateStringIfNeeded(s, "y", s == "" && prof);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_prof) + paramProf, prof);
+
+
+        s = UpdateStringIfNeeded(s, "y", s == "" && braile);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_braille), braile);
+
+        s = UpdateStringIfNeeded(s, "y", s == "" && automatico);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_automat), automatico);
+
+        s = UpdateStringIfNeeded(s, "y", s == "" && sonido);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_audio), sonido);
+
+        s = UpdateStringIfNeeded(s, "y", s == "" && hueco);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_dist), hueco);
+
+        s = UpdateStringIfNeeded(s, "y", s == "" && escalon);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_alt_resal), automatico);
+
+        ascensor.setAccesible(anchura && prof && braile && automatico && sonido && hueco && escalon);
+
+        UpdateMessage(ascensor.getAccesible(), s);
+
+        ascensor.setMensaje(message);
 
         Intent i = new Intent(this,AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ASCENSORES.getValue());
@@ -335,5 +363,16 @@ public class MedirAscensor extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
+    {
+        return condition ? "" : base + " " + to_add;
+    }
+
+    private void UpdateMessage(boolean condition, String aux)
+    {
+        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message += aux;
     }
 }

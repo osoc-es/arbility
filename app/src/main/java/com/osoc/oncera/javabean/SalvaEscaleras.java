@@ -14,8 +14,9 @@ public class SalvaEscaleras implements Serializable {
     private Boolean accesible;
     private String codCentro;
     private String id;
+    private String mensaje;
 
-    public SalvaEscaleras(Float anchuraPlataforma, Float largoPlataforma, Boolean mandoPlataforma, Boolean mandoEmbarque, Boolean mandoDesembarque, Boolean carga, Boolean velocidad, Boolean accesible, String codCentro, String id) {
+    public SalvaEscaleras(Float anchuraPlataforma, Float largoPlataforma, Boolean mandoPlataforma, Boolean mandoEmbarque, Boolean mandoDesembarque, Boolean carga, Boolean velocidad, Boolean accesible, String codCentro, String id, String mensaje) {
         this.anchuraPlataforma = anchuraPlataforma;
         this.largoPlataforma = largoPlataforma;
         this.mandoPlataforma = mandoPlataforma;
@@ -26,6 +27,7 @@ public class SalvaEscaleras implements Serializable {
         this.accesible = accesible;
         this.codCentro = codCentro;
         this.id = id;
+        this.mensaje = mensaje;
     }
 
     public SalvaEscaleras() {
@@ -110,4 +112,8 @@ public class SalvaEscaleras implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getMensaje(){return mensaje;}
+
+    public void setMensaje (String mensaje){this.mensaje = mensaje;}
 }

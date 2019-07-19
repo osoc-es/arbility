@@ -20,8 +20,9 @@ import com.osoc.oncera.javabean.EvacuacionEmergencia;
 public class MedirEmergencias extends AppCompatActivity {
 
 
-    private EvacuacionEmergencia emergencia = new EvacuacionEmergencia(null, null, null, null, null);
+    private EvacuacionEmergencia emergencia = new EvacuacionEmergencia(null, null, null, null, null, null);
     private boolean db_alumbrado, db_simulacro;
+    private String message;
 
 
     @Override
@@ -54,13 +55,23 @@ public class MedirEmergencias extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
+
+                String s ="";
+
                 emergencia.setAlumbradoEmergencia(chk_alumbrado.isChecked());
                 emergencia.setSimulacros(chk_simulacro.isChecked());
 
                 boolean cumple_alumbrado = Evaluator.IsEqualsTo(emergencia.getAlumbradoEmergencia(), db_alumbrado);
-                boolean cumple_simulacro = Evaluator.IsEqualsTo(emergencia.getAlumbradoEmergencia(), db_simulacro);
+                s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_alumbrado), cumple_alumbrado);
+
+                boolean cumple_simulacro = Evaluator.IsEqualsTo(emergencia.getSimulacros(), db_simulacro);
+                s = UpdateStringIfNeeded(s, "y", s == "" && cumple_simulacro);
+                s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_simulacro), cumple_simulacro);
 
                 emergencia.setAccesible(cumple_alumbrado && cumple_simulacro);
+
+                UpdateMessage(emergencia.getAccesible(), s);
+                emergencia.setMensaje(message);
 
                 Intent i = new Intent(getApplicationContext(),AxesibilityActivity.class);
                 i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.EMERGENCIAS.getValue());
@@ -108,6 +119,17 @@ public class MedirEmergencias extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
+    {
+        return condition ? "" : base + " " + to_add;
+    }
+
+    private void UpdateMessage(boolean condition, String aux)
+    {
+        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message += aux;
     }
 
 

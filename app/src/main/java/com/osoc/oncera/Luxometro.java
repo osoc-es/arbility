@@ -49,11 +49,12 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     private float value;
     private String type;
     float f, F, m, M;
+    boolean instructions_hidden = false;
 
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
     private float max_value;
-    private Iluminacion iluminacion = new Iluminacion(null, null, null, null);
+    private Iluminacion iluminacion = new Iluminacion(null, null, null, null, null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,10 +150,11 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     }
 
 
-    public void Medir()
-    {
-        lux_text.setText(form_numbers.format(value) + " lx");
-        iluminacion.setLuz(value);
+    public void Medir() {
+        if (instructions_hidden) {
+            lux_text.setText(form_numbers.format(value) + " lx");
+            iluminacion.setLuz(value);
+        }
     }
 
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
@@ -174,7 +176,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
     String s= "";
 
-        if(iluminacion.getLuz() != null) {
+        if(iluminacion.getLuz() != null && instructions_hidden) {
 
 
             if (type == getString(R.string.lux_exterior))
@@ -199,7 +201,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
 
             UpdateMessage(iluminacion.getAccesible(),s);
-            iluminacion.setCodCentro(message);
+            iluminacion.setMensaje(message);
 
             Intent i = new Intent(this,AxesibilityActivity.class);
             i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ILUM.getValue());
@@ -214,6 +216,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
     public void HideInstructions()
     {
         instrucciones.setVisibility(View.INVISIBLE);
+        instructions_hidden = true;
     }
 
     private void UpdateDatabaseValues()

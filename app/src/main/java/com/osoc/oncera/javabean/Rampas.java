@@ -12,8 +12,9 @@ public class Rampas implements Serializable {
     private Boolean accesible;
     private String codCentro;
     private String id;
+    private String mensaje;
 
-    public Rampas(Float anchura, Float longitud, Float pendiente, Float alturaPasamanosSuperior, Float privateManiobra, Boolean accesible, String codCentro, String id) {
+    public Rampas(Float anchura, Float longitud, Float pendiente, Float alturaPasamanosSuperior, Float privateManiobra, Boolean accesible, String codCentro, String id, String mensaje) {
         this.anchura = anchura;
         this.longitud = longitud;
         this.pendiente = pendiente;
@@ -22,6 +23,7 @@ public class Rampas implements Serializable {
         this.accesible = accesible;
         this.codCentro = codCentro;
         this.id = id;
+        this.mensaje = mensaje;
     }
 
     public Rampas() {
@@ -91,4 +93,7 @@ public class Rampas implements Serializable {
         this.privateManiobra = privateManiobra;
 
     }
+
+    public String getMensaje(){return mensaje;}
+    public void setMensaje(String mensaje){this.mensaje = mensaje;}
 }

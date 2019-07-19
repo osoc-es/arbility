@@ -12,9 +12,10 @@ public class Puerta implements Serializable {
     private Boolean accesible;
     private String codCentro;
     private String id;
+    private String mensaje;
 
 
-    public Puerta(int anchura, int altura, String tipoPuerta, int alturaPomo, String tipoMecanismo, Boolean accesible, String codCentro, String id) {
+    public Puerta(int anchura, int altura, String tipoPuerta, int alturaPomo, String tipoMecanismo, Boolean accesible, String codCentro, String id, String mensaje) {
         this.anchura = anchura;
         this.altura = altura;
         this.tipoPuerta = tipoPuerta;
@@ -23,6 +24,7 @@ public class Puerta implements Serializable {
         this.accesible = accesible;
         this.codCentro = codCentro;
         this.id = id;
+        this.mensaje = mensaje;
     }
 
     public Puerta() {
@@ -91,5 +93,7 @@ public class Puerta implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+    public String getMensaje(){return mensaje;}
+    public void setMensaje(String mensaje){this.mensaje = mensaje;}
 }
 

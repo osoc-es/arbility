@@ -15,9 +15,12 @@
     <string name="sim_R">DERECHA</string>
     <string name="simAcelerar">ACELERAR</string>
 
-    <string name="lux_n_exterior">en exterior, la intensidad de la luz ha de ser superior a </string>
-    <string name="lux_n_int_ramp">en interior con rampa y/o escaleras, la intensidad de la luz ha de ser entre </string>
-    <string name="lux_n_int_hab">en interior habitable, la intensidad de la luz ha de ser superior a </string>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////
+    Accesibilidad
+    ////////////////////////////////////////////////////////////////////////////
+    -->
 
     <string name="accesible">Es accesible</string>
     <string name="no_accesible">No es accesible porque</string>
@@ -138,13 +141,16 @@
     <string name="msj_no_registrado">No se ha podido registrar</string>
 
     <!--
-    ////////////////////////////////////////////////////////////////////////////
-    Emergencias
-    ////////////////////////////////////////////////////////////////////////////
-    -->
+     ////////////////////////////////////////////////////////////////////////////
+     Emergencias
+     ////////////////////////////////////////////////////////////////////////////
+     -->
+
     <string name="emergencia_e">De las siguientes preguntas, marque aquellas que sean ciertas.</string>
     <string name="emergencia_p1">¿Se realizan simulacros de seguridad?</string>
     <string name="emergencia_p2">¿Hay alumbrado de emergencia?</string>
+    <string name="emergencia_n_alumbrado">no hay alumbrado de emergencia</string>
+    <string name="emergencia_n_simulacro">no se realizan simulacros</string>
 
     <!--
     ////////////////////////////////////////////////////////////////////////////
@@ -159,6 +165,77 @@
     la pantalla del móvil hacia la fuente de luz antes de darle al botón de medir.
         \nUna vez tengas la medición deseada, presiona el botón \"Ok\". \n\n
     Presiona este recuadro para continuar.</string>
+
+    <string name="lux_n_exterior">en exterior, la intensidad de la luz ha de ser superior a </string>
+    <string name="lux_n_int_ramp">en interior con rampa y/o escaleras, la intensidad de la luz ha de ser entre </string>
+    <string name="lux_n_int_hab">en interior habitable, la intensidad de la luz ha de ser superior a </string>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////
+    Puertas
+    ////////////////////////////////////////////////////////////////////////////
+    -->
+
+    <string name="puerta_n_altura">su altura no es superior a </string>
+    <string name="puerta_n_ancho">su anchura no es superior a </string>
+    <string name="puerta_n_tipo_puerta">el tipo de puerta no es accesible </string>
+    <string name="puerta_n_tipo_mec">el tipo de mecanismo no es accesible </string>
+    <string name="puerta_n_altura_mec">la altura del mecanismo no se encuentra entre los valores: </string>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////
+    Ascensores
+    ////////////////////////////////////////////////////////////////////////////
+    -->
+
+    <string name="asc_n_anch">la anchura de la cabina no es superior a </string>
+    <string name="asc_n_prof">la profundidad de la cabina no es superior a </string>
+    <string name="asc_n_alt_resal">la altura del resalte es superior a 1cm </string>
+    <string name="asc_n_dist">el hueco entre el piso y la cabina es superior a 2cm </string>
+    <string name="asc_n_audio">no hay señal audible de apertura y cierre </string>
+    <string name="asc_n_braille">no hay botonera con Braille </string>
+    <string name="asc_n_automat">no hay apertura y cierre automático </string>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////
+    Mostradores
+    ////////////////////////////////////////////////////////////////////////////
+    -->
+
+    <string name="mostr_n_anpt">la anchura del plano de trabajo no es superior a </string>
+    <string name="mostr_n_alpt">la altura del plano de trabajo no es inferior a </string>
+    <string name="mostr_n_aleil">la altura del espacio inferior libre no es superior a </string>
+    <string name="mostr_n_aneil">la anchura del espacio inferior libre no es superior a </string>
+    <string name="mostr_n_peil">la profundidad del espacio inferior libre no es superior a </string>
+
+    <!--
+   ////////////////////////////////////////////////////////////////////////////
+   Rampas
+   ////////////////////////////////////////////////////////////////////////////
+   -->
+
+    <string name="ramp_n_anch">la anchura de la rampa no es superior a </string>
+    <string name="ramp_n_incl"> la inclinación no es inferior a </string>
+    <string name="ramp_n_alt">la altura del pasamanos no está entre los valores </string>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////
+    Salvaescaleras
+    ////////////////////////////////////////////////////////////////////////////
+    -->
+
+    <string name="se_n_ancho">la anchura de la plataforma no es superior a </string>
+    <string name="se_n_largo">el largo de la plataforma no es superior a </string>
+    <string name="se_n_mando">no hay mandos en las zonas de embarque, desembarque y en la plataforma </string>
+    <string name="se_n_carga">la carga no supera los </string>
+    <string name="se_n_velocidad">la velocidad no es inferior a </string>
+
+
+    <!--
+   ////////////////////////////////////////////////////////////////////////////
+   Otros
+   ////////////////////////////////////////////////////////////////////////////
+   -->
 
     <string name="btnCopiarCodCentro">Copiar código centro</string>
     <string name="btnEvaluarObst">Evaluar el obstáculo</string>

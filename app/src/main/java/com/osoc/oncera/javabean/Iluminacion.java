@@ -8,12 +8,14 @@ public class Iluminacion implements Serializable {
     private Boolean accesible;
     private String codCentro;
     private String id;
+    private String mensaje;
 
-    public Iluminacion(Float luz, Boolean accesible, String codCentro, String id) {
+    public Iluminacion(Float luz, Boolean accesible, String codCentro, String id, String mensaje) {
         Luz = luz;
         this.accesible = accesible;
         this.codCentro = codCentro;
         this.id = id;
+        this.mensaje = mensaje;
     }
 
     public Iluminacion() {
@@ -50,4 +52,7 @@ public class Iluminacion implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getMensaje(){return mensaje;}
+    public void setMensaje(String mensaje){this.mensaje = mensaje;}
 }

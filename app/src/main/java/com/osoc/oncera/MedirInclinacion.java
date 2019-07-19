@@ -34,6 +34,7 @@ public class MedirInclinacion extends AppCompatActivity {
     private ImageButton exit_button;
 
     private boolean barandilla;
+    private String message;
 
     private DecimalFormat df = new DecimalFormat("#0.00º");
 
@@ -269,7 +270,12 @@ public class MedirInclinacion extends AppCompatActivity {
     }
 
     private void evaluate() {
+
+        String s ="";
+
        boolean cumpleAnch = Evaluator.IsGreaterThan(_rampa.getAnchura(), paramAnch);
+
+        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_anpt) + paramAnch, cumpleAnch);
 
         casos aux;
 
@@ -280,6 +286,10 @@ public class MedirInclinacion extends AppCompatActivity {
         else aux = rampa3;
 
         boolean cumpleIncl = Evaluator.IsLowerThan(_rampa.getPendiente(),aux.getPendiente());
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumpleIncl);
+        s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_incl) + aux.getPendiente(), cumpleIncl);
+
+
 
         boolean cumplePasamanos;
 
@@ -288,7 +298,14 @@ public class MedirInclinacion extends AppCompatActivity {
 
         else cumplePasamanos = true;
 
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumplePasamanos);
+        s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_alt) + aux.getPendiente(), cumplePasamanos);
+
         _rampa.setAccesible(cumpleAnch && cumpleIncl && cumplePasamanos);
+
+        UpdateMessage(_rampa.getAccesible(), s);
+
+        _rampa.setMensaje(message);
 
         Intent i = new Intent(this,AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.RAMPAS.getValue());
@@ -299,6 +316,17 @@ public class MedirInclinacion extends AppCompatActivity {
 
 
 
+    }
+
+    private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
+    {
+        return condition ? "" : base + " " + to_add;
+    }
+
+    private void UpdateMessage(boolean condition, String aux)
+    {
+        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message += aux;
     }
 
 }

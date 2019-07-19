@@ -71,11 +71,13 @@ public class MedirMostradorActivity extends AppCompatActivity {
     TextView alto_repisa;
     SeekBar z_axis;
 
+    private String message;
+
     private Anchor anchor1=null, anchor2=null;
 
     private HitResult myhit;
 
-    private PuntosAtencion mostrador = new PuntosAtencion(null, null, null, null, null, null, null, null);
+    private PuntosAtencion mostrador = new PuntosAtencion(null, null, null, null, null, null, null, null, null);
 
     float db_anch_plano_trabajo, db_alt_plano_trabajo, db_alt_esp_inf_libre, db_anch_esp_inf_libre, db_prof_esp_inf_libre;
 
@@ -338,13 +340,32 @@ public class MedirMostradorActivity extends AppCompatActivity {
 
     private void Confirmar()
     {
+        String s = "";
+
         boolean cumple_anpt = Evaluator.IsGreaterThan(mostrador.getAnchuraPlanoTrabajo(), db_anch_plano_trabajo);
+        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_anpt) + db_anch_plano_trabajo, cumple_anpt);
+
         boolean cumple_alpt = Evaluator.IsLowerThan(mostrador.getAlturaPlanoTrabajo(), db_alt_plano_trabajo);
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_alpt);
+        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_alpt) + db_alt_plano_trabajo, cumple_alpt);
+
         boolean cumple_aleif = Evaluator.IsGreaterThan(mostrador.getAlturaEspacioInferiorLibre(), db_alt_esp_inf_libre);
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_aleif);
+        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aleil) + db_alt_esp_inf_libre, cumple_aleif);
+
         boolean cumple_aneif = Evaluator.IsGreaterThan(mostrador.getAnchuraEspacioInferiorLibre(), db_anch_esp_inf_libre);
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_aneif);
+        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aneil) + db_anch_esp_inf_libre, cumple_aneif);
+
         boolean cumple_peif = Evaluator.IsGreaterThan(mostrador.getProfundidadEspacioInferiorLibre(), db_prof_esp_inf_libre);
+        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_peif);
+        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_peil) + db_prof_esp_inf_libre, cumple_peif);
+
 
         mostrador.setAccesible(cumple_aleif && cumple_anpt && cumple_alpt && cumple_aneif && cumple_peif);
+
+        UpdateMessage(mostrador.getAccesible(), s);
+        mostrador.setMensaje(message);
 
         Intent i = new Intent(this,AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.MOSTRADORES.getValue());
@@ -427,6 +448,17 @@ public class MedirMostradorActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
+    {
+        return condition ? "" : base + " " + to_add;
+    }
+
+    private void UpdateMessage(boolean condition, String aux)
+    {
+        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message += aux;
     }
 
 }

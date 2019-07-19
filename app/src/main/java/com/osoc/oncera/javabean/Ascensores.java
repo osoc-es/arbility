@@ -13,9 +13,10 @@ public class Ascensores implements Serializable {
     private Boolean botoneraBraile;
     private Boolean accesible;
     private String codCentro;
+    private String mensaje;
 
 
-    public Ascensores(String id, Float anchuraCabina, Float profundidadCabina, Float alturaResalte, Float distanciaCabina, Boolean puertasAutomaticas, Boolean senialAudible, Boolean botoneraBraile, Boolean accesible, String codCentro) {
+    public Ascensores(String id, Float anchuraCabina, Float profundidadCabina, Float alturaResalte, Float distanciaCabina, Boolean puertasAutomaticas, Boolean senialAudible, Boolean botoneraBraile, Boolean accesible, String codCentro, String mensaje) {
         this.id = id;
         this.anchuraCabina = anchuraCabina;
         this.profundidadCabina = profundidadCabina;
@@ -26,6 +27,7 @@ public class Ascensores implements Serializable {
         this.botoneraBraile = botoneraBraile;
         this.accesible = accesible;
         this.codCentro = codCentro;
+        this.mensaje = mensaje;
     }
 
     public Ascensores() {
@@ -110,4 +112,7 @@ public class Ascensores implements Serializable {
     public void setCodCentro(String codCentro) {
         this.codCentro = codCentro;
     }
+
+    public String getMensaje(){return mensaje;}
+    public void setMensaje(String mensaje){this.mensaje = mensaje;}
 }

@@ -58,6 +58,8 @@ public class MedirSalvaescaleras extends AppCompatActivity {
     private float paramAnch;
     private float paramLargo;
 
+    private String message;
+
     Button restart;
     Button confirm;
     TextView data;
@@ -68,7 +70,7 @@ public class MedirSalvaescaleras extends AppCompatActivity {
 
     private HitResult myhit;
 
-    private SalvaEscaleras salvaEscaleras = new SalvaEscaleras(null,null,null,null,null,null,null,null,null,null);
+    private SalvaEscaleras salvaEscaleras = new SalvaEscaleras(null,null,null,null,null,null,null,null,null,null,null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -223,10 +225,30 @@ public class MedirSalvaescaleras extends AppCompatActivity {
         barandillaDialog();
     }
     private void validate() {
+
+        String s = "";
+
         Boolean anch = Evaluator.IsGreaterThan(salvaEscaleras.getAnchuraPlataforma(),paramAnch);
+        s = UpdateStringIfNeeded(s, getString(R.string.se_n_ancho) + paramAnch, anch);
+
         Boolean largo = Evaluator.IsGreaterThan(salvaEscaleras.getLargoPlataforma(),paramLargo);
+        s = UpdateStringIfNeeded(s, "y", s == "" && largo);
+        s = UpdateStringIfNeeded(s, getString(R.string.se_n_largo) + paramLargo, largo);
+
+        s = UpdateStringIfNeeded(s, "y", s == "" && salvaEscaleras.getMandoEmbarque());
+        s = UpdateStringIfNeeded(s, getString(R.string.se_n_mando), salvaEscaleras.getMandoEmbarque());
+
+        s = UpdateStringIfNeeded(s, "y", s == "" && salvaEscaleras.getCarga());
+        s = UpdateStringIfNeeded(s, getString(R.string.se_n_carga), salvaEscaleras.getCarga());
+
+        s = UpdateStringIfNeeded(s, "y", s == "" && salvaEscaleras.getVelocidad());
+        s = UpdateStringIfNeeded(s, getString(R.string.se_n_velocidad), salvaEscaleras.getVelocidad());
 
         salvaEscaleras.setAccesible(anch && largo && salvaEscaleras.getMandoEmbarque() && salvaEscaleras.getCarga() && salvaEscaleras.getVelocidad());
+
+        UpdateMessage(salvaEscaleras.getAccesible(), s);
+
+        salvaEscaleras.setMensaje(message);
 
         Intent i = new Intent(this,AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.SALVAESCALERAS.getValue());
@@ -327,5 +349,16 @@ public class MedirSalvaescaleras extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
+    {
+        return condition ? "" : base + " " + to_add;
+    }
+
+    private void UpdateMessage(boolean condition, String aux)
+    {
+        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message += aux;
     }
 }

@@ -76,7 +76,7 @@ public class MedirRampa extends AppCompatActivity {
 
     private HitResult myhit;
 
-    private Rampas rampa = new Rampas(null, null, null, null, null, null, null, null);
+    private Rampas rampa = new Rampas(null, null, null, null, null, null, null, null, null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})

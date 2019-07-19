@@ -12,8 +12,9 @@ public class PuntosAtencion implements Serializable {
     private Boolean accesible;
     private String codCentro;
     private String id;
+    private String mensaje;
 
-    public PuntosAtencion(Float anchuraPlanoTrabajo, Float alturaPlanoTrabajo, Float alturaEspacioInferiorLibre, Float anchuraEspacioInferiorLibre, Float profundidadEspacioInferiorLibre, Boolean accesible, String codCentro, String id) {
+    public PuntosAtencion(Float anchuraPlanoTrabajo, Float alturaPlanoTrabajo, Float alturaEspacioInferiorLibre, Float anchuraEspacioInferiorLibre, Float profundidadEspacioInferiorLibre, Boolean accesible, String codCentro, String id, String mensaje) {
         this.anchuraPlanoTrabajo = anchuraPlanoTrabajo;
         this.alturaPlanoTrabajo = alturaPlanoTrabajo;
         this.alturaEspacioInferiorLibre = alturaEspacioInferiorLibre;
@@ -22,6 +23,7 @@ public class PuntosAtencion implements Serializable {
         this.accesible = accesible;
         this.codCentro = codCentro;
         this.id = id;
+        this.mensaje = mensaje;
     }
 
     public PuntosAtencion() {
@@ -90,4 +92,7 @@ public class PuntosAtencion implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getMensaje(){return mensaje;}
+    public void setMensaje(String mensaje){this.mensaje = mensaje;}
 }
