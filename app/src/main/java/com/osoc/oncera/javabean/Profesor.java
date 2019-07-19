@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Profesor implements Serializable {
 
     private String id;
-    private String nombre;
+    private String alias;
     private String codCentro;
     private String correo;
 
-    public Profesor(String id, String nombre, String codCentro, String correo) {
+    public Profesor(String id, String alias, String codCentro, String correo) {
         this.id = id;
-        this.nombre = nombre;
+        this.alias = alias;
         this.codCentro = codCentro;
         this.correo = correo;
     }
@@ -19,12 +19,12 @@ public class Profesor implements Serializable {
     public Profesor() {
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getCodCentro() {

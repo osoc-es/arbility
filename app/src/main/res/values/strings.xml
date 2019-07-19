@@ -15,6 +15,13 @@
     <string name="sim_R">DERECHA</string>
     <string name="simAcelerar">ACELERAR</string>
 
+    <string name="lux_n_exterior">en exterior, la intensidad de la luz ha de ser superior a </string>
+    <string name="lux_n_int_ramp">en interior con rampa y/o escaleras, la intensidad de la luz ha de ser entre </string>
+    <string name="lux_n_int_hab">en interior habitable, la intensidad de la luz ha de ser superior a </string>
+
+    <string name="accesible">Es accesible</string>
+    <string name="no_accesible">No es accesible porque</string>
+
 
     <string name="descAseos">Un aseo es accesible si:
         \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n

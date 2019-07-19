@@ -155,8 +155,24 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
         iluminacion.setLuz(value);
     }
 
+    private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
+    {
+        return condition ? "" : base + " " + to_add;
+    }
+
+    String message;
+
+    private void UpdateMessage(boolean condition, String aux)
+    {
+        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message += aux;
+    }
+
+
     public void Confirmar()
     {
+
+    String s= "";
 
         if(iluminacion.getLuz() != null) {
 
@@ -164,17 +180,26 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
             if (type == getString(R.string.lux_exterior))
             {
                 accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), f);
+
+                s = UpdateStringIfNeeded(s, getString(R.string.lux_n_exterior) + " "+ f, accesible);
+
             }
             else if (type == getString(R.string.lux_interior_habitable))
             {
                 accesible = Evaluator.IsGreaterThan(iluminacion.getLuz(), F);
+                s = UpdateStringIfNeeded(s, getString(R.string.lux_n_int_hab) + " "+F, accesible);
             }
             else if (type == getString(R.string.lux_interior_escalera))
             {
                 accesible = Evaluator.IsInRange(iluminacion.getLuz(), m, M);
+                s = UpdateStringIfNeeded(s, getString(R.string.lux_n_int_ramp) + " "+m + " y " + M, accesible);
             }
 
             iluminacion.setAccesible(accesible);
+
+
+            UpdateMessage(iluminacion.getAccesible(),s);
+            iluminacion.setCodCentro(message);
 
             Intent i = new Intent(this,AxesibilityActivity.class);
             i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ILUM.getValue());

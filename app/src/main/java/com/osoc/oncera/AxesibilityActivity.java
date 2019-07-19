@@ -55,31 +55,32 @@ public class AxesibilityActivity extends AppCompatActivity {
 
     private void parseType(Bundle b){
 
-        if (type == TypesManager.obsType.PUERTAS)  CheckAccesibility(((Puerta)b.get(TypesManager.PUERTAS_OBS)).getAccesible());
-       else if (type == TypesManager.obsType.ILUM)  CheckAccesibility(((Iluminacion)b.get(TypesManager.ILUM_OBS)).getAccesible());
-       else if (type == TypesManager.obsType.ASCENSORES)  CheckAccesibility(((Ascensores)b.get(TypesManager.ASCENSOR_OBS)).getAccesible());
-       else if (type == TypesManager.obsType.MOSTRADORES)  CheckAccesibility(((PuntosAtencion)b.get(TypesManager.MOSTRADOR_OBS)).getAccesible());
+       // if (type == TypesManager.obsType.PUERTAS)  CheckAccesibility(((Puerta)b.get(TypesManager.PUERTAS_OBS)).getAccesible());
+        if (type == TypesManager.obsType.ILUM)  CheckAccesibility(((Iluminacion)b.get(TypesManager.ILUM_OBS)).getAccesible(),((Iluminacion) b.get(TypesManager.ILUM_OBS)).getCodCentro());
+      // else if (type == TypesManager.obsType.ASCENSORES)  CheckAccesibility(((Ascensores)b.get(TypesManager.ASCENSOR_OBS)).getAccesible());
+       /*else if (type == TypesManager.obsType.MOSTRADORES)  CheckAccesibility(((PuntosAtencion)b.get(TypesManager.MOSTRADOR_OBS)).getAccesible());
        else if (type == TypesManager.obsType.RAMPAS)  CheckAccesibility(((Rampas)b.get(TypesManager.RAMPA_OBS)).getAccesible());
        else if (type == TypesManager.obsType.SALVAESCALERAS) CheckAccesibility(((SalvaEscaleras)b.get(TypesManager.SALVAESC_OBS)).getAccesible());
-       else if (type == TypesManager.obsType.EMERGENCIAS)  CheckAccesibility(((EvacuacionEmergencia)b.get(TypesManager.EMERGENC_OBS)).getAccesible());
+       else if (type == TypesManager.obsType.EMERGENCIAS)  CheckAccesibility(((EvacuacionEmergencia)b.get(TypesManager.EMERGENC_OBS)).getAccesible());*/
     }
 
 
-    private void CheckAccesibility(boolean b)
+
+    private void CheckAccesibility(boolean b,String s)
     {
-        if(b) OnAccesible();
-        else OnNonAccesible();
+        if(b) OnAccesible(s);
+        else OnNonAccesible(s);
     }
 
-    private void OnAccesible()
+    private void OnAccesible(String s)
     {
-        accText.setText("ES ACCESIBLE");
+        accText.setText(s);
         ChangeColorWhenValid();
     }
 
-    private void OnNonAccesible()
+    private void OnNonAccesible(String s)
     {
-        accText.setText("NO ES ACCESIBLE");
+        accText.setText(s);
         ChangeColorWhenNotValid();
     }
 
