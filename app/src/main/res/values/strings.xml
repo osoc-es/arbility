@@ -161,4 +161,11 @@
 
     <string name="btnCopiarCodCentro">Copiar código centro</string>
     <string name="btnEvaluarObst">Evaluar el obstáculo</string>
+    <string name="descriptionLabel">Descripción</string>
+    <string name="descriptionHint">Descripción del itinerario</string>
+    <string name="titleLabel">Título</string>
+    <string name="titleHint">Título del itinerario</string>
+    <string name="btnNuevoObstaculoText">Nuevo obstaculo</string>
+    <string name="btnConfirmarObstaculoText">Confirmar obstaculo</string>
+    <string name="btnCrearItinerarioText">Crear itinerario</string>
 </resources>

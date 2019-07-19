@@ -98,7 +98,6 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
                                 //TODO METODOS
                                 Intent i = new Intent(ItinerariosProfesorActivity.this, crearItinerarioActivity.class);
                                 startActivity(i);
-                                finish();
                             }
                         } ).setNegativeButton( "Cancelar", null );
 
