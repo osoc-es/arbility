@@ -11,6 +11,9 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-feature
         android:name="android.hardware.camera.ar"
         android:required="true" />
@@ -22,22 +25,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapaItinerarioActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".LoginAlumnoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ItinerariosProfesorActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SimulacionActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MedirEmergencias"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SesionCentroActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".RegisterProfesorActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".LoginProfesorActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".crearItinerarioActivity"></activity>
+        <activity
+            android:name=".MapaItinerarioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginAlumnoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ItinerariosProfesorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SimulacionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MedirEmergencias"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SesionCentroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegisterProfesorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginProfesorActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MedirSalvaescaleras"
             android:screenOrientation="portrait" />

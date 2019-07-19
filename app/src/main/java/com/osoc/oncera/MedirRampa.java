@@ -255,7 +255,7 @@ public class MedirRampa extends AppCompatActivity {
 
     void barandillaDialog() {
         int[] spinnerImages = new int[]{R.drawable.rampa_barandilla
-                , R.drawable.rampa};
+                , R.drawable.rampa_sin_barandilla};
 
         String[] spinnerPopulation = new String[]{"Rampa con barandilla", "Rampa sin barandilla"};
 

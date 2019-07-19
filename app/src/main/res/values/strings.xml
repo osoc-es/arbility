@@ -26,7 +26,6 @@
     <string name="no_accesible">No es accesible porque</string>
 
 
-
     <string name="descAseos">Un aseo es accesible si:
         \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
         \t\n•La altura de las barras de apoyo está comprendida entre 70 y 75 centímetros.\n
@@ -239,4 +238,11 @@
 
     <string name="btnCopiarCodCentro">Copiar código centro</string>
     <string name="btnEvaluarObst">Evaluar el obstáculo</string>
+    <string name="descriptionLabel">Descripción</string>
+    <string name="descriptionHint">Descripción del itinerario</string>
+    <string name="titleLabel">Título</string>
+    <string name="titleHint">Título del itinerario</string>
+    <string name="btnNuevoObstaculoText">Nuevo obstaculo</string>
+    <string name="btnConfirmarObstaculoText">Confirmar obstaculo</string>
+    <string name="btnCrearItinerarioText">Crear itinerario</string>
 </resources>
