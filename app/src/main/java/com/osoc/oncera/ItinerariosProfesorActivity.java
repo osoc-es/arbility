@@ -95,10 +95,10 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
                         .setPositiveButton( "Sí", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
-
                                 //TODO METODOS
-
+                                Intent i = new Intent(ItinerariosProfesorActivity.this, crearItinerarioActivity.class);
+                                startActivity(i);
+                                finish();
                             }
                         } ).setNegativeButton( "Cancelar", null );
 
