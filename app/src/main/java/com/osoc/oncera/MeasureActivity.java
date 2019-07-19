@@ -308,21 +308,21 @@ public class MeasureActivity extends AppCompatActivity {
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura) + paramAltura, cumple_altura);
 
         boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(),paramAnchura);
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_anchura);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_anchura);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_ancho) + paramAnchura, cumple_anchura);
 
 
         boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, puerta.getTipoPuerta());
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_tipo_puerta);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_tipo_puerta);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_puerta), cumple_tipo_puerta);
 
 
         boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, puerta.getTipoMecanismo());
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_tipo_mecanismos);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_tipo_mecanismos);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_mec), cumple_tipo_mecanismos);
 
         boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), minMecApertura, maxMecApertura);
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_alto_mecanismo);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_alto_mecanismo);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura_mec) + minMecApertura + " y " + maxMecApertura, cumple_alto_mecanismo);
 
 
@@ -406,7 +406,7 @@ public class MeasureActivity extends AppCompatActivity {
 
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
-        return condition ? "" : base + " " + to_add;
+        return condition ? base : base + " " + to_add;
     }
 
     private void UpdateMessage(boolean condition, String aux)

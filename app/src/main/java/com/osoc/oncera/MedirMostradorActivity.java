@@ -346,19 +346,19 @@ public class MedirMostradorActivity extends AppCompatActivity {
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_anpt) + db_anch_plano_trabajo, cumple_anpt);
 
         boolean cumple_alpt = Evaluator.IsLowerThan(mostrador.getAlturaPlanoTrabajo(), db_alt_plano_trabajo);
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_alpt);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_alpt);
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_alpt) + db_alt_plano_trabajo, cumple_alpt);
 
         boolean cumple_aleif = Evaluator.IsGreaterThan(mostrador.getAlturaEspacioInferiorLibre(), db_alt_esp_inf_libre);
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_aleif);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_aleif);
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aleil) + db_alt_esp_inf_libre, cumple_aleif);
 
         boolean cumple_aneif = Evaluator.IsGreaterThan(mostrador.getAnchuraEspacioInferiorLibre(), db_anch_esp_inf_libre);
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_aneif);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_aneif);
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aneil) + db_anch_esp_inf_libre, cumple_aneif);
 
         boolean cumple_peif = Evaluator.IsGreaterThan(mostrador.getProfundidadEspacioInferiorLibre(), db_prof_esp_inf_libre);
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumple_peif);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_peif);
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_peil) + db_prof_esp_inf_libre, cumple_peif);
 
 
@@ -452,7 +452,7 @@ public class MedirMostradorActivity extends AppCompatActivity {
 
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
-        return condition ? "" : base + " " + to_add;
+        return condition ? base : base + " " + to_add;
     }
 
     private void UpdateMessage(boolean condition, String aux)

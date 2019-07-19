@@ -65,7 +65,7 @@ public class MedirEmergencias extends AppCompatActivity {
                 s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_alumbrado), cumple_alumbrado);
 
                 boolean cumple_simulacro = Evaluator.IsEqualsTo(emergencia.getSimulacros(), db_simulacro);
-                s = UpdateStringIfNeeded(s, "y", s == "" && cumple_simulacro);
+                s = UpdateStringIfNeeded(s, "y", (s == "" || cumple_simulacro));
                 s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_simulacro), cumple_simulacro);
 
                 emergencia.setAccesible(cumple_alumbrado && cumple_simulacro);
@@ -123,7 +123,7 @@ public class MedirEmergencias extends AppCompatActivity {
 
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
-        return condition ? "" : base + " " + to_add;
+        return condition ? base : base + " " + to_add;
     }
 
     private void UpdateMessage(boolean condition, String aux)

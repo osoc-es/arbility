@@ -286,7 +286,7 @@ public class MedirInclinacion extends AppCompatActivity {
         else aux = rampa3;
 
         boolean cumpleIncl = Evaluator.IsLowerThan(_rampa.getPendiente(),aux.getPendiente());
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumpleIncl);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumpleIncl);
         s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_incl) + aux.getPendiente(), cumpleIncl);
 
 
@@ -298,7 +298,7 @@ public class MedirInclinacion extends AppCompatActivity {
 
         else cumplePasamanos = true;
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && cumplePasamanos);
+        s = UpdateStringIfNeeded(s, "y", s == "" || cumplePasamanos);
         s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_alt) + aux.getPendiente(), cumplePasamanos);
 
         _rampa.setAccesible(cumpleAnch && cumpleIncl && cumplePasamanos);
@@ -320,7 +320,7 @@ public class MedirInclinacion extends AppCompatActivity {
 
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
-        return condition ? "" : base + " " + to_add;
+        return condition ? base : base + " " + to_add;
     }
 
     private void UpdateMessage(boolean condition, String aux)

@@ -159,7 +159,7 @@ public class Luxometro extends AppCompatActivity implements SensorEventListener,
 
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
-        return condition ? "" : base + " " + to_add;
+        return condition ? base : base + " " + to_add;
     }
 
     String message;

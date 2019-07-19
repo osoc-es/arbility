@@ -232,16 +232,16 @@ public class MedirSalvaescaleras extends AppCompatActivity {
         s = UpdateStringIfNeeded(s, getString(R.string.se_n_ancho) + paramAnch, anch);
 
         Boolean largo = Evaluator.IsGreaterThan(salvaEscaleras.getLargoPlataforma(),paramLargo);
-        s = UpdateStringIfNeeded(s, "y", s == "" && largo);
+        s = UpdateStringIfNeeded(s, "y", s == "" || largo);
         s = UpdateStringIfNeeded(s, getString(R.string.se_n_largo) + paramLargo, largo);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && salvaEscaleras.getMandoEmbarque());
+        s = UpdateStringIfNeeded(s, "y", s == "" || salvaEscaleras.getMandoEmbarque());
         s = UpdateStringIfNeeded(s, getString(R.string.se_n_mando), salvaEscaleras.getMandoEmbarque());
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && salvaEscaleras.getCarga());
+        s = UpdateStringIfNeeded(s, "y", s == "" || salvaEscaleras.getCarga());
         s = UpdateStringIfNeeded(s, getString(R.string.se_n_carga), salvaEscaleras.getCarga());
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && salvaEscaleras.getVelocidad());
+        s = UpdateStringIfNeeded(s, "y", s == "" || salvaEscaleras.getVelocidad());
         s = UpdateStringIfNeeded(s, getString(R.string.se_n_velocidad), salvaEscaleras.getVelocidad());
 
         salvaEscaleras.setAccesible(anch && largo && salvaEscaleras.getMandoEmbarque() && salvaEscaleras.getCarga() && salvaEscaleras.getVelocidad());
@@ -353,7 +353,7 @@ public class MedirSalvaescaleras extends AppCompatActivity {
 
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
-        return condition ? "" : base + " " + to_add;
+        return condition ? base : base + " " + to_add;
     }
 
     private void UpdateMessage(boolean condition, String aux)

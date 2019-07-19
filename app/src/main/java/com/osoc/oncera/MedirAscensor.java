@@ -297,23 +297,23 @@ public class MedirAscensor extends AppCompatActivity {
     Boolean prof = Evaluator.IsGreaterThan(ascensor.getProfundidadCabina(),
             paramProf);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && prof);
+        s = UpdateStringIfNeeded(s, "y", s == "" || prof);
         s = UpdateStringIfNeeded(s, getString(R.string.asc_n_prof) + paramProf, prof);
 
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && braile);
+        s = UpdateStringIfNeeded(s, "y", s == "" || braile);
         s = UpdateStringIfNeeded(s, getString(R.string.asc_n_braille), braile);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && automatico);
+        s = UpdateStringIfNeeded(s, "y", s == "" || automatico);
         s = UpdateStringIfNeeded(s, getString(R.string.asc_n_automat), automatico);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && sonido);
+        s = UpdateStringIfNeeded(s, "y", s == "" || sonido);
         s = UpdateStringIfNeeded(s, getString(R.string.asc_n_audio), sonido);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && hueco);
+        s = UpdateStringIfNeeded(s, "y", s == "" || hueco);
         s = UpdateStringIfNeeded(s, getString(R.string.asc_n_dist), hueco);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" && escalon);
+        s = UpdateStringIfNeeded(s, "y", s == "" || escalon);
         s = UpdateStringIfNeeded(s, getString(R.string.asc_n_alt_resal), automatico);
 
         ascensor.setAccesible(anchura && prof && braile && automatico && sonido && hueco && escalon);
@@ -367,7 +367,7 @@ public class MedirAscensor extends AppCompatActivity {
 
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
-        return condition ? "" : base + " " + to_add;
+        return condition ? base : base + " " + to_add;
     }
 
     private void UpdateMessage(boolean condition, String aux)
