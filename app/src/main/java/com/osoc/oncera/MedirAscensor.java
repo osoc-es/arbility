@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -119,10 +120,19 @@ public class MedirAscensor extends AppCompatActivity {
 
         ancho_ascensor = (TextView) findViewById(R.id.ancho_acensor);
         profundo_ascensor = (TextView) findViewById(R.id.profundo_ascensor);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
 
         anchorNodes = new ArrayList<>();
 
         confirm.setEnabled(false);
+
+
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         restart.setOnClickListener(new View.OnClickListener() {

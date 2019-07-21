@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -96,11 +97,19 @@ public class MeasureActivity extends AppCompatActivity {
         TextView mechanism = (TextView) findViewById(R.id.height_mecha);
         TextView height = (TextView) findViewById(R.id.height);
         SeekBar z_axis = (SeekBar) findViewById(R.id.z_axis);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
         List<AnchorNode> anchorNodes = new ArrayList<>();
 
         z_axis.setEnabled(false);
         confirm.setEnabled(false);
 
+
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override

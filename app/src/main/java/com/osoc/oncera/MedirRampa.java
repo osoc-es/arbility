@@ -100,10 +100,18 @@ public class MedirRampa extends AppCompatActivity {
         largo_rampa = (TextView) findViewById(R.id.largo_rampa);
 
         z_axis = (SeekBar) findViewById(R.id.z_axis);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
         anchorNodes = new ArrayList<>();
 
         z_axis.setEnabled(false);
         confirm.setEnabled(false);
+
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         restart.setOnClickListener(new View.OnClickListener() {

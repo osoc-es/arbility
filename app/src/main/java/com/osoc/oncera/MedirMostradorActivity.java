@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -104,11 +105,19 @@ public class MedirMostradorActivity extends AppCompatActivity {
         profundo_repisa = (TextView) findViewById(R.id.profundo_repisa);
         alto_repisa = (TextView) findViewById(R.id.alto_repisa);
         z_axis = (SeekBar) findViewById(R.id.z_axis);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+
         anchorNodes = new ArrayList<>();
 
         z_axis.setEnabled(false);
         confirm.setEnabled(false);
 
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override

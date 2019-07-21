@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -120,11 +121,18 @@ public class MedirSalvaescaleras extends AppCompatActivity {
 
         ancho_plat = (TextView) findViewById(R.id.ancho_plat);
         largo_plat = (TextView) findViewById(R.id.largo_plat);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
 
         anchorNodes = new ArrayList<>();
 
         confirm.setEnabled(false);
 
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override

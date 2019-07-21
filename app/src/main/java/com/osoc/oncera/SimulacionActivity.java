@@ -66,6 +66,7 @@ public class SimulacionActivity extends AppCompatActivity {
     private ImageButton btnSalir;
 
     private HitResult myhit;
+    private float mySize = 70f;
     private float mytravel=0.01f, distance_x=0f, distance_z=0f, myangle=0f;
 
     @Override
@@ -90,6 +91,8 @@ public class SimulacionActivity extends AppCompatActivity {
         btnSalir = (ImageButton) findViewById(R.id.BotonSalir);
         List<AnchorNode> anchorNodes = new ArrayList<>();
 
+        sb_size.setEnabled(false);
+
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +103,7 @@ public class SimulacionActivity extends AppCompatActivity {
         sb_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mySize = progress;
                 myanchornode.setLocalScale(new Vector3(progress/70f, progress/70f, progress/70f));
                 tv_width.setText(progress+" cm");
             }
@@ -180,6 +184,11 @@ public class SimulacionActivity extends AppCompatActivity {
                     if (andyRenderable == null) {
                         return;
                     }
+
+                    distance_x=0f;
+                    distance_z=0f;
+                    myangle=0f;
+
                     myhit = hitResult;
 
                     // Create the Anchor.
@@ -190,6 +199,7 @@ public class SimulacionActivity extends AppCompatActivity {
 
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
                     anchorNodes.add(anchorNode);
+                    sb_size.setEnabled(true);
 
                     //myanchor = anchor;
                     myanchornode = anchorNode;
@@ -206,6 +216,8 @@ public class SimulacionActivity extends AppCompatActivity {
                     //andy.getScaleController().setEnabled(false);
 
                     mytranode = andy;
+                    mytranode.setLocalRotation(new Quaternion(0f, 0f, 0f, 1f));
+                    myanchornode.setLocalScale(new Vector3(mySize/70f, mySize/70f, mySize/70f));
                 });
     }
 
@@ -269,8 +281,6 @@ public class SimulacionActivity extends AppCompatActivity {
 
 
     void forward(AnchorNode an){
-        //Vector3 forw = mytranode.getForward();
-        //System.out.println("Volando voy: "+forw.toString());
         distance_x+=Math.sin(myangle)*mytravel;
         distance_z+=Math.cos(myangle)*mytravel;
 
