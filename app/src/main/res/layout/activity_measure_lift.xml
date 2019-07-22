@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MedirSalvaescaleras">
+    tools:context=".MeasureLift">
 
     <fragment
         android:id="@+id/ux_fragment"
         android:name="com.google.ar.sceneform.ux.ArFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
     <ImageButton
         android:id="@+id/btnAtras"
@@ -21,24 +22,26 @@
         android:src="@drawable/ic_cruz"/>
 
     <TextView
-        android:id="@+id/ancho_plat"
+        android:id="@+id/ancho_acensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Anchura plataforma: --" />
+        android:text="Anchura ascensor: --" />
 
     <TextView
-        android:id="@+id/largo_plat"
+        android:id="@+id/profundo_ascensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Longitud plataforma: --" />
+        android:text="Profundidad ascensor: --" />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +53,7 @@
             android:id="@+id/img_instr"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/salvaescaleras_01"
+            android:src="@drawable/ascensor_01"
             android:padding="10dp"/>
         <TextView
             android:id="@+id/tv_distance"
@@ -60,7 +63,7 @@
             android:textSize="25sp"
             android:padding="5dp"
             android:textColor="#fff"
-            android:text="@string/instr_salvaescaleras_01"
+            android:text="@string/instr_ascensor_01"
             />
     </LinearLayout>
 

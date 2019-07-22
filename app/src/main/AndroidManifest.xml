@@ -36,10 +36,10 @@
             android:name=".ItinerariosProfesorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SimulacionActivity"
+            android:name=".WheelchairSimulation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MedirEmergencias"
+            android:name=".MeasureEmergencies"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SesionCentroActivity"
@@ -51,22 +51,22 @@
             android:name=".LoginProfesorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MedirSalvaescaleras"
+            android:name=".MeasureStairLift"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MedirAscensor"
+            android:name=".MeasureLift"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MedirInclinacion"
+            android:name=".MeasureInclination"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MedirRampa"
+            android:name=".MeasureRamp"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Luxometro"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MedirMostradorActivity"
+            android:name=".MeasureCounter"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AxesibilityActivity"
@@ -80,7 +80,7 @@
             android:value="required" />
 
         <activity
-            android:name=".MeasureActivity"
+            android:name=".MeasureDoor"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LegalInfoActivity"

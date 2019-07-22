@@ -28,9 +28,6 @@ import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.Pose;
 import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
@@ -46,11 +43,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.atan2;
+public class MeasureCounter extends AppCompatActivity {
 
-public class MedirMostradorActivity extends AppCompatActivity {
-
-    private static final String TAG = MeasureActivity.class.getSimpleName();
+    private static final String TAG = MeasureDoor.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
     private float upDistance=0f;
     private ArFragment arFragment;
@@ -97,7 +92,7 @@ public class MedirMostradorActivity extends AppCompatActivity {
 
         UpdateDatabaseValues();
 
-        setContentView(R.layout.activity_medir_mostrador);
+        setContentView(R.layout.activity_measure_counter);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         restart = (Button)findViewById(R.id.btn_restart);
         confirm = (Button)findViewById(R.id.btn_ok);
@@ -157,7 +152,7 @@ public class MedirMostradorActivity extends AppCompatActivity {
                     resetMedirRespisa();
                 }
                 else{
-                    Toast.makeText(MedirMostradorActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeasureCounter.this, "Confirmado", Toast.LENGTH_SHORT).show();
                     Confirmar();
                 }
             }
@@ -272,11 +267,11 @@ public class MedirMostradorActivity extends AppCompatActivity {
         String[] spinnerPopulation = new String[]{"Mostrador plano", "Mostrador con repisa"};
 
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MedirMostradorActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_door, null);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureCounter.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_single_spinner, null);
         mBuilder.setTitle("Selecciona mostrador");
         Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MedirMostradorActivity.this, spinnerImages, spinnerPopulation);
+        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MeasureCounter.this, spinnerImages, spinnerPopulation);
         mSpinner.setAdapter(mCustomAdapter);
 
 

@@ -4,11 +4,28 @@
     android:layout_height="match_parent"
     android:padding="20dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Elige el tipo de puerta"/>
+
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinner_puerta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </Spinner>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Elige el mecanismo de apertura"/>
+
+    <Spinner
+        android:id="@+id/spinner_mecanismo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </Spinner>
 
 </LinearLayout>

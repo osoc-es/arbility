@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MedirMostradorActivity">
+    tools:context=".MeasureStairLift">
 
     <fragment
         android:id="@+id/ux_fragment"
@@ -21,34 +21,24 @@
         android:src="@drawable/ic_cruz"/>
 
     <TextView
-        android:id="@+id/largo_rampa"
+        android:id="@+id/ancho_plat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Longitud rampa: --" />
+        android:text="Anchura plataforma: --" />
 
     <TextView
-        android:id="@+id/ancho_rampa"
+        android:id="@+id/largo_plat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Anchura rampa: --" />
-
-    <TextView
-        android:id="@+id/alto_barandilla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="75dp"
-        android:textSize="20sp"
-        android:textColor="#fff"
-        android:text="Altura barandilla: --" />
+        android:text="Longitud plataforma: --" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,7 +50,7 @@
             android:id="@+id/img_instr"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/rampa_01"
+            android:src="@drawable/salvaescaleras_01"
             android:padding="10dp"/>
         <TextView
             android:id="@+id/tv_distance"
@@ -70,21 +60,11 @@
             android:textSize="25sp"
             android:padding="5dp"
             android:textColor="#fff"
-            android:text="@string/instr_rampa_01"
+            android:text="@string/instr_salvaescaleras_01"
             />
     </LinearLayout>
 
 
-
-    <SeekBar
-        android:id="@+id/z_axis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="100dp"
-        android:max="300"
-        android:enabled="false"
-        android:progress="0"/>
 
     <LinearLayout
         android:layout_width="match_parent"

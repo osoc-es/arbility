@@ -1,6 +1,5 @@
 package com.osoc.oncera;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,10 +8,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +22,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.data.model.User;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
@@ -36,11 +30,6 @@ import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.ImageTitleAdapter;
 import com.osoc.oncera.javabean.Rampas;
 
@@ -48,9 +37,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedirRampa extends AppCompatActivity {
+public class MeasureRamp extends AppCompatActivity {
 
-    private static final String TAG = MeasureActivity.class.getSimpleName();
+    private static final String TAG = MeasureDoor.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
     private float upDistance = 0f;
     private ArFragment arFragment;
@@ -90,7 +79,7 @@ public class MedirRampa extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_medir_rampa);
+        setContentView(R.layout.activity_measure_ramp);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         restart = (Button) findViewById(R.id.btn_restart);
         confirm = (Button) findViewById(R.id.btn_ok);
@@ -151,7 +140,7 @@ public class MedirRampa extends AppCompatActivity {
                     medir_anchura = true;
                     resetMedirAnchura();
                 } else {
-                    Intent guestActivity = new Intent(MedirRampa.this, MedirInclinacion.class);
+                    Intent guestActivity = new Intent(MeasureRamp.this, MeasureInclination.class);
                     guestActivity.putExtra("rampaIntermedio", rampa);
                     guestActivity.putExtra("barandilla", barandilla);
                     startActivity(guestActivity);
@@ -273,11 +262,11 @@ public class MedirRampa extends AppCompatActivity {
         String[] spinnerPopulation = new String[]{"Rampa con barandilla", "Rampa sin barandilla"};
 
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MedirRampa.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_door, null);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureRamp.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_single_spinner, null);
         mBuilder.setTitle("Selecciona rampa");
         Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MedirRampa.this, spinnerImages, spinnerPopulation);
+        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MeasureRamp.this, spinnerImages, spinnerPopulation);
         mSpinner.setAdapter(mCustomAdapter);
 
 

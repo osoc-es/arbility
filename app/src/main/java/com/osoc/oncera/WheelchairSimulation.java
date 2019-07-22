@@ -36,13 +36,11 @@ import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.Pose;
 import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
-import com.osoc.oncera.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +50,8 @@ import static java.lang.Math.atan2;
 /**
  * This is an example activity that uses the Sceneform UX package to make common AR tasks easier.
  */
-public class SimulacionActivity extends AppCompatActivity {
-    private static final String TAG = SimulacionActivity.class.getSimpleName();
+public class WheelchairSimulation extends AppCompatActivity {
+    private static final String TAG = WheelchairSimulation.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
     private float x=0f, y=0f, z=0f;
     private ArFragment arFragment;
@@ -80,7 +78,7 @@ public class SimulacionActivity extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_simulacion);
+        setContentView(R.layout.activity_wheelchair_simulator);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
         Button r_left = (Button)findViewById(R.id.r_left);

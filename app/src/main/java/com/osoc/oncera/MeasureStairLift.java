@@ -41,8 +41,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedirSalvaescaleras extends AppCompatActivity {
-    private static final String TAG = MeasureActivity.class.getSimpleName();
+public class MeasureStairLift extends AppCompatActivity {
+    private static final String TAG = MeasureDoor.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
     private float upDistance = 0f;
     private ArFragment arFragment;
@@ -86,7 +86,7 @@ public class MedirSalvaescaleras extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_medir_salvaescaleras);
+        setContentView(R.layout.activity_measure_stair_lift);
 
         final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Salvaescaleras/Anchura");
 
@@ -169,7 +169,7 @@ public class MedirSalvaescaleras extends AppCompatActivity {
                     medir_profundidad = true;
                     resetMedirAnchura();
                 } else {
-                    Toast.makeText(MedirSalvaescaleras.this, "Confirmado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeasureStairLift.this, "Confirmado", Toast.LENGTH_SHORT).show();
                     validate();
                 }
             }
@@ -290,8 +290,8 @@ public class MedirSalvaescaleras extends AppCompatActivity {
     void barandillaDialog() {
 
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MedirSalvaescaleras.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_pregunta_salvaescaleras, null);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureStairLift.this);
+        View mView = getLayoutInflater().inflate(R.layout.diaglog_chair_lift, null);
         mBuilder.setTitle("Rellena el cuestionario");
 
         CheckBox chkMando = (CheckBox) mView.findViewById(R.id.chkMando);

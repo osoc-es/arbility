@@ -41,9 +41,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedirAscensor extends AppCompatActivity {
+public class MeasureLift extends AppCompatActivity {
 
-    private static final String TAG = MeasureActivity.class.getSimpleName();
+    private static final String TAG = MeasureDoor.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
     private float upDistance=0f;
     private ArFragment arFragment;
@@ -85,7 +85,7 @@ public class MedirAscensor extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_medir_ascensor);
+        setContentView(R.layout.activity_measure_lift);
 
         final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Ascensores/Anchura");
 
@@ -171,7 +171,7 @@ public class MedirAscensor extends AppCompatActivity {
                     resetMedirAnchura();
                 }
                 else{
-                    Toast.makeText(MedirAscensor.this, "Confirmado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeasureLift.this, "Confirmado", Toast.LENGTH_SHORT).show();
                     validateEvaluation();
 
                 }
@@ -259,8 +259,8 @@ public class MedirAscensor extends AppCompatActivity {
     void barandillaDialog(){
 
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MedirAscensor.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_pregunta_ascensor, null);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureLift.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_lift, null);
         mBuilder.setTitle("Rellena el cuestionario");
         CheckBox chkBraile = (CheckBox) mView.findViewById(R.id.chkBraile);
         CheckBox chkSonido = (CheckBox) mView.findViewById(R.id.chkSonido);

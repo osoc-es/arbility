@@ -25,7 +25,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedirInclinacion extends AppCompatActivity {
+public class MeasureInclination extends AppCompatActivity {
 
     SensorManager sManager;
 
@@ -42,7 +42,7 @@ public class MedirInclinacion extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medir_inclinacion);
+        setContentView(R.layout.activity_measure_inclination);
 
         getDBValues();
 

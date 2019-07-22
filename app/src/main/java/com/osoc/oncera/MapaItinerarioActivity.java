@@ -25,23 +25,15 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.mapboxsdk.style.layers.Layer;
 import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-import com.osoc.oncera.javabean.Ascensores;
-import com.osoc.oncera.javabean.EvacuacionEmergencia;
-import com.osoc.oncera.javabean.Iluminacion;
 import com.osoc.oncera.javabean.Itinerario;
 import com.osoc.oncera.javabean.Obstaculo;
-import com.osoc.oncera.javabean.Puerta;
-import com.osoc.oncera.javabean.PuntosAtencion;
-import com.osoc.oncera.javabean.Rampas;
 import com.osoc.oncera.javabean.SalvaEscaleras;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MapaItinerarioActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -128,13 +120,13 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
     {
         Intent i;
         String t = itinerario.getObstaculos().get((int)sp_obstaculo.getSelectedItemId()).getTipo();
-        if (t == TypesManager.PUERTAS_OBS)  i = new Intent(this,MeasureActivity.class);
+        if (t == TypesManager.PUERTAS_OBS)  i = new Intent(this, MeasureDoor.class);
         else if (t == TypesManager.ILUM_OBS)i = new Intent(this,Luxometro.class);
-        else if (t == TypesManager.ASCENSOR_OBS) i = new Intent(this,MedirAscensor.class);
-        else if (t == TypesManager.MOSTRADOR_OBS) i = new Intent(this,MedirMostradorActivity.class);
-        else if (t == TypesManager.RAMPA_OBS) i = new Intent(this,MedirRampa.class);
+        else if (t == TypesManager.ASCENSOR_OBS) i = new Intent(this, MeasureLift.class);
+        else if (t == TypesManager.MOSTRADOR_OBS) i = new Intent(this, MeasureCounter.class);
+        else if (t == TypesManager.RAMPA_OBS) i = new Intent(this, MeasureRamp.class);
         else if (t == TypesManager.SALVAESC_OBS) i = new Intent(this,SalvaEscaleras.class);
-        else if (t == TypesManager.EMERGENC_OBS) i = new Intent(this,MedirEmergencias.class);
+        else if (t == TypesManager.EMERGENC_OBS) i = new Intent(this, MeasureEmergencies.class);
 
         else i = new Intent(this,null);
 

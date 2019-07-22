@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MeasureActivity">
+    tools:context=".MeasureCounter">
 
     <fragment
         android:id="@+id/ux_fragment"
@@ -21,35 +21,34 @@
         android:src="@drawable/ic_cruz"/>
 
     <TextView
-        android:id="@+id/width"
+        android:id="@+id/largo_rampa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Anchura puerta: --" />
+        android:text="Longitud rampa: --" />
 
     <TextView
-        android:id="@+id/height_mecha"
+        android:id="@+id/ancho_rampa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:text="Anchura rampa: --" />
+
+    <TextView
+        android:id="@+id/alto_barandilla"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="75dp"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Altura mecanismo: --" />
-
-    <TextView
-        android:id="@+id/height"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="125dp"
-        android:textSize="30sp"
-        android:textColor="#fff"
-        android:text="Altura puerta: --" />
-
+        android:text="Altura barandilla: --" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +60,7 @@
             android:id="@+id/img_instr"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/puerta_01"
+            android:src="@drawable/rampa_01"
             android:padding="10dp"/>
         <TextView
             android:id="@+id/tv_distance"
@@ -71,7 +70,7 @@
             android:textSize="25sp"
             android:padding="5dp"
             android:textColor="#fff"
-            android:text="@string/instr_puerta_01"
+            android:text="@string/instr_rampa_01"
             />
     </LinearLayout>
 

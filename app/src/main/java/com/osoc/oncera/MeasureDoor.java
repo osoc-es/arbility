@@ -30,9 +30,6 @@ import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.Pose;
 import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
@@ -48,11 +45,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.atan2;
+public class MeasureDoor extends AppCompatActivity {
 
-public class MeasureActivity extends AppCompatActivity {
-
-    private static final String TAG = MeasureActivity.class.getSimpleName();
+    private static final String TAG = MeasureDoor.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
     private float upDistance = 0f;
     private ArFragment arFragment;
@@ -87,7 +82,7 @@ public class MeasureActivity extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_measure);
+        setContentView(R.layout.activity_measure_door);
 
        GetDBValues();
 
@@ -141,7 +136,7 @@ public class MeasureActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MeasureActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MeasureDoor.this, "Confirmado", Toast.LENGTH_SHORT).show();
                 if (!measure_height) {
                     measure_height = true;
                     img_instr.setImageResource(R.drawable.puerta_03);
@@ -363,16 +358,16 @@ public class MeasureActivity extends AppCompatActivity {
                 , R.drawable.mecanismo_barra, R.drawable.mecanismo_agarrador};
 
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_puerta_pomo, null);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureDoor.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_door, null);
         mBuilder.setTitle("Selecciona puerta y pomo");
         Spinner mSpinnerDoor = (Spinner) mView.findViewById(R.id.spinner_puerta);
         Spinner mSpinnerMecha = (Spinner) mView.findViewById(R.id.spinner_mecanismo);
 
-        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MeasureActivity.this, spinnerImages, tipoPuerta);
+        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MeasureDoor.this, spinnerImages, tipoPuerta);
         mSpinnerDoor.setAdapter(mCustomAdapter);
 
-        ImageTitleAdapter mCustomAdapter2 = new ImageTitleAdapter(MeasureActivity.this, spinnerImages2, tipoMecanismo);
+        ImageTitleAdapter mCustomAdapter2 = new ImageTitleAdapter(MeasureDoor.this, spinnerImages2, tipoMecanismo);
         mSpinnerMecha.setAdapter(mCustomAdapter2);
 
 

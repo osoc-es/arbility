@@ -75,7 +75,7 @@ public class GuestActivity extends AppCompatActivity {
         });
         botonMostrador.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { changeWindowTo(MedirMostradorActivity.class);}
+            public void onClick(View view) { changeWindowTo(MeasureCounter.class);}
         });
         botonRampa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +102,7 @@ public class GuestActivity extends AppCompatActivity {
         botonSimulacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWindowTo(SimulacionActivity.class);
+                changeWindowTo(WheelchairSimulation.class);
             }
         });
 

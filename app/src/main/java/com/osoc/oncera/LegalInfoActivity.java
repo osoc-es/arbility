@@ -1,22 +1,13 @@
 package com.osoc.oncera;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.util.Measure;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-
-import com.osoc.oncera.javabean.SalvaEscaleras;
-
-import org.w3c.dom.Text;
 
 public class LegalInfoActivity extends AppCompatActivity {
 
@@ -53,13 +44,13 @@ public class LegalInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (type == TypesManager.obsType.PUERTAS)  changeWindowTo(MeasureActivity.class);
+                if (type == TypesManager.obsType.PUERTAS)  changeWindowTo(MeasureDoor.class);
                 else if (type == TypesManager.obsType.ILUM) changeWindowTo(Luxometro.class);
-                else if (type == TypesManager.obsType.ASCENSORES) changeWindowTo(MedirAscensor.class);
-                else if (type == TypesManager.obsType.MOSTRADORES) changeWindowTo(MedirMostradorActivity.class);
-                else if (type == TypesManager.obsType.RAMPAS) changeWindowTo(MedirRampa.class);
-                else if (type == TypesManager.obsType.SALVAESCALERAS) changeWindowTo(MedirSalvaescaleras.class);
-                else if (type == TypesManager.obsType.EMERGENCIAS) changeWindowTo(MedirEmergencias.class);
+                else if (type == TypesManager.obsType.ASCENSORES) changeWindowTo(MeasureLift.class);
+                else if (type == TypesManager.obsType.MOSTRADORES) changeWindowTo(MeasureCounter.class);
+                else if (type == TypesManager.obsType.RAMPAS) changeWindowTo(MeasureRamp.class);
+                else if (type == TypesManager.obsType.SALVAESCALERAS) changeWindowTo(MeasureStairLift.class);
+                else if (type == TypesManager.obsType.EMERGENCIAS) changeWindowTo(MeasureEmergencies.class);
             }
         });
     }

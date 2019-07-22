@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.javabean.EvacuacionEmergencia;
 
-public class MedirEmergencias extends AppCompatActivity {
+public class MeasureEmergencies extends AppCompatActivity {
 
 
     private EvacuacionEmergencia emergencia = new EvacuacionEmergencia(null, null, null, null, null, null);
@@ -28,7 +28,7 @@ public class MedirEmergencias extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medir_emergencias);
+        setContentView(R.layout.activity_measure_emergencies);
 
         UpdateDatabaseValues();
 
@@ -37,8 +37,8 @@ public class MedirEmergencias extends AppCompatActivity {
 
     private void dialog()
     {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MedirEmergencias.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_pregunta_emergencias, null);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureEmergencies.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_emergencies, null);
         mBuilder.setTitle("Rellena el cuestionario");
         CheckBox chk_simulacro = (CheckBox) mView.findViewById(R.id.chk1);
         CheckBox chk_alumbrado = (CheckBox) mView.findViewById(R.id.chk2);
