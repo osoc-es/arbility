@@ -12,9 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -96,7 +94,7 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //TODO METODOS
-                                Intent i = new Intent(ItinerariosProfesorActivity.this, crearItinerarioActivity.class);
+                                Intent i = new Intent(ItinerariosProfesorActivity.this, CrearItinerarioActivity.class);
                                 startActivity(i);
                             }
                         } ).setNegativeButton( "Cancelar", null );
