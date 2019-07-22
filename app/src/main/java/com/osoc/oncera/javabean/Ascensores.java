@@ -113,6 +113,6 @@ public class Ascensores implements Serializable {
         this.codCentro = codCentro;
     }
 
-    public String getMensaje(){return mensaje;}
+    public String getMessage(){return mensaje;}
     public void setMensaje(String mensaje){this.mensaje = mensaje;}
 }

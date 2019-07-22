@@ -8,10 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.osoc.oncera.javabean.Ascensores;
-import com.osoc.oncera.javabean.Aseos;
 import com.osoc.oncera.javabean.EvacuacionEmergencia;
 import com.osoc.oncera.javabean.Iluminacion;
 import com.osoc.oncera.javabean.Puerta;
@@ -31,7 +29,7 @@ public class AxesibilityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_axesibility);
+        setContentView(R.layout.activity_accessibility_checker);
 
         layout = (RelativeLayout) findViewById(R.id.layout);
         accText = (TextView)findViewById(R.id.accText);
@@ -55,13 +53,13 @@ public class AxesibilityActivity extends AppCompatActivity {
 
     private void parseType(Bundle b){
 
-       if (type == TypesManager.obsType.PUERTAS)  CheckAccesibility(((Puerta)b.get(TypesManager.PUERTAS_OBS)).getAccesible(), ((Puerta)b.get(TypesManager.PUERTAS_OBS)).getMensaje());
-        else if (type == TypesManager.obsType.ILUM)  CheckAccesibility(((Iluminacion)b.get(TypesManager.ILUM_OBS)).getAccesible(),((Iluminacion) b.get(TypesManager.ILUM_OBS)).getMensaje());
-        else if (type == TypesManager.obsType.ASCENSORES)  CheckAccesibility(((Ascensores)b.get(TypesManager.ASCENSOR_OBS)).getAccesible(), ((Ascensores)b.get(TypesManager.ASCENSOR_OBS)).getMensaje());
-       else if (type == TypesManager.obsType.MOSTRADORES)  CheckAccesibility(((PuntosAtencion)b.get(TypesManager.MOSTRADOR_OBS)).getAccesible(), ((PuntosAtencion)b.get(TypesManager.MOSTRADOR_OBS)).getMensaje());
-       else if (type == TypesManager.obsType.RAMPAS)  CheckAccesibility(((Rampas)b.get(TypesManager.RAMPA_OBS)).getAccesible(), ((Rampas)b.get(TypesManager.RAMPA_OBS)).getMensaje());
-       else if (type == TypesManager.obsType.SALVAESCALERAS) CheckAccesibility(((SalvaEscaleras)b.get(TypesManager.SALVAESC_OBS)).getAccesible(), ((SalvaEscaleras)b.get(TypesManager.SALVAESC_OBS)).getMensaje());
-       else if (type == TypesManager.obsType.EMERGENCIAS)  CheckAccesibility(((EvacuacionEmergencia)b.get(TypesManager.EMERGENC_OBS)).getAccesible(), ((EvacuacionEmergencia)b.get(TypesManager.EMERGENC_OBS)).getMensaje());
+       if (type == TypesManager.obsType.PUERTAS)  CheckAccesibility(((Puerta)b.get(TypesManager.PUERTAS_OBS)).getAccesible(), ((Puerta)b.get(TypesManager.PUERTAS_OBS)).getMessage());
+        else if (type == TypesManager.obsType.ILUM)  CheckAccesibility(((Iluminacion)b.get(TypesManager.ILUM_OBS)).getAccesible(),((Iluminacion) b.get(TypesManager.ILUM_OBS)).getMessage());
+        else if (type == TypesManager.obsType.ASCENSORES)  CheckAccesibility(((Ascensores)b.get(TypesManager.ASCENSOR_OBS)).getAccesible(), ((Ascensores)b.get(TypesManager.ASCENSOR_OBS)).getMessage());
+       else if (type == TypesManager.obsType.MOSTRADORES)  CheckAccesibility(((PuntosAtencion)b.get(TypesManager.MOSTRADOR_OBS)).getAccesible(), ((PuntosAtencion)b.get(TypesManager.MOSTRADOR_OBS)).getMessage());
+       else if (type == TypesManager.obsType.RAMPAS)  CheckAccesibility(((Rampas)b.get(TypesManager.RAMPA_OBS)).getAccesible(), ((Rampas)b.get(TypesManager.RAMPA_OBS)).getMessage());
+       else if (type == TypesManager.obsType.SALVAESCALERAS) CheckAccesibility(((SalvaEscaleras)b.get(TypesManager.SALVAESC_OBS)).getAccesible(), ((SalvaEscaleras)b.get(TypesManager.SALVAESC_OBS)).getMessage());
+       else if (type == TypesManager.obsType.EMERGENCIAS)  CheckAccesibility(((EvacuacionEmergencia)b.get(TypesManager.EMERGENC_OBS)).getAccesible(), ((EvacuacionEmergencia)b.get(TypesManager.EMERGENC_OBS)).getMessage());
     }
 
 

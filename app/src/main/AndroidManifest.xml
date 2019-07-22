@@ -63,7 +63,7 @@
             android:name=".MeasureRamp"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Luxometro"
+            android:name=".LuxMeter"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MeasureCounter"
