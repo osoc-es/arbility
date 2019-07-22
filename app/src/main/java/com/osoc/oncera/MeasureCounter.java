@@ -23,6 +23,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
@@ -47,7 +48,7 @@ public class MeasureCounter extends AppCompatActivity {
 
     private static final String TAG = MeasureDoor.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
-    private float upDistance=0f;
+    private float upDistance = 0f;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
     private Anchor myanchor;
@@ -71,7 +72,7 @@ public class MeasureCounter extends AppCompatActivity {
 
     private String message;
 
-    private Anchor anchor1=null, anchor2=null;
+    private Anchor anchor1 = null, anchor2 = null;
 
     private HitResult myhit;
 
@@ -94,8 +95,8 @@ public class MeasureCounter extends AppCompatActivity {
 
         setContentView(R.layout.activity_measure_counter);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-        restart = (Button)findViewById(R.id.btn_restart);
-        confirm = (Button)findViewById(R.id.btn_ok);
+        restart = (Button) findViewById(R.id.btn_restart);
+        confirm = (Button) findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
         ancho_util = (TextView) findViewById(R.id.ancho_util);
         alto_trabajo = (TextView) findViewById(R.id.alto_trabajo);
@@ -119,15 +120,14 @@ public class MeasureCounter extends AppCompatActivity {
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                anchor1=null;
-                anchor2=null;
+            public void onClick(View v) {
+                anchor1 = null;
+                anchor2 = null;
                 medir_respisa = false;
                 z_axis.setProgress(0);
                 z_axis.setEnabled(false);
                 confirm.setEnabled(false);
-                if(repisa)
+                if (repisa)
                     confirm.setText("Next");
                 img_instr.setImageResource(R.drawable.mostrador_01);
                 data.setText(R.string.instr_mostrador_01);
@@ -135,7 +135,7 @@ public class MeasureCounter extends AppCompatActivity {
                 alto_trabajo.setText("Altura trabajo: --");
                 profundo_repisa.setText("Profundidad repisa: --");
                 alto_repisa.setText("Altura repisa: --");
-                for(AnchorNode n : anchorNodes){
+                for (AnchorNode n : anchorNodes) {
                     arFragment.getArSceneView().getScene().removeChild(n);
                     n.getAnchor().detach();
                     n.setParent(null);
@@ -147,12 +147,17 @@ public class MeasureCounter extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(repisa&&!medir_respisa){
+                if (repisa && !medir_respisa) {
                     medir_respisa = true;
                     resetMedirRespisa();
+<<<<<<< HEAD:app/src/main/java/com/osoc/oncera/MeasureCounter.java
                 }
                 else{
                     Toast.makeText(MeasureCounter.this, "Confirmado", Toast.LENGTH_SHORT).show();
+=======
+                } else {
+                    Toast.makeText(MedirMostradorActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
+>>>>>>> c16b5566f2c04597906473dc17f8b873275ea7dd:app/src/main/java/com/osoc/oncera/MedirMostradorActivity.java
                     Confirmar();
                 }
             }
@@ -165,12 +170,11 @@ public class MeasureCounter extends AppCompatActivity {
                 upDistance = progress;
                 ascend(myanchornode, upDistance);
                 confirm.setEnabled(true);
-                if(!medir_respisa) {
+                if (!medir_respisa) {
                     alto_trabajo.setText("Altura trabajo: " +
                             form_numbers.format(progress / 100f));
                     mostrador.setAlturaPlanoTrabajo((float) progress);
-                }
-                else {
+                } else {
                     alto_repisa.setText("Altura repisa: " +
                             form_numbers.format(progress / 100f));
                     mostrador.setAlturaEspacioInferiorLibre((float) progress);
@@ -178,10 +182,12 @@ public class MeasureCounter extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
         // When you build a Renderable, Sceneform loads its resources in the background while returning
@@ -215,22 +221,20 @@ public class MeasureCounter extends AppCompatActivity {
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
                     anchorNodes.add(anchorNode);
 
-                    if(anchor1 == null) {
+                    if (anchor1 == null) {
                         anchor1 = anchor;
-                    }
-                    else {
+                    } else {
                         anchor2 = anchor;
                         z_axis.setEnabled(true);
-                        if(!medir_respisa){
+                        if (!medir_respisa) {
                             ancho_util.setText("Anchura util: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
                             mostrador.setAnchuraPlanoTrabajo(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
-                            mostrador.setAnchuraEspacioInferiorLibre(mostrador.getAnchuraPlanoTrabajo() * 100f );
+                            mostrador.setAnchuraEspacioInferiorLibre(mostrador.getAnchuraPlanoTrabajo() * 100f);
 
                             img_instr.setImageResource(R.drawable.mostrador_02);
                             data.setText(R.string.instr_mostrador_02);
-                        }
-                        else {
+                        } else {
                             profundo_repisa.setText("Profundidad repisa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
@@ -253,14 +257,14 @@ public class MeasureCounter extends AppCompatActivity {
         repisaDialog();
     }
 
-    void ascend(AnchorNode an, float up){
-        Anchor anchor =  myhit.getTrackable().createAnchor(
-                myhit.getHitPose().compose(Pose.makeTranslation(0, up/100f, 0)));
+    void ascend(AnchorNode an, float up) {
+        Anchor anchor = myhit.getTrackable().createAnchor(
+                myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
 
         an.setAnchor(anchor);
     }
 
-    void repisaDialog(){
+    void repisaDialog() {
         int[] spinnerImages = new int[]{R.drawable.mostrador_most
                 , R.drawable.mostrador_most_salida};
 
@@ -275,9 +279,9 @@ public class MeasureCounter extends AppCompatActivity {
         mSpinner.setAdapter(mCustomAdapter);
 
 
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i){
+            public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });
@@ -285,11 +289,10 @@ public class MeasureCounter extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if(mSpinner.getSelectedItemPosition() == 1) {
+                if (mSpinner.getSelectedItemPosition() == 1) {
                     repisa = true;
                     confirm.setText("Next");
-                }
-                else {
+                } else {
                     alto_repisa.setVisibility(View.INVISIBLE);
                     profundo_repisa.setVisibility(View.INVISIBLE);
                 }
@@ -306,21 +309,21 @@ public class MeasureCounter extends AppCompatActivity {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
         float totalDistanceSquared = 0;
-        for(int i=0; i<3; ++i)
-            totalDistanceSquared += distance_vector[i]*distance_vector[i];
+        for (int i = 0; i < 3; ++i)
+            totalDistanceSquared += distance_vector[i] * distance_vector[i];
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void resetMedirRespisa(){
-        anchor1=null;
-        anchor2=null;
+    void resetMedirRespisa() {
+        anchor1 = null;
+        anchor2 = null;
         z_axis.setEnabled(false);
         z_axis.setProgress(0);
         confirm.setEnabled(false);
         confirm.setText("Confirm");
         img_instr.setImageResource(R.drawable.mostrador_03);
         data.setText(R.string.instr_mostrador_03);
-        for(AnchorNode n : anchorNodes){
+        for (AnchorNode n : anchorNodes) {
             arFragment.getArSceneView().getScene().removeChild(n);
             n.getAnchor().detach();
             n.setParent(null);
@@ -349,8 +352,7 @@ public class MeasureCounter extends AppCompatActivity {
         return true;
     }
 
-    private void Confirmar()
-    {
+    private void Confirmar() {
         String s = "";
 
         boolean cumple_anpt = Evaluator.IsGreaterThan(mostrador.getAnchuraPlanoTrabajo(), db_anch_plano_trabajo);
@@ -360,26 +362,29 @@ public class MeasureCounter extends AppCompatActivity {
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_alpt);
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_alpt) + db_alt_plano_trabajo, cumple_alpt);
 
-        boolean cumple_aleif = Evaluator.IsGreaterThan(mostrador.getAlturaEspacioInferiorLibre(), db_alt_esp_inf_libre);
-        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_aleif);
-        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aleil) + db_alt_esp_inf_libre, cumple_aleif);
+        if (repisa) {
+            boolean cumple_aleif = Evaluator.IsGreaterThan(mostrador.getAlturaEspacioInferiorLibre(), db_alt_esp_inf_libre);
+            s = UpdateStringIfNeeded(s, "y", s == "" || cumple_aleif);
+            s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aleil) + db_alt_esp_inf_libre, cumple_aleif);
 
-        boolean cumple_aneif = Evaluator.IsGreaterThan(mostrador.getAnchuraEspacioInferiorLibre(), db_anch_esp_inf_libre);
-        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_aneif);
-        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aneil) + db_anch_esp_inf_libre, cumple_aneif);
+            boolean cumple_aneif = Evaluator.IsGreaterThan(mostrador.getAnchuraEspacioInferiorLibre(), db_anch_esp_inf_libre);
+            s = UpdateStringIfNeeded(s, "y", s == "" || cumple_aneif);
+            s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aneil) + db_anch_esp_inf_libre, cumple_aneif);
 
-        boolean cumple_peif = Evaluator.IsGreaterThan(mostrador.getProfundidadEspacioInferiorLibre(), db_prof_esp_inf_libre);
-        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_peif);
-        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_peil) + db_prof_esp_inf_libre, cumple_peif);
+            boolean cumple_peif = Evaluator.IsGreaterThan(mostrador.getProfundidadEspacioInferiorLibre(), db_prof_esp_inf_libre);
+            s = UpdateStringIfNeeded(s, "y", s == "" || cumple_peif);
+            s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_peil) + db_prof_esp_inf_libre, cumple_peif);
 
+            mostrador.setAccesible(cumple_aleif && cumple_anpt && cumple_alpt && cumple_aneif && cumple_peif);
 
-        mostrador.setAccesible(cumple_aleif && cumple_anpt && cumple_alpt && cumple_aneif && cumple_peif);
+        } else
+            mostrador.setAccesible(cumple_anpt && cumple_alpt );
 
         UpdateMessage(mostrador.getAccesible(), s);
         mostrador.setMensaje(message);
 
-        Intent i = new Intent(this,AxesibilityActivity.class);
-        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.MOSTRADORES.getValue());
+        Intent i = new Intent(this, AxesibilityActivity.class);
+        i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.MOSTRADORES.getValue());
         i.putExtra(TypesManager.MOSTRADOR_OBS, mostrador);
 
         startActivity(i);
@@ -387,8 +392,7 @@ public class MeasureCounter extends AppCompatActivity {
 
     }
 
-    private void UpdateDatabaseValues()
-    {
+    private void UpdateDatabaseValues() {
         final DatabaseReference anchuraPTDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AnchuraPlanoTrabajo");
 
         anchuraPTDB.addValueEventListener(new ValueEventListener() {
@@ -461,14 +465,12 @@ public class MeasureCounter extends AppCompatActivity {
 
     }
 
-    private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
-    {
+    private String UpdateStringIfNeeded(String base, String to_add, boolean condition) {
         return condition ? base : base + " " + to_add;
     }
 
-    private void UpdateMessage(boolean condition, String aux)
-    {
-        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+    private void UpdateMessage(boolean condition, String aux) {
+        message = condition ? getString(R.string.accesible) : getString(R.string.no_accesible);
         message += aux;
     }
 
