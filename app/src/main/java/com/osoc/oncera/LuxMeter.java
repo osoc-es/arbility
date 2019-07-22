@@ -58,11 +58,10 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
     //Obstacle
     private Iluminacion iluminacion = new Iluminacion(null, null, null, null, null);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_luxMeter);
+        setContentView(R.layout.activity_lux_meter);
 
         UpdateDatabaseValues();
 

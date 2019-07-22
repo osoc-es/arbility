@@ -25,15 +25,16 @@ public class AccessibilityChecker extends AppCompatActivity {
 
 
     TextView accText;
-    int typeID;
     RelativeLayout layout;
-    TypesManager.obsType type;
     Button confirmButton;
+
+    TypesManager.obsType type;
+    int typeID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accessibilityChecker);
+        setContentView(R.layout.activity_accessibility_checker);
 
         layout = (RelativeLayout) findViewById(R.id.layout);
         accText = (TextView) findViewById(R.id.accText);
