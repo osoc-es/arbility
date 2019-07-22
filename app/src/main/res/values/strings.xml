@@ -245,4 +245,18 @@
     <string name="btnNuevoObstaculoText">Nuevo obstaculo</string>
     <string name="btnConfirmarObstaculoText">Confirmar obstaculo</string>
     <string name="btnCrearItinerarioText">Crear itinerario</string>
+    <string name="instr_puerta_01">Haz click en las esquinas inferiores de la puerta tras calibrar</string>
+    <string name="instr_puerta_02">Sube el cubo con el deslizador hasta que su base de con el mecanismo de apertura</string>
+    <string name="instr_puerta_03">Sube el cubo con el deslizador hasta que su base de con el marco de la puerta</string>
+    <string name="instr_ascensor_01">Toca en las esquinas inferiores de la puerta del ascensor</string>
+    <string name="instr_ascensor_02">Toca el suelo del ascensor al fondo y en la puerta</string>
+    <string name="instr_mostrador_01">Haz click en las esquinas inferiores del mostrador tras calibrar</string>
+    <string name="instr_mostrador_04">Sube el cubo con el deslizador hasta que su base de con el lado inferior de la repisa</string>
+    <string name="instr_mostrador_02">Sube el cubo con el deslizador hasta que su base de con el tope del mostrador</string>
+    <string name="instr_mostrador_03">Delimita el hueco util de repisa con dos puntos desde un lado</string>
+    <string name="instr_salvaescaleras_01">Toca en las esquinas de la plataforma a lo ancho</string>
+    <string name="instr_salvaescaleras_02">Toca en las esquinas de la plataforma a lo largo</string>
+    <string name="instr_rampa_01">Toca en los extremos inferiores de la rampa a lo largo</string>
+    <string name="instr_rampa_03">Sube el cubo con el deslizador hasta que su base de con el lado inferior de la barandilla</string>
+    <string name="instr_rampa_02">Toca en los extremos inferiores de la rampa a lo ancho</string>
 </resources>

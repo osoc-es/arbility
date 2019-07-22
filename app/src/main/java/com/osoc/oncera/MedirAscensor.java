@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class MedirAscensor extends AppCompatActivity {
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
     private float paramAnchura;
     private float paramProf;
+    private ImageView img_instr;
 
     private List<AnchorNode> anchorNodes;
 
@@ -121,6 +123,7 @@ public class MedirAscensor extends AppCompatActivity {
         ancho_ascensor = (TextView) findViewById(R.id.ancho_acensor);
         profundo_ascensor = (TextView) findViewById(R.id.profundo_ascensor);
         ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();
 
@@ -143,7 +146,8 @@ public class MedirAscensor extends AppCompatActivity {
                 anchor2=null;
                 confirm.setEnabled(false);
                 confirm.setText("Next");
-                data.setText("Toca en las esquinas inferiores de la puerta del ascensor");
+                img_instr.setImageResource(R.drawable.ascensor_01);
+                data.setText(R.string.instr_ascensor_01);
 
                 ancho_ascensor.setText("Anchura ascensor: --");
                 profundo_ascensor.setText("Profundidad ascensor: --");
@@ -344,7 +348,8 @@ public class MedirAscensor extends AppCompatActivity {
         anchor2=null;
         confirm.setEnabled(false);
         confirm.setText("Confirm");
-        data.setText("Toca el suelo del ascensor al fondo y en la puerta");
+        img_instr.setImageResource(R.drawable.ascensor_02);
+        data.setText(R.string.instr_ascensor_02);
         for(AnchorNode n : anchorNodes){
             arFragment.getArSceneView().getScene().removeChild(n);
             n.getAnchor().detach();

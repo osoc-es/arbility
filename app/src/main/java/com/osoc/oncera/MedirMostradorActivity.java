@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -71,6 +72,7 @@ public class MedirMostradorActivity extends AppCompatActivity {
     TextView profundo_repisa;
     TextView alto_repisa;
     SeekBar z_axis;
+    private ImageView img_instr;
 
     private String message;
 
@@ -106,6 +108,7 @@ public class MedirMostradorActivity extends AppCompatActivity {
         alto_repisa = (TextView) findViewById(R.id.alto_repisa);
         z_axis = (SeekBar) findViewById(R.id.z_axis);
         ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();
 
@@ -131,7 +134,8 @@ public class MedirMostradorActivity extends AppCompatActivity {
                 confirm.setEnabled(false);
                 if(repisa)
                     confirm.setText("Next");
-                data.setText("Haz click en las esquinas inferiores del mostrador tras calibrar");
+                img_instr.setImageResource(R.drawable.mostrador_01);
+                data.setText(R.string.instr_mostrador_01);
                 ancho_util.setText("Anchura util: --");
                 alto_trabajo.setText("Altura trabajo: --");
                 profundo_repisa.setText("Profundidad repisa: --");
@@ -228,7 +232,8 @@ public class MedirMostradorActivity extends AppCompatActivity {
                             mostrador.setAnchuraPlanoTrabajo(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
                             mostrador.setAnchuraEspacioInferiorLibre(mostrador.getAnchuraPlanoTrabajo() * 100f );
 
-                            data.setText("Sube el cubo con el deslizador hasta que su base de con el tope del mostrador");
+                            img_instr.setImageResource(R.drawable.mostrador_02);
+                            data.setText(R.string.instr_mostrador_02);
                         }
                         else {
                             profundo_repisa.setText("Profundidad repisa: " +
@@ -236,7 +241,8 @@ public class MedirMostradorActivity extends AppCompatActivity {
 
                             mostrador.setProfundidadEspacioInferiorLibre(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
 
-                            data.setText("Sube el cubo con el deslizador hasta que su base de con el lado inferior de la repisa");
+                            img_instr.setImageResource(R.drawable.mostrador_04);
+                            data.setText(R.string.instr_mostrador_04);
                         }
                     }
                     myanchornode = anchorNode;
@@ -317,7 +323,8 @@ public class MedirMostradorActivity extends AppCompatActivity {
         z_axis.setProgress(0);
         confirm.setEnabled(false);
         confirm.setText("Confirm");
-        data.setText("Delimita el hueco util de repisa con dos puntos desde un lado");
+        img_instr.setImageResource(R.drawable.mostrador_03);
+        data.setText(R.string.instr_mostrador_03);
         for(AnchorNode n : anchorNodes){
             arFragment.getArSceneView().getScene().removeChild(n);
             n.getAnchor().detach();

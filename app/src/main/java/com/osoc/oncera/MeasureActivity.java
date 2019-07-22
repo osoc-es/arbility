@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class MeasureActivity extends AppCompatActivity {
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
     private Anchor anchor1 = null, anchor2 = null;
+    private ImageView img_instr;
 
     private HitResult myhit;
 
@@ -98,6 +100,7 @@ public class MeasureActivity extends AppCompatActivity {
         TextView height = (TextView) findViewById(R.id.height);
         SeekBar z_axis = (SeekBar) findViewById(R.id.z_axis);
         ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        img_instr = (ImageView) findViewById(R.id.img_instr);
         List<AnchorNode> anchorNodes = new ArrayList<>();
 
         z_axis.setEnabled(false);
@@ -120,7 +123,8 @@ public class MeasureActivity extends AppCompatActivity {
                 z_axis.setEnabled(false);
                 confirm.setEnabled(false);
                 confirm.setText("Next");
-                data.setText("Haz click en las esquinas inferiores de la puerta tras calibrar");
+                data.setText(R.string.instr_puerta_01);
+                img_instr.setImageResource(R.drawable.puerta_01);
                 width.setText("Anchura puerta: --");
                 mechanism.setText("Altura mecanismo: --");
                 height.setText("Altura puerta: --");
@@ -140,7 +144,8 @@ public class MeasureActivity extends AppCompatActivity {
                 Toast.makeText(MeasureActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
                 if (!measure_height) {
                     measure_height = true;
-                    data.setText("Sube el cubo con el deslizador hasta que su base de con el marco de la puerta");
+                    img_instr.setImageResource(R.drawable.puerta_03);
+                    data.setText(R.string.instr_puerta_03);
                     confirm.setEnabled(false);
                     confirm.setText("Confirm");
                 } else
@@ -216,7 +221,8 @@ public class MeasureActivity extends AppCompatActivity {
 
                         puerta.setAnchura((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
 
-                        data.setText("Sube el cubo con el deslizador hasta que su base de con el mecanismo de apertura");
+                        img_instr.setImageResource(R.drawable.puerta_02);
+                        data.setText(R.string.instr_puerta_02);
 
                         z_axis.setEnabled(true);
                     }

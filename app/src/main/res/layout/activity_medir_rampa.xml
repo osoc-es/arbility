@@ -50,20 +50,30 @@
         android:textColor="#fff"
         android:text="Altura barandilla: --" />
 
-
-    <TextView
-        android:id="@+id/tv_distance"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="150dp"
-        android:textAlignment="center"
-        android:background="#8000"
-        android:textSize="25sp"
-        android:padding="5dp"
-        android:textColor="#fff"
-        android:text="Toca en los extremos inferiores de la rampa a lo largo"
-        />
+        android:background="#8000">
+        <ImageView
+            android:id="@+id/img_instr"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/rampa_01"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:padding="5dp"
+            android:textColor="#fff"
+            android:text="@string/instr_rampa_01"
+            />
+    </LinearLayout>
+
 
 
     <SeekBar

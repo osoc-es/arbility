@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,7 @@ public class MedirSalvaescaleras extends AppCompatActivity {
     TextView data;
     TextView ancho_plat;
     TextView largo_plat;
+    private ImageView img_instr;
 
     private Anchor anchor1 = null, anchor2 = null;
 
@@ -122,6 +124,7 @@ public class MedirSalvaescaleras extends AppCompatActivity {
         ancho_plat = (TextView) findViewById(R.id.ancho_plat);
         largo_plat = (TextView) findViewById(R.id.largo_plat);
         ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();
 
@@ -141,7 +144,8 @@ public class MedirSalvaescaleras extends AppCompatActivity {
                 anchor2 = null;
                 confirm.setEnabled(false);
                 confirm.setText("Next");
-                data.setText("Toca en las esquinas de la plataforma a lo ancho");
+                data.setText(R.string.instr_salvaescaleras_01);
+                img_instr.setImageResource(R.drawable.salvaescaleras_01);
 
                 ancho_plat.setText("Anchura plataforma: --");
                 largo_plat.setText("Longitud plataforma: --");
@@ -328,7 +332,8 @@ public class MedirSalvaescaleras extends AppCompatActivity {
         anchor2 = null;
         confirm.setEnabled(false);
         confirm.setText("Confirm");
-        data.setText("Toca en las esquinas de la plataforma a lo largo");
+        data.setText(R.string.instr_salvaescaleras_02);
+        img_instr.setImageResource(R.drawable.salvaescaleras_02);
         for (AnchorNode n : anchorNodes) {
             arFragment.getArSceneView().getScene().removeChild(n);
             n.getAnchor().detach();

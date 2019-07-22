@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -70,7 +71,7 @@ public class MedirRampa extends AppCompatActivity {
     TextView alto_barandilla;
     TextView largo_rampa;
     SeekBar z_axis;
-
+    private ImageView img_instr;
 
     private Anchor anchor1 = null, anchor2 = null;
 
@@ -101,6 +102,8 @@ public class MedirRampa extends AppCompatActivity {
 
         z_axis = (SeekBar) findViewById(R.id.z_axis);
         ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        img_instr = (ImageView) findViewById(R.id.img_instr);
+
         anchorNodes = new ArrayList<>();
 
         z_axis.setEnabled(false);
@@ -124,7 +127,8 @@ public class MedirRampa extends AppCompatActivity {
                 z_axis.setEnabled(false);
                 confirm.setEnabled(false);
                 confirm.setText("Next");
-                data.setText("Toca en los extremos inferiores de la rampa a lo largo");
+                data.setText(R.string.instr_rampa_01);
+                img_instr.setImageResource(R.drawable.rampa_01);
 
                 largo_rampa.setText("Longitud rampa: --");
                 ancho_rampa.setText("Anchura rampa: --");
@@ -227,7 +231,8 @@ public class MedirRampa extends AppCompatActivity {
                                 confirm.setEnabled(true);
                             else {
                                 z_axis.setEnabled(true);
-                                data.setText("Sube el cubo con el deslizador hasta que su base de con el lado inferior de la barandilla");
+                                data.setText(R.string.instr_rampa_03);
+                                img_instr.setImageResource(R.drawable.rampa_03);
                             }
                         }
                     }
@@ -304,7 +309,8 @@ public class MedirRampa extends AppCompatActivity {
         anchor2 = null;
         confirm.setEnabled(false);
         confirm.setText("Confirm");
-        data.setText("Toca en los extremos inferiores de la rampa a lo ancho");
+        data.setText(R.string.instr_rampa_02);
+        img_instr.setImageResource(R.drawable.rampa_02);
         for (AnchorNode n : anchorNodes) {
             arFragment.getArSceneView().getScene().removeChild(n);
             n.getAnchor().detach();
