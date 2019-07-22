@@ -13,7 +13,6 @@ public final class Evaluator {
     static public boolean IsGreaterThan(float to_evaluate, float other)
     {
         return to_evaluate > other;
-
     }
 
     /**
@@ -29,24 +28,24 @@ public final class Evaluator {
     /**
      * Check if a value is between a range
      * @param to_evaluate value to check
-     * @param min
-     * @param max
-     * @return
+     * @param min lower value (exclusive)
+     * @param max higher value (exclusive)
+     * @return true if to_evaluate is in the range
      */
     static public boolean IsInRange(float to_evaluate, float min, float max)
     {
         return IsGreaterThan(to_evaluate, min) && IsLowerThan(to_evaluate, max);
     }
 
-    static public boolean IsEqualsTo(float to_evaluate, float other)
-    {
-        return to_evaluate == other;
-    }
-
+    /**
+     *
+     * @param to_evaluate
+     * @param other
+     * @return true if to_evaluate is equal to other
+     */
     static public boolean IsEqualsTo(boolean to_evaluate, boolean other)
     {
         return to_evaluate == other;
     }
-
 
 }
