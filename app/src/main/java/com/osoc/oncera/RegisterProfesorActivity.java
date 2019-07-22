@@ -170,11 +170,12 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
                 if (profesor[0] != null) {
 
-                    if (profesor[0].getCodCentro().equals( alias ) && alias != null) {
+                    if (profesor[0].getAlias().equals( alias ) && alias != null) {
+                        Toast.makeText( RegisterProfesorActivity.this, "Alias Repetido, por favor introduzca otro Alias", Toast.LENGTH_LONG ).show();
+
+                    } else {
                         Toast.makeText( RegisterProfesorActivity.this, "Alias correcto", Toast.LENGTH_LONG ).show();
                         comprobarCodigo();
-                    } else {
-                        Toast.makeText( RegisterProfesorActivity.this, "Alias Repetido, por favor introduzca otro Alias", Toast.LENGTH_LONG ).show();
                     }
 
                 } else {

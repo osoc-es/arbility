@@ -11,14 +11,16 @@ public class Itinerario implements Serializable {
     private String nombre;
     private String descripcion;
     private String codCentro;
+    private String codItinerario;
 
-    public Itinerario(String id, ArrayList<Obstaculo> obstaculos, String aliasProfesor, String nombre, String descripcion, String codCentro) {
+    public Itinerario(String id, ArrayList<Obstaculo> obstaculos, String aliasProfesor, String nombre, String descripcion, String codCentro, String codItinerario) {
         this.id = id;
         this.obstaculos = obstaculos;
         this.aliasProfesor = aliasProfesor;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.codCentro = codCentro;
+        this.codItinerario = codItinerario;
     }
 
     public Itinerario() {
@@ -26,6 +28,14 @@ public class Itinerario implements Serializable {
 
     public String getId() {
         return id;
+    }
+
+    public String getCodItinerario() {
+        return codItinerario;
+    }
+
+    public void setCodItinerario(String codItinerario) {
+        this.codItinerario = codItinerario;
     }
 
     public void setId(String id) {

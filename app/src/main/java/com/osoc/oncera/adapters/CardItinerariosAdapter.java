@@ -22,6 +22,7 @@ import java.util.List;
 public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerariosAdapter.CardItinerarioViewHolder> {
     List<Itinerario> mLista;
     DatabaseReference reference;
+    String nombre, descripcion, codigoItinerario, uid;
     private Context context;
 
     public CardItinerariosAdapter(List<Itinerario> mLista) {
@@ -32,46 +33,48 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
     @NonNull
     @Override
     public CardItinerariosAdapter.CardItinerarioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context=parent.getContext();
         View view= LayoutInflater.from(parent.getContext()).inflate( R.layout.card_datos_itinerario,parent, false);
 
-        context=parent.getContext();
-        return new CardItinerariosAdapter.CardItinerarioViewHolder(view);
+        CardItinerarioViewHolder holder = new CardItinerarioViewHolder( view );
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardItinerariosAdapter.CardItinerarioViewHolder holder, int position) {
 
-        final Itinerario itinerario = mLista.get( position );
+        Itinerario itinerario = mLista.get( position );
 
-        String upperString = itinerario.getNombre().substring( 0,1 ).toUpperCase() + itinerario.getNombre().substring( 1 );
+        nombre = itinerario.getNombre();
+        codigoItinerario = itinerario.getCodItinerario();
+        descripcion = itinerario.getDescripcion();
+        uid = itinerario.getId();
 
-        holder.tvNombre.setText( upperString );
-        if(itinerario.getDescripcion().trim().equals( "" )){
-            holder.tvDescripcion.setText( "Descripcion: No especificada" );
-            holder.tvNombre.setText( itinerario.getNombre());
-        }else{
-            holder.tvDescripcion.setText( itinerario.getDescripcion() );
-            holder.tvNombre.setText( itinerario.getNombre());
-        }
+        holder.tvNombre.setText( nombre );
+        holder.tvDescripcion.setText( descripcion );
+        holder.tvCodItinerario.setText( codigoItinerario );
+
         holder.btnEl.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder( context );
 
-                builder.setMessage( "¿Seguro qué quieres eliminar este itinerario de la lista?" )
-                        .setPositiveButton( "Si", new DialogInterface.OnClickListener() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder( context );
+                    builder.setMessage( "¿Seguro qué quieres eliminar este itinerario de la lista?" )
+                            .setPositiveButton( "Si", new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                mLista.remove(mLista.get(position).getId());
-                                reference.child( mLista.get( position ).getId()).removeValue();
-                                removeAt( position );
-                            }
-                        }).setNegativeButton( "Cancelar", null );
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    mLista.remove(mLista.get(position).getId());
+                                    reference.child(mLista.get(position).getId()).removeValue();
+                                    removeAt(position);
+                                    notifyDataSetChanged();
+                                }
+                            } ).setNegativeButton( "Cancelar", null );
 
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+
         } );
     }
 
@@ -82,16 +85,17 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
 
     public static class CardItinerarioViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView tvNombre;
-        public TextView tvDescripcion;
-        public ImageButton btnEl;
+         TextView tvNombre;
+         TextView tvDescripcion;
+         TextView tvCodItinerario;
+         ImageButton btnEl;
 
         public CardItinerarioViewHolder(@NonNull View itemView) {
             super( itemView );
             tvNombre = itemView.findViewById( R.id.tvNombre );
             tvDescripcion = itemView.findViewById( R.id.tvDescripcion );
-
-            btnEl = itemView.findViewById( R.id.btnEliminarIti );
+            tvCodItinerario = itemView.findViewById( R.id.tvCodItinerario );
+            btnEl =(ImageButton) itemView.findViewById( R.id.btnEliminarItinerario );
         }
     }
 

@@ -17,38 +17,42 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.CardItinerariosAdapter;
 import com.osoc.oncera.javabean.Itinerario;
-import com.osoc.oncera.javabean.Profesor;
 
 import java.util.ArrayList;
 
 public class ItinerariosProfesorActivity extends AppCompatActivity {
 
-    private ArrayList<Itinerario> lista;
+    RecyclerView rv;
 
-    private RecyclerView recyclerView;
-    private CardItinerariosAdapter adapter;
+    ArrayList<Itinerario> itinerarios;
+
+    CardItinerariosAdapter adapter;
+   /* ArrayList<Itinerario> lista;
+    private DatabaseReference mDatabaseRef;
+    RecyclerView rv;
+    Adapter adapter;
     private LinearLayoutManager llManager;
 
-    FirebaseUser firebaseUser;
+
     private DatabaseReference reference;
 
     private final Profesor[] prf = new Profesor[1];
 
 
-    String emailPersona;
-    String codCentro;
 
     ArrayList<String> listaIti;
+
+
+    //FloatingActionButton fam;*/
+   FirebaseUser firebaseUser;
+   Button bntAniadir;
     ImageButton btnEl;
-    Button bntAniadir;
-    //FloatingActionButton fam;
+    String emailPersona;
+    String codCentro;
 
 
     @Override
@@ -56,28 +60,73 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_itinerarios_profesor );
 
+        rv = findViewById( R.id.rvItinerario );
+        rv.setLayoutManager( new LinearLayoutManager( this ) );
 
+        itinerarios = new ArrayList<>();
 
+        FirebaseDatabase databse = FirebaseDatabase.getInstance();
 
+        adapter = new CardItinerariosAdapter( itinerarios );
 
-       // final FloatingActionButton fab2 = (FloatingActionButton) findViewById( R.id.fab2 );
+        rv.setAdapter( adapter );
 
+        adapter.notifyDataSetChanged();
 
-        btnEl = findViewById( R.id.btnEliminarIti );
+        databse.getReference().child( "Itinerarios" ).addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                itinerarios.removeAll( itinerarios );
+                for (DataSnapshot snapshost : dataSnapshot.getChildren()) {
+                    Itinerario iti = snapshost.getValue( Itinerario.class );
+                    itinerarios.add( iti );
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
+        /*btnEl.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder( ItinerariosProfesorActivity.this );
+                    builder.setMessage( "¿Seguro qué quieres eliminar este itinerario de la lista?" )
+                            .setPositiveButton( "Si", new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    String seleccionado;
+                                    Itinerario iti = new Itinerario(  );
+                                    iti.setId( seleccionado.getId );
+                                    mLista.remove( mLista.get( position ).getId() );
+                                    reference.child( mLista.get( position ).getId() ).removeValue();
+                                    removeAt( position );
+                                }
+                            } ).setNegativeButton( "Cancelar", null );
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+            }
+        } );*/
+
         bntAniadir = findViewById( R.id.btnAniadir );
+        btnEl = findViewById( R.id.btnEliminarItinerario );
 
-        llManager = new LinearLayoutManager( this );
 
-        recyclerView = findViewById( R.id.rvItinerario );
-        recyclerView.setHasFixedSize( true );
 
-        lista = new ArrayList<>();
+        rv.setHasFixedSize( true );
+
+
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         emailPersona = firebaseUser.getEmail();
-        reference = FirebaseDatabase.getInstance().getReference( "Usuarios" );
 
-        cargarCodCentro();
+        //cargarCodCentro();
 
         bntAniadir.setOnClickListener( new View.OnClickListener() {
 
@@ -108,9 +157,10 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
             }
         } );
 
+
     }
 
-    private void cargarCodCentro() {
+    /*private void cargarCodCentro() {
         Query qq = reference.orderByChild( "correo" ).equalTo( emailPersona );
 
         qq.addListenerForSingleValueEvent( new ValueEventListener() {
@@ -132,8 +182,8 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
             }
 
         } );
-    }
-    private void cargarItinerarios() {
+    }*/
+   /* private void cargarItinerarios() {
         reference = FirebaseDatabase.getInstance().getReference( "Itinerarios" );
 
         recyclerView.setLayoutManager( llManager );
@@ -173,7 +223,7 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        } );
+        } );*/
     }
-}
+
 

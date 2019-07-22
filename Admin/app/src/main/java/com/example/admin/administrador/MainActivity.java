@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rv;
 
-    List<Centro> centros;
+    ArrayList<Centro> centros;
 
     Adapter adapter;
 

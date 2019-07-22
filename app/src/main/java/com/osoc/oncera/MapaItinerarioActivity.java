@@ -61,7 +61,7 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
 
     private Itinerario itinerario;
 
-    private void createItinerario(){
+    /*private void createItinerario(){
         ArrayList<Obstaculo> aux = new ArrayList<>();
 
         Obstaculo p = new Obstaculo("1",-3.696541,40.347230,TypesManager.PUERTAS_OBS,"foto",1,null);
@@ -77,14 +77,14 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
         itinerario = new Itinerario("1",aux,"Pedro","ItinerarioTest","prueba it",null);
 
 
-    }
+    }*/
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, "pk.eyJ1IjoiZm9uY2UiLCJhIjoiY2p4b3B1NG53MDhsbTNjbnYzMXNpbjRjYiJ9.MkBM2G0smC9aOJ_IS804xg");
         setContentView(R.layout.activity_mapa_itinerario);
 
-        createItinerario();
+        //createItinerario();
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
