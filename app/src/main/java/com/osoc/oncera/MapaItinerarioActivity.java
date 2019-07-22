@@ -124,6 +124,7 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
         Button btn_location = (Button) findViewById(R.id.btn_evaluar);
     }
 
+
     private void goToEv()
     {
         Intent i;

@@ -196,6 +196,7 @@ public class MedirRampa extends AppCompatActivity {
                             return null;
                         });
 
+
         arFragment.setOnTapArPlaneListener(
                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
                     if (andyRenderable == null) {
