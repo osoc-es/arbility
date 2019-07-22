@@ -121,26 +121,7 @@ public class MeasureCounter extends AppCompatActivity {
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anchor1 = null;
-                anchor2 = null;
-                medir_respisa = false;
-                z_axis.setProgress(0);
-                z_axis.setEnabled(false);
-                confirm.setEnabled(false);
-                if (repisa)
-                    confirm.setText("Next");
-                img_instr.setImageResource(R.drawable.mostrador_01);
-                data.setText(R.string.instr_mostrador_01);
-                ancho_util.setText("Anchura util: --");
-                alto_trabajo.setText("Altura trabajo: --");
-                profundo_repisa.setText("Profundidad repisa: --");
-                alto_repisa.setText("Altura repisa: --");
-                for (AnchorNode n : anchorNodes) {
-                    arFragment.getArSceneView().getScene().removeChild(n);
-                    n.getAnchor().detach();
-                    n.setParent(null);
-                    n = null;
-                }
+                resetLayout();
             }
         });
 
@@ -149,15 +130,10 @@ public class MeasureCounter extends AppCompatActivity {
             public void onClick(View view) {
                 if (repisa && !medir_respisa) {
                     medir_respisa = true;
-                    resetMedirRespisa();
-<<<<<<< HEAD:app/src/main/java/com/osoc/oncera/MeasureCounter.java
+                    startMeasureLedge();
                 }
                 else{
                     Toast.makeText(MeasureCounter.this, "Confirmado", Toast.LENGTH_SHORT).show();
-=======
-                } else {
-                    Toast.makeText(MedirMostradorActivity.this, "Confirmado", Toast.LENGTH_SHORT).show();
->>>>>>> c16b5566f2c04597906473dc17f8b873275ea7dd:app/src/main/java/com/osoc/oncera/MedirMostradorActivity.java
                     Confirmar();
                 }
             }
@@ -264,6 +240,9 @@ public class MeasureCounter extends AppCompatActivity {
         an.setAnchor(anchor);
     }
 
+    /**
+     * Dialog to ask user whether the counter has a ledge or not
+     */
     void repisaDialog() {
         int[] spinnerImages = new int[]{R.drawable.mostrador_most
                 , R.drawable.mostrador_most_salida};
@@ -305,6 +284,12 @@ public class MeasureCounter extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Function to return the distance in meters between two objects placed in ArPlane
+     * @param anchor1 first object's anchor
+     * @param anchor2 second object's anchor
+     * @return the distance between the two anchors in meters
+     */
     float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
@@ -314,7 +299,10 @@ public class MeasureCounter extends AppCompatActivity {
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void resetMedirRespisa() {
+    /**
+     * Set the layout to start measuring the counter's ledge
+     */
+    void startMeasureLedge() {
         anchor1 = null;
         anchor2 = null;
         z_axis.setEnabled(false);
@@ -331,6 +319,11 @@ public class MeasureCounter extends AppCompatActivity {
         }
     }
 
+    /**
+     * Check whether the device supports the tools required to use the measurement tools
+     * @param activity
+     * @return boolean determining whether the device is supported or not
+     */
     public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
         if (Build.VERSION.SDK_INT < VERSION_CODES.N) {
             Log.e(TAG, "Sceneform requires Android N or later");
@@ -352,6 +345,10 @@ public class MeasureCounter extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Check whether the counter is accessible or not and start Axesibility activity to display the
+     * result
+     */
     private void Confirmar() {
         String s = "";
 
@@ -465,6 +462,13 @@ public class MeasureCounter extends AppCompatActivity {
 
     }
 
+    /**
+     * Add string to anothr string if a condition is met
+     * @param base initial base string
+     * @param to_add string that will be added to the base if the condition is met
+     * @param condition 
+     * @return
+     */
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition) {
         return condition ? base : base + " " + to_add;
     }
@@ -472,6 +476,32 @@ public class MeasureCounter extends AppCompatActivity {
     private void UpdateMessage(boolean condition, String aux) {
         message = condition ? getString(R.string.accesible) : getString(R.string.no_accesible);
         message += aux;
+    }
+
+    /**
+     * Reset layout to its initial state
+     */
+    private void resetLayout(){
+        anchor1 = null;
+        anchor2 = null;
+        medir_respisa = false;
+        z_axis.setProgress(0);
+        z_axis.setEnabled(false);
+        confirm.setEnabled(false);
+        if (repisa)
+            confirm.setText("Next");
+        img_instr.setImageResource(R.drawable.mostrador_01);
+        data.setText(R.string.instr_mostrador_01);
+        ancho_util.setText("Anchura util: --");
+        alto_trabajo.setText("Altura trabajo: --");
+        profundo_repisa.setText("Profundidad repisa: --");
+        alto_repisa.setText("Altura repisa: --");
+        for (AnchorNode n : anchorNodes) {
+            arFragment.getArSceneView().getScene().removeChild(n);
+            n.getAnchor().detach();
+            n.setParent(null);
+            n = null;
+        }
     }
 
 }
