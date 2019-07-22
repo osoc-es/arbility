@@ -122,7 +122,7 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
         Intent i;
         String t = itinerario.getObstaculos().get((int)sp_obstaculo.getSelectedItemId()).getTipo();
         if (t == TypesManager.PUERTAS_OBS)  i = new Intent(this, MeasureDoor.class);
-        else if (t == TypesManager.ILUM_OBS)i = new Intent(this,Luxometro.class);
+        else if (t == TypesManager.ILUM_OBS)i = new Intent(this, LuxMeter.class);
         else if (t == TypesManager.ASCENSOR_OBS) i = new Intent(this, MeasureLift.class);
         else if (t == TypesManager.MOSTRADOR_OBS) i = new Intent(this, MeasureCounter.class);
         else if (t == TypesManager.RAMPA_OBS) i = new Intent(this, MeasureRamp.class);

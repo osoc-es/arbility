@@ -29,7 +29,7 @@ public class AxesibilityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_axesibility);
+        setContentView(R.layout.activity_accessibilityChecker);
 
         layout = (RelativeLayout) findViewById(R.id.layout);
         accText = (TextView)findViewById(R.id.accText);
