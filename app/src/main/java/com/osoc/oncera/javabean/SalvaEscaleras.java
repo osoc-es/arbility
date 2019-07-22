@@ -113,7 +113,7 @@ public class SalvaEscaleras implements Serializable {
         this.id = id;
     }
 
-    public String getMensaje(){return mensaje;}
+    public String getMessage(){return mensaje;}
 
     public void setMensaje (String mensaje){this.mensaje = mensaje;}
 }
