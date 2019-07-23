@@ -74,12 +74,12 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-        databse.getReference().child( "Itinerarios" ).addValueEventListener( new ValueEventListener() {
+        databse.getReference().child( "Itineraries" ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 itinerarios.removeAll( itinerarios );
                 for (DataSnapshot snapshost : dataSnapshot.getChildren()) {
-                    Itinerario iti = snapshost.getValue( Itinerario.class );
+                    Itinerary iti = snapshost.getValue( Itinerary.class );
                     itinerarios.add( iti );
                 }
                 adapter.notifyDataSetChanged();
@@ -173,7 +173,7 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
                     cargarItinerarios();
                 }
 
-                if (emailPersona.equals( prf[0].getMail() )) codCentro = prf[0].getCenterCode();
+                if (emailPersona.equals( prf[0].getMail() )) codCentro = prf[0].getCode();
 
             }
 
@@ -200,7 +200,7 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
                     try {
                         art = snapshot.getValue( Itinerary.class );
 
-                        if (art.getCenterCode().equals( codCentro )) {
+                        if (art.getCode().equals( codCentro )) {
                             lista.add( art );
                         }
                     } catch (DatabaseException de) {

@@ -67,7 +67,7 @@ public class MeasureDoor extends AppCompatActivity {
     private float paramHeight,paramWidth, minOpeningMc, maxOpeningMc;
     private String message;
 
-    private Puerta door = new Puerta(-1, -1, null, -1, null, null, null, null, null);
+    private Door door = new Door(-1, -1, null, -1, null, null, null, null, null);
 
 
     @Override
@@ -140,7 +140,7 @@ public class MeasureDoor extends AppCompatActivity {
                     confirm.setEnabled(false);
                     confirm.setText("Confirm");
                 } else
-                    Confirm();
+                    Confirmar();
             }
         });
 
@@ -153,12 +153,12 @@ public class MeasureDoor extends AppCompatActivity {
                 if (measure_height) {
                     height.setText("Altura puerta: " +
                             form_numbers.format(progress / 100f));
-                    door.setAltura(progress);
+                    door.setHeight(progress);
                 }
                 else {
                     mechanism.setText("Altura mecanismo: " +
                             form_numbers.format(progress / 100f));
-                    door.setAlturaPomo(progress);
+                    door.setKnobHeight(progress);
                 }
                 confirm.setEnabled(true);
             }
@@ -208,7 +208,7 @@ public class MeasureDoor extends AppCompatActivity {
                         width.setText("Anchura door_: " +
                                 form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
-                        door.setAnchura((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
+                        door.setWidth((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
 
                         img_instr.setImageResource(R.drawable.puerta_02);
                         data.setText(R.string.instr_puerta_02);
@@ -224,7 +224,7 @@ public class MeasureDoor extends AppCompatActivity {
                     andy.select();
                     andy.getScaleController().setEnabled(false);
                 });
-        doorDialog();
+        puertaDialog();
     }
 
     /**
@@ -325,36 +325,36 @@ public class MeasureDoor extends AppCompatActivity {
     {
         String s = "";
 
-        boolean cumple_altura = Evaluator.IsGreaterThan(door.getAltura(), paramAltura);
-        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura) + paramAltura, cumple_altura);
+        boolean cumple_altura = Evaluator.IsGreaterThan(door.getHeight(), paramHeight);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura) + paramHeight, cumple_altura);
 
-        boolean cumple_anchura = Evaluator.IsGreaterThan(door.getAnchura(),paramAnchura);
+        boolean cumple_anchura = Evaluator.IsGreaterThan(door.getWidth(),paramWidth);
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_anchura);
-        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_ancho) + paramAnchura, cumple_anchura);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_ancho) + paramWidth, cumple_anchura);
 
 
-        boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, door.getTipoPuerta());
+        boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, door.getDoorType());
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_tipo_puerta);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_puerta), cumple_tipo_puerta);
 
 
-        boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, door.getTipoMecanismo());
+        boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, door.getMecType());
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_tipo_mecanismos);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_mec), cumple_tipo_mecanismos);
 
-        boolean cumple_alto_mecanismo = Evaluator.IsInRange(door.getAlturaPomo(), minMecApertura, maxMecApertura);
+        boolean cumple_alto_mecanismo = Evaluator.IsInRange(door.getKnobHeight(), minOpeningMc, maxOpeningMc);
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_alto_mecanismo);
-        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura_mec) + minMecApertura + " y " + maxMecApertura, cumple_alto_mecanismo);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura_mec) + minOpeningMc + " y " + maxOpeningMc, cumple_alto_mecanismo);
 
 
-        door.setAccesible(cumple_altura && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta && cumple_alto_mecanismo);
+        door.setAccessible(cumple_altura && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta && cumple_alto_mecanismo);
 
-        UpdateMessage(door.getAccesible(), s);
-        door.setMensaje(message);
+        UpdateMessage(door.getAccessible(), s);
+        door.setMessage(message);
 
-        Intent i = new Intent(this, AxesibilityActivity.class);
-        i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.PUERTAS.getValue());
-        i.putExtra(TypesManager.PUERTAS_OBS, door);
+        Intent i = new Intent(this, AccessibilityChecker.class);
+        i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.DOOR.getValue());
+        i.putExtra(TypesManager.DOOR_OBS, door);
 
         startActivity(i);
         finish();
@@ -395,8 +395,8 @@ public class MeasureDoor extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                door.setTipoPuerta(tipoPuerta[mSpinnerDoor.getSelectedItemPosition()]);
-                door.setTipoMecanismo(tipoMecanismo[mSpinnerMecha.getSelectedItemPosition()]);
+                door.setDoorType(doorType[mSpinnerDoor.getSelectedItemPosition()]);
+                door.setMecType(mecTypes[mSpinnerMecha.getSelectedItemPosition()]);
             }
         });
 

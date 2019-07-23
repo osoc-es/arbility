@@ -10,15 +10,27 @@ public class Itinerary implements Serializable {
     private String teacherAlias;
     private String name;
     private String description;
-    private String centerCode;
+    private String code;
 
-    public Itinerary(String id, ArrayList<Obstacles> obstacles, String teacherAlias, String name, String description, String centerCode) {
+    public String getItineraryCode() {
+        return ItineraryCode;
+    }
+
+    public void setItineraryCode(String itineraryCode) {
+        ItineraryCode = itineraryCode;
+    }
+
+    private String ItineraryCode;
+
+
+    public Itinerary(String id, ArrayList<Obstacles> obstacles, String teacherAlias, String name, String description, String code, String ItineraryCode) {
         this.id = id;
         this.obstacles = obstacles;
         this.teacherAlias = teacherAlias;
         this.name = name;
         this.description = description;
-        this.centerCode = centerCode;
+        this.code = code;
+        this.ItineraryCode = ItineraryCode;
     }
 
     public Itinerary() {
@@ -64,11 +76,11 @@ public class Itinerary implements Serializable {
         this.description = description;
     }
 
-    public String getCenterCode() {
-        return centerCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setCenterCode(String centerCode) {
-        this.centerCode = centerCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 }

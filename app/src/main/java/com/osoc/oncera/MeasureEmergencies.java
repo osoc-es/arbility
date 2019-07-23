@@ -61,24 +61,24 @@ public class MeasureEmergencies extends AppCompatActivity {
 
                 String s ="";
 
-                emergency.setAlumbradoEmergencia(chk_lighting.isChecked());
-                emergency.setSimulacros(chk_drill.isChecked());
+                emergency.setEmergencyLighting(chk_lighting.isChecked());
+                emergency.setSimulation(chk_drill.isChecked());
 
-                boolean cumple_alumbrado = Evaluator.IsEqualsTo(emergency.getAlumbradoEmergencia(), db_lighting);
+                boolean cumple_alumbrado = Evaluator.IsEqualsTo(emergency.getEmergencyLighting(), db_lighting);
                 s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_alumbrado), cumple_alumbrado);
 
-                boolean cumple_simulacro = Evaluator.IsEqualsTo(emergency.getSimulacros(), db_drill);
+                boolean cumple_simulacro = Evaluator.IsEqualsTo(emergency.getSimulation(), db_drill);
                 s = UpdateStringIfNeeded(s, "y", (s == "" || cumple_simulacro));
                 s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_simulacro), cumple_simulacro);
 
-                emergency.setAccesible(cumple_alumbrado && cumple_simulacro);
+                emergency.setAccessible(cumple_alumbrado && cumple_simulacro);
 
-                UpdateMessage(emergency.getAccesible(), s);
-                emergency.setMensaje(message);
+                UpdateMessage(emergency.getAccessible(), s);
+                emergency.setMessage(message);
 
-                Intent i = new Intent(getApplicationContext(),AxesibilityActivity.class);
-                i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.EMERGENCIAS.getValue());
-                i.putExtra(TypesManager.EMERGENC_OBS, emergency);
+                Intent i = new Intent(getApplicationContext(),AccessibilityChecker.class);
+                i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.EMERGENCY.getValue());
+                i.putExtra(TypesManager.EMERGENCY_OBS, emergency);
 
                 startActivity(i);
                 finish();
@@ -97,7 +97,7 @@ public class MeasureEmergencies extends AppCompatActivity {
      */
     private void UpdateDatabaseValues()
     {
-        final DatabaseReference dbr_a = FirebaseDatabase.getInstance().getReference("Estandares/Emergencias/AlumbradoEmerg");
+        final DatabaseReference dbr_a = FirebaseDatabase.getInstance().getReference("Standards/Emergency/EmergencyLightning");
 
         dbr_a.addValueEventListener(new ValueEventListener() {
             @Override
@@ -111,7 +111,7 @@ public class MeasureEmergencies extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference dbr_s = FirebaseDatabase.getInstance().getReference("Estandares/Emergencias/Simulacros");
+        final DatabaseReference dbr_s = FirebaseDatabase.getInstance().getReference("Standards/Emergency/Simulation");
 
         dbr_s.addValueEventListener(new ValueEventListener() {
             @Override
@@ -146,7 +146,7 @@ public class MeasureEmergencies extends AppCompatActivity {
      */
     private void UpdateMessage(boolean condition, String aux)
     {
-        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message = condition? getString(R.string.accessible) : getString(R.string.no_accesible);
         message += aux;
     }
 

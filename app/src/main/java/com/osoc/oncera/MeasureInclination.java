@@ -165,7 +165,7 @@ public class MeasureInclination extends AppCompatActivity {
      */
     private void Medir() {
         pitch_text.setText(df.format(pitch));
-        _rampa.setSlope(pitch);
+        _ramp.setSlope(pitch);
 
        evaluate();
     }
@@ -174,7 +174,7 @@ public class MeasureInclination extends AppCompatActivity {
      * Get values of accessibility standards from database
      */
     private void getDBValues() {
-        final DatabaseReference anchDB = FirebaseDatabase.getInstance().getReference("Estandares/Ramps/Anchura");
+        final DatabaseReference anchDB = FirebaseDatabase.getInstance().getReference("Standards/Ramps/Width");
 
         anchDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -187,7 +187,7 @@ public class MeasureInclination extends AppCompatActivity {
 
             }
         });
-        final DatabaseReference cas1 = FirebaseDatabase.getInstance().getReference("Estandares/Ramps/Caso1");
+        final DatabaseReference cas1 = FirebaseDatabase.getInstance().getReference("Standards/Ramps/Case1");
 
         cas1.addValueEventListener(new ValueEventListener() {
             @Override
@@ -206,7 +206,7 @@ public class MeasureInclination extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference cas2 = FirebaseDatabase.getInstance().getReference("Estandares/Ramps/Caso2");
+        final DatabaseReference cas2 = FirebaseDatabase.getInstance().getReference("Standards/Ramps/Case2");
 
         cas2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -225,7 +225,7 @@ public class MeasureInclination extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference cas3 = FirebaseDatabase.getInstance().getReference("Estandares/Ramps/Caso3");
+        final DatabaseReference cas3 = FirebaseDatabase.getInstance().getReference("Standards/Ramps/Case3");
 
         cas3.addValueEventListener(new ValueEventListener() {
             @Override
@@ -245,7 +245,7 @@ public class MeasureInclination extends AppCompatActivity {
         });
 
 
-        final DatabaseReference minPomo = FirebaseDatabase.getInstance().getReference("Estandares/Ramps/minAlturaPasamanos");
+        final DatabaseReference minPomo = FirebaseDatabase.getInstance().getReference("Standards/Ramps/minHandRailHeight");
 
         minPomo.addValueEventListener(new ValueEventListener() {
             @Override
@@ -259,7 +259,7 @@ public class MeasureInclination extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference maxPomo = FirebaseDatabase.getInstance().getReference("Estandares/Ramps/maxAlturaPasamanos");
+        final DatabaseReference maxPomo = FirebaseDatabase.getInstance().getReference("Standards/Ramps/maxHandRailHeight");
 
         maxPomo.addValueEventListener(new ValueEventListener() {
             @Override
@@ -281,19 +281,19 @@ public class MeasureInclination extends AppCompatActivity {
     private void evaluate() {
         String s ="";
 
-       boolean cumpleAnch = Evaluator.IsGreaterThan(_rampa.getWidth(), paramAnch);
+       boolean cumpleAnch = Evaluator.IsGreaterThan(_ramp.getWidth(), paramWidth);
 
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_anpt) + paramWidth, cumpleAnch);
 
         casos aux;
 
-        float lng = _rampa.getLength();
+        float lng = _ramp.getLength();
 
         if(lng < ramp1.getLongitude()) aux = ramp1;
         else if(Evaluator.IsInRange(lng, ramp2.getMinLong(), ramp2.getMaxLong())) aux = ramp2;
         else aux = ramp3;
 
-        boolean cumpleIncl = Evaluator.IsLowerThan(_rampa.getSlope(),aux.getPendiente());
+        boolean cumpleIncl = Evaluator.IsLowerThan(_ramp.getSlope(),aux.getSlope());
         s = UpdateStringIfNeeded(s, "y", s == "" || cumpleIncl);
         s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_incl) + aux.getSlope(), cumpleIncl);
 
@@ -301,23 +301,23 @@ public class MeasureInclination extends AppCompatActivity {
 
         boolean cumplePasamanos;
 
-        if(barandilla)
-            cumplePasamanos = Evaluator.IsInRange(_rampa.getHandRailHeight(),minParamPomo,maxParamPomo);
+        if(railing)
+            cumplePasamanos = Evaluator.IsInRange(_ramp.getHandRailHeight(),minParamKnob,maxParamKnob);
 
         else cumplePasamanos = true;
 
         s = UpdateStringIfNeeded(s, "y", s == "" || cumplePasamanos);
         s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_alt) + aux.getSlope(), cumplePasamanos);
 
-        _rampa.setAccessible(cumpleAnch && cumpleIncl && cumplePasamanos);
+        _ramp.setAccessible(cumpleAnch && cumpleIncl && cumplePasamanos);
 
-        UpdateMessage(_rampa.getAccessible(), s);
+        UpdateMessage(_ramp.getAccessible(), s);
 
-        _rampa.setMessage(message);
+        _ramp.setMessage(message);
 
-        Intent i = new Intent(this,AxesibilityActivity.class);
-        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.RAMPAS.getValue());
-        i.putExtra(TypesManager.RAMPA_OBS, _ramp);
+        Intent i = new Intent(this,AccessibilityChecker.class);
+        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.RAMPS.getValue());
+        i.putExtra(TypesManager.RAMP_OBS, _ramp);
 
         startActivity(i);
         finish();
@@ -342,7 +342,7 @@ public class MeasureInclination extends AppCompatActivity {
      */
     private void UpdateMessage(boolean condition, String aux)
     {
-        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message = condition? getString(R.string.accessible) : getString(R.string.no_accesible);
         message += aux;
     }
 

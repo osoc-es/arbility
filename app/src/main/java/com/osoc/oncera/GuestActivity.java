@@ -58,19 +58,19 @@ public class GuestActivity extends AppCompatActivity {
         botonPuertas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.PUERTAS);
+                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.DOOR);
             }
         });
         botonIlum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ILUM);
+                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ILLUM);
             }
         });
         botonAscensor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ASCENSORES);
+                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ELEVATOR);
             }
         });
         botonMostrador.setOnClickListener(new View.OnClickListener() {
@@ -80,20 +80,20 @@ public class GuestActivity extends AppCompatActivity {
         botonRampa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.RAMPAS);
+                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.RAMPS);
             }
         });
         botonSalvaescaleras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.SALVAESCALERAS);
+                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.STAIRLIFTER);
             }
         });
 
         botonEmergencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.EMERGENCIAS);
+                changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.EMERGENCY);
             }
         });
 

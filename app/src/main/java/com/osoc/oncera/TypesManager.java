@@ -6,13 +6,14 @@ import java.util.Map;
 public final class TypesManager {
 
     public static final  String OBS_TYPE = "obsType";
-    public static final String ILLUM_OBS = "ilumObs";
-    public static final String ASCENSOR_OBS = "ascensorObs";
-    public static final String DOOR_OBS = "puertaObs";
-    public static final String SALVAESC_OBS = "salvaObs";
-    public static final String MOSTRADOR_OBS = "mostradObs";
-    public static final String RAMPA_OBS = "rampaObs";
-    public static final String EMERGENC_OBS = "emergenObs";
+    public static final String ILLUM_OBS = "Luz";
+    public static final String ELEVATOR_OBS = "Ascensor";
+    public static final String DOOR_OBS = "Puerta";
+    public static final String STAIRLIFTER_OBS = "Salvaescaleras";
+    public static final String ATTPOINT_OBS = "Mostrador";
+    public static final String RAMP_OBS = "Rampa";
+    public static final String EMERGENCY_OBS = "Emergencias";
+    public static final String SIMULATION_OBS = "Simulacion";
 
 
 
@@ -20,14 +21,14 @@ public final class TypesManager {
         ASEOS(1),
         DOOR(2),
         ILLUM(3),
-        ASCENSORES(4),
-        MOSTRADORES(5),
-        RAMPAS(6),
-        SALVAESCALERAS(7),
-        ESTANCIAS(8),
-        PASILLOS(9),
-        EMERGENCIAS(10),
-        SIMULACION(11);
+        ELEVATOR(4),
+        ATTPOINT(5),
+        RAMPS(6),
+        STAIRLIFTER(7),
+        ROOM(8),
+        CORRIDOR(9),
+        EMERGENCY(10),
+        SIMULATION(11);
 
         private int value;
         private static Map map = new HashMap<>();

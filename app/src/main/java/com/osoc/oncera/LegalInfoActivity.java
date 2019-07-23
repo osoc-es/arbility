@@ -44,13 +44,13 @@ public class LegalInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (type == TypesManager.obsType.PUERTAS)  changeWindowTo(MeasureDoor.class);
-                else if (type == TypesManager.obsType.ILUM) changeWindowTo(LuxMeter.class);
-                else if (type == TypesManager.obsType.ASCENSORES) changeWindowTo(MeasureElevator.class);
-                else if (type == TypesManager.obsType.MOSTRADORES) changeWindowTo(MeasureCounter.class);
-                else if (type == TypesManager.obsType.RAMPAS) changeWindowTo(MeasureRamp.class);
-                else if (type == TypesManager.obsType.SALVAESCALERAS) changeWindowTo(MeasureStairLift.class);
-                else if (type == TypesManager.obsType.EMERGENCIAS) changeWindowTo(MeasureEmergencies.class);
+                if (type == TypesManager.obsType.DOOR)  changeWindowTo(MeasureDoor.class);
+                else if (type == TypesManager.obsType.ILLUM) changeWindowTo(LuxMeter.class);
+                else if (type == TypesManager.obsType.ELEVATOR) changeWindowTo(MeasureElevator.class);
+                else if (type == TypesManager.obsType.ATTPOINT) changeWindowTo(MeasureCounter.class);
+                else if (type == TypesManager.obsType.RAMPS) changeWindowTo(MeasureRamp.class);
+                else if (type == TypesManager.obsType.STAIRLIFTER) changeWindowTo(MeasureStairLift.class);
+                else if (type == TypesManager.obsType.EMERGENCY) changeWindowTo(MeasureEmergencies.class);
             }
         });
     }
@@ -58,15 +58,15 @@ public class LegalInfoActivity extends AppCompatActivity {
     private void selectText(){
 
         if(type == TypesManager.obsType.ASEOS) descText = getString(R.string.descAseos);
-        else if (type == TypesManager.obsType.PUERTAS)  descText = getString(R.string.descPuertas);
-        else if (type == TypesManager.obsType.ILUM)  descText = getString(R.string.descIlum);
-        else if (type == TypesManager.obsType.ASCENSORES)  descText = getString(R.string.descAscensor);
-        else if (type == TypesManager.obsType.MOSTRADORES)  descText = getString(R.string.descMostrador);
-        else if (type == TypesManager.obsType.RAMPAS)  descText = getString(R.string.descRampa);
-        else if (type == TypesManager.obsType.SALVAESCALERAS)  descText = getString(R.string.descSalvaescaleras);
-        else if (type == TypesManager.obsType.ESTANCIAS)  descText = getString(R.string.descEstancias);
-        else if (type == TypesManager.obsType.PASILLOS)  descText = getString(R.string.descPasillos);
-        else if (type == TypesManager.obsType.EMERGENCIAS)  descText = getString(R.string.descEmergencias);
+        else if (type == TypesManager.obsType.DOOR)  descText = getString(R.string.descPuertas);
+        else if (type == TypesManager.obsType.ILLUM)  descText = getString(R.string.descIlum);
+        else if (type == TypesManager.obsType.ELEVATOR)  descText = getString(R.string.descAscensor);
+        else if (type == TypesManager.obsType.STAIRLIFTER)  descText = getString(R.string.descMostrador);
+        else if (type == TypesManager.obsType.RAMPS)  descText = getString(R.string.descRampa);
+        else if (type == TypesManager.obsType.STAIRLIFTER)  descText = getString(R.string.descSalvaescaleras);
+        else if (type == TypesManager.obsType.ROOM)  descText = getString(R.string.descEstancias);
+        else if (type == TypesManager.obsType.STAIRLIFTER)  descText = getString(R.string.descPasillos);
+        else if (type == TypesManager.obsType.EMERGENCY)  descText = getString(R.string.descEmergencias);
 
         desc.setText(descText);
 

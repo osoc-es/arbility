@@ -68,7 +68,7 @@ public class RegisterProfesorActivity extends AppCompatActivity {
         btnRegistrar = (Button) findViewById( R.id.btnRegistrar );
 
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Usuarios" );
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Users" );
 
         progressDialog = new ProgressDialog( this );
 
@@ -122,7 +122,7 @@ public class RegisterProfesorActivity extends AppCompatActivity {
     public void comprobarCodigo() {
 
         RegisterProfesorActivity.this.codigo = codCentro.getText().toString();
-        Query qq2 = mDatabaseRef.orderByChild( "codCentro" ).equalTo( codigo ).limitToFirst( 1 );
+        Query qq2 = mDatabaseRef.orderByChild( "centerCode" ).equalTo( codigo ).limitToFirst( 1 );
         qq2.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -142,7 +142,7 @@ public class RegisterProfesorActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText( RegisterProfesorActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
+                    Toast.makeText( RegisterProfesorActivity.this, "Prof null", Toast.LENGTH_LONG ).show();
                 }
 
                 qq2.removeEventListener( this );
@@ -179,7 +179,9 @@ public class RegisterProfesorActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText( RegisterProfesorActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
+                    Toast.makeText( RegisterProfesorActivity.this, "Codigo correcto", Toast.LENGTH_LONG ).show();
+                    comprobarCodigo();
+
                 }
 
                 qq4.removeEventListener( this );

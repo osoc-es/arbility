@@ -65,7 +65,7 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
         setContentView( R.layout.activity_register );
 
         firebaseAuth = FirebaseAuth.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Usuarios");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
         validarCentro = false;
         etNombre = (EditText) findViewById(R.id.etNombreReg);
         etCiudad = (EditText) findViewById(R.id.etCiudadReg);
@@ -97,7 +97,7 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
 
                                 codCentro=crearcodCentro();
-                                mDatabaseRef=FirebaseDatabase.getInstance().getReference().child("Usuarios");
+                                mDatabaseRef=FirebaseDatabase.getInstance().getReference().child("Users");
 
                                 user = firebaseAuth.getCurrentUser();
 

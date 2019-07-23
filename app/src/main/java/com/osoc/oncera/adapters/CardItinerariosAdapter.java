@@ -43,11 +43,11 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
     @Override
     public void onBindViewHolder(@NonNull CardItinerariosAdapter.CardItinerarioViewHolder holder, int position) {
 
-        Itinerario itinerario = mLista.get( position );
+        Itinerary itinerario = mLista.get( position );
 
-        nombre = itinerario.getNombre();
-        codigoItinerario = itinerario.getCodItinerario();
-        descripcion = itinerario.getDescripcion();
+        nombre = itinerario.getName();
+        codigoItinerario = itinerario.getItineraryCode();
+        descripcion = itinerario.getDescription();
         uid = itinerario.getId();
 
         holder.tvNombre.setText( nombre );

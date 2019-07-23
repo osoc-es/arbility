@@ -88,7 +88,7 @@ public class MeasureStairLift extends AppCompatActivity {
 
         setContentView(R.layout.activity_measure_stair_lift);
 
-        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Salvaescaleras/Anchura");
+        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Standards/StairLift/Width");
 
         anch.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,7 +102,7 @@ public class MeasureStairLift extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference larg = FirebaseDatabase.getInstance().getReference("Estandares/Salvaescaleras/Largo");
+        final DatabaseReference larg = FirebaseDatabase.getInstance().getReference("Standards/StairLift/Length");
 
         larg.addValueEventListener(new ValueEventListener() {
             @Override
@@ -262,9 +262,9 @@ public class MeasureStairLift extends AppCompatActivity {
 
         stairLifter.setMessage(message);
 
-        Intent i = new Intent(this,AxesibilityActivity.class);
-        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.SALVAESCALERAS.getValue());
-        i.putExtra(TypesManager.SALVAESC_OBS, stairLifter);
+        Intent i = new Intent(this,AccessibilityChecker.class);
+        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.STAIRLIFTER.getValue());
+        i.putExtra(TypesManager.STAIRLIFTER_OBS, stairLifter);
 
         startActivity(i);
         finish();

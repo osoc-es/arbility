@@ -66,16 +66,16 @@ public class AccessibilityChecker extends AppCompatActivity {
             CheckAccesibility(((Door) b.get(TypesManager.DOOR_OBS)).getAccessible(), ((Door) b.get(TypesManager.DOOR_OBS)).getMessage());
         else if (type == TypesManager.obsType.ILLUM)
             CheckAccesibility(((Illuminance) b.get(TypesManager.ILLUM_OBS)).getAccessible(), ((Illuminance) b.get(TypesManager.ILLUM_OBS)).getMessage());
-        else if (type == TypesManager.obsType.ASCENSORES)
-            CheckAccesibility(((Elevator) b.get(TypesManager.ASCENSOR_OBS)).getAccessible(), ((Elevator) b.get(TypesManager.ASCENSOR_OBS)).getMessage());
-        else if (type == TypesManager.obsType.MOSTRADORES)
-            CheckAccesibility(((AttPoints) b.get(TypesManager.MOSTRADOR_OBS)).getAccessible(), ((AttPoints) b.get(TypesManager.MOSTRADOR_OBS)).getMessage());
-        else if (type == TypesManager.obsType.RAMPAS)
-            CheckAccesibility(((Ramps) b.get(TypesManager.RAMPA_OBS)).getAccessible(), ((Ramps) b.get(TypesManager.RAMPA_OBS)).getMessage());
-        else if (type == TypesManager.obsType.SALVAESCALERAS)
-            CheckAccesibility(((StairLifter) b.get(TypesManager.SALVAESC_OBS)).getAccessible(), ((StairLifter) b.get(TypesManager.SALVAESC_OBS)).getMessage());
-        else if (type == TypesManager.obsType.EMERGENCIAS)
-            CheckAccesibility(((EmergencyNEvacuation) b.get(TypesManager.EMERGENC_OBS)).getAccessible(), ((EmergencyNEvacuation) b.get(TypesManager.EMERGENC_OBS)).getMessage());
+        else if (type == TypesManager.obsType.ELEVATOR)
+            CheckAccesibility(((Elevator) b.get(TypesManager.ELEVATOR_OBS)).getAccessible(), ((Elevator) b.get(TypesManager.ELEVATOR_OBS)).getMessage());
+        else if (type == TypesManager.obsType.ATTPOINT)
+            CheckAccesibility(((AttPoints) b.get(TypesManager.ATTPOINT_OBS)).getAccessible(), ((AttPoints) b.get(TypesManager.ATTPOINT_OBS)).getMessage());
+        else if (type == TypesManager.obsType.RAMPS)
+            CheckAccesibility(((Ramps) b.get(TypesManager.RAMP_OBS)).getAccessible(), ((Ramps) b.get(TypesManager.RAMP_OBS)).getMessage());
+        else if (type == TypesManager.obsType.STAIRLIFTER)
+            CheckAccesibility(((StairLifter) b.get(TypesManager.STAIRLIFTER_OBS)).getAccessible(), ((StairLifter) b.get(TypesManager.STAIRLIFTER_OBS)).getMessage());
+        else if (type == TypesManager.obsType.EMERGENCY)
+            CheckAccesibility(((EmergencyNEvacuation) b.get(TypesManager.EMERGENCY_OBS)).getAccessible(), ((EmergencyNEvacuation) b.get(TypesManager.EMERGENCY_OBS)).getMessage());
     }
 
 

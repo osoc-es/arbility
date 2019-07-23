@@ -42,7 +42,7 @@ public class SesionCentroActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_sesion_centro );
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference( "Usuarios" );
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference( "Users" );
         firebaseAuth = FirebaseAuth.getInstance();
         usuario = firebaseAuth.getCurrentUser();
         emailPersona = usuario.getEmail();
@@ -77,14 +77,12 @@ public class SesionCentroActivity extends AppCompatActivity {
     }
     public void cargarCodCentro(){
 
-        Query qq1 = mDatabaseRef.orderByChild("correo").equalTo(emailPersona);
+
+        Query qq1 = mDatabaseRef.orderByChild("mail").equalTo(emailPersona);
 
         qq1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-
 
                 for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
                         cen[0] = dataSnapshot1.getValue(Institution.class);

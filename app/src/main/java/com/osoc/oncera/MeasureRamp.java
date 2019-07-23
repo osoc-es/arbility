@@ -138,7 +138,7 @@ public class MeasureRamp extends AppCompatActivity {
                 confirm.setEnabled(true);
                 ledge_height.setText("Altura barandilla: " +
                         form_numbers.format(progress / 100f));
-                rampa.setHandRailHeight((float) progress * 100);
+                ramp.setHandRailHeight((float) progress * 100);
             }
 
             @Override

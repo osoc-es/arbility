@@ -389,9 +389,9 @@ public class MeasureCounter extends AppCompatActivity {
         UpdateMessage(counter.getAccessible(), s);
         counter.setMessage(message);
 
-        Intent i = new Intent(this, AxesibilityActivity.class);
-        i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.MOSTRADORES.getValue());
-        i.putExtra(TypesManager.MOSTRADOR_OBS, counter);
+        Intent i = new Intent(this, AccessibilityChecker.class);
+        i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.ATTPOINT.getValue());
+        i.putExtra(TypesManager.ATTPOINT_OBS, counter);
 
         startActivity(i);
         finish();
@@ -401,7 +401,7 @@ public class MeasureCounter extends AppCompatActivity {
      * Get values of accessibility standards from database
      */
     private void UpdateDatabaseValues() {
-        final DatabaseReference anchuraPTDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AnchuraPlanoTrabajo");
+        final DatabaseReference anchuraPTDB = FirebaseDatabase.getInstance().getReference("Standards/AttPoint/WorkFlatWidth");
 
         anchuraPTDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -415,7 +415,7 @@ public class MeasureCounter extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference alturaPTDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AlturaPlanoTrabajo");
+        final DatabaseReference alturaPTDB = FirebaseDatabase.getInstance().getReference("Standards/AttPoint/WorkFlatHeight");
 
         alturaPTDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -429,7 +429,7 @@ public class MeasureCounter extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference alturaEILDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AlturaEspacioInfLibre");
+        final DatabaseReference alturaEILDB = FirebaseDatabase.getInstance().getReference("Standards/AttPoint/FreeLowerSpaceHeight");
 
         alturaEILDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -443,7 +443,7 @@ public class MeasureCounter extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference anchuraEILDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/AnchuraEspacioInfLibre");
+        final DatabaseReference anchuraEILDB = FirebaseDatabase.getInstance().getReference("Standards/AttPoint/FreeLowerSpaceWidth");
 
         anchuraEILDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -457,7 +457,7 @@ public class MeasureCounter extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference profundidadEILDB = FirebaseDatabase.getInstance().getReference("Estandares/Mostradores/ProfundidadEspacioInfLibre");
+        final DatabaseReference profundidadEILDB = FirebaseDatabase.getInstance().getReference("Standards/AttPoint/FreeLowerSpaceDepth");
 
         profundidadEILDB.addValueEventListener(new ValueEventListener() {
             @Override

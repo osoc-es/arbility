@@ -219,7 +219,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
             UpdateMessage(Illuminance.getAccessible(),s);
             Illuminance.setMessage(message);
 
-            Intent i = new Intent(this,AxesibilityActivity.class);
+            Intent i = new Intent(this,AccessibilityChecker.class);
             i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ILLUM.getValue());
             i.putExtra(TypesManager.ILLUM_OBS, Illuminance);
 

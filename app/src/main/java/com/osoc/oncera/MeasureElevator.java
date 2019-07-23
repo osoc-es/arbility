@@ -115,8 +115,8 @@ public class MeasureElevator extends AppCompatActivity {
         confirm = (Button)findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
 
-        ancho_ascensor = (TextView) findViewById(R.id.ancho_acensor);
-        profundo_ascensor = (TextView) findViewById(R.id.profundo_ascensor);
+        elevator_width = (TextView) findViewById(R.id.ancho_acensor);
+        elevDepth = (TextView) findViewById(R.id.profundo_ascensor);
         ImageButton btnAtras = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
 
@@ -125,7 +125,7 @@ public class MeasureElevator extends AppCompatActivity {
         confirm.setEnabled(false);
 
 
-        backButtn.setOnClickListener(new View.OnClickListener() {
+        btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -331,9 +331,9 @@ public class MeasureElevator extends AppCompatActivity {
 
         elevator.setMessage(message);
 
-        Intent i = new Intent(this,AxesibilityActivity.class);
-        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ASCENSORES.getValue());
-        i.putExtra(TypesManager.ASCENSOR_OBS, elevator);
+        Intent i = new Intent(this,AccessibilityChecker.class);
+        i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ELEVATOR.getValue());
+        i.putExtra(TypesManager.ELEVATOR_OBS, elevator);
 
         startActivity(i);
         finish();

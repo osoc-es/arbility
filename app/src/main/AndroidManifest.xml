@@ -69,7 +69,7 @@
             android:name=".MeasureCounter"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AxesibilityActivity"
+            android:name=".AccessibilityChecker"
             android:screenOrientation="portrait" />
 
         <meta-data

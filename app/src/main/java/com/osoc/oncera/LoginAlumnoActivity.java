@@ -1,6 +1,7 @@
 package com.osoc.oncera;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.osoc.oncera.javabean.Institution;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +38,7 @@ public class LoginAlumnoActivity extends AppCompatActivity {
     private String itinerario;
 
 
-    private final Itinerario[] iti = new Itinerario[1];
+    private final Itinerary[] iti = new Itinerary[1];
 
 
     @Override
@@ -53,7 +53,7 @@ public class LoginAlumnoActivity extends AppCompatActivity {
         btnItineratio = (Button) findViewById( R.id.btnItinerario );
         atras = (ImageButton) findViewById(R.id.btnBack);
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Itinerarios" );
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Itineraries" );
 
 
         firebaseAuthProfe = FirebaseAuth.getInstance();
@@ -80,23 +80,23 @@ public class LoginAlumnoActivity extends AppCompatActivity {
     }
     public void obtenerCodigoItinerario(){
         itinerario = etCodigoItinerario.getText().toString().trim();
-        Query qq2 = mDatabaseRef.orderByChild( "codItinerario" ).equalTo( itinerario ).limitToFirst( 1 );
+        Query qq2 = mDatabaseRef.orderByChild( "itineraryCode" ).equalTo( itinerario ).limitToFirst( 1 );
         qq2.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    iti[0] = dataSnapshot1.getValue( Itinerario.class );
+                    iti[0] = dataSnapshot1.getValue( Itinerary.class );
                 }
 
                 if (iti[0] != null) {
 
-                    if (iti[0].getCodItinerario().equals( itinerario ) && itinerario != null) {
-                        Toast.makeText( LoginAlumnoActivity.this, "REALIZANDO ACTIVITY PARA DESCARGAR ITINERARIOS", Toast.LENGTH_LONG ).show();
-                        /*Intent i = new Intent(LoginAlumnoActivity.this, MapaItinerarioActivity.class);
-                        i.putExtra( "codigoItinerario", itinerario );
-                        startActivity(i);*/
+                    if (iti[0].getItineraryCode().equals( itinerario ) && itinerario != null) {
+                        //Toast.makeText( LoginAlumnoActivity.this, "REALIZANDO ACTIVITY PARA DESCARGAR ITINERARIOS", Toast.LENGTH_LONG ).show();
+                        Intent i = new Intent(LoginAlumnoActivity.this, MapaItinerarioActivity.class);
+                        i.putExtra( "itineraryCode", itinerario );
+                        startActivity(i);
                     } else {
                         Toast.makeText( LoginAlumnoActivity.this, "El Código no Existe", Toast.LENGTH_LONG ).show();
                     }
