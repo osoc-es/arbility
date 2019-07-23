@@ -38,7 +38,7 @@ public class LoginProfesorActivity extends AppCompatActivity {
         atras = (ImageButton) findViewById(R.id.btnBack);
 
         auth = FirebaseAuth.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Usuarios");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
 
         atras.setOnClickListener(new View.OnClickListener() {
             @Override

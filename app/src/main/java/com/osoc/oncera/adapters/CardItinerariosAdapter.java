@@ -8,22 +8,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.R;
+import com.osoc.oncera.RegisterProfesorActivity;
 import com.osoc.oncera.javabean.Itinerary;
+import com.osoc.oncera.javabean.Teacher;
 
 import java.util.List;
 
 public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerariosAdapter.CardItinerarioViewHolder> {
     List<Itinerary> mLista;
     DatabaseReference reference;
-    String nombre, descripcion, codigoItinerario, uid;
+    String nombre, descripcion, codigoItinerario, uid, codigoDelCentro, aliasProfesor;
     private Context context;
+
+    private final Teacher[] teacher = new Teacher[1];
 
     public CardItinerariosAdapter(List<Itinerary> mLista) {
         this.mLista = mLista;
@@ -49,6 +58,9 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
         codigoItinerario = itinerario.getItineraryCode();
         descripcion = itinerario.getDescription();
         uid = itinerario.getId();
+        aliasProfesor = itinerario.getTeacherAlias();
+        codigoDelCentro = itinerario.getCode();
+
 
         holder.tvNombre.setText( nombre );
         holder.tvDescripcion.setText( descripcion );
@@ -103,5 +115,41 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
         mLista.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mLista.size());
+    }
+
+    public void obtenerDatosProfesor(){
+        reference= FirebaseDatabase.getInstance().getReference("Itineraries");
+        Query qq = reference.orderByChild( "teacherAlias" ).equalTo( aliasProfesor ).limitToFirst( 1 );
+        qq.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    teacher[0] = dataSnapshot1.getValue( Teacher.class );
+                }
+
+                if (teacher[0] != null) {
+
+                    if (teacher[0].getAlias().equals( aliasProfesor ) && aliasProfesor != null) {
+
+
+                    } else {
+
+                    }
+
+                } else {
+
+
+                }
+
+                qq.removeEventListener( this );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
     }
 }

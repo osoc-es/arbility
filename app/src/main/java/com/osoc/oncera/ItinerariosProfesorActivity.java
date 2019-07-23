@@ -12,12 +12,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.CardItinerariosAdapter;
 import com.osoc.oncera.javabean.Itinerary;
@@ -30,30 +33,20 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
     RecyclerView rv;
 
     ArrayList<Itinerary> itinerarios;
-
+    private final DatabaseReference mDatabaseRef =  FirebaseDatabase.getInstance().getReference("Users");
     CardItinerariosAdapter adapter;
-   /* ArrayList<Itinerario> lista;
-    private DatabaseReference mDatabaseRef;
-    RecyclerView rv;
-    Adapter adapter;
-    private LinearLayoutManager llManager;
 
-
-    private DatabaseReference reference;
-
-    private final Teacher[] prf = new Teacher[1];
-
-
-
-    ArrayList<String> listaIti;
-
-
-    //FloatingActionButton fam;*/
    FirebaseUser firebaseUser;
    Button bntAniadir;
     ImageButton btnEl;
     String emailPersona;
     String codCentro;
+
+    private final Teacher[] prf = new Teacher[1];
+
+
+    //String codigoDelCentro;
+ //   String aliasProfesor;
 
 
     @Override
@@ -68,19 +61,29 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
 
         FirebaseDatabase databse = FirebaseDatabase.getInstance();
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        emailPersona = firebaseUser.getEmail();
+
         adapter = new CardItinerariosAdapter( itinerarios );
 
         rv.setAdapter( adapter );
 
         adapter.notifyDataSetChanged();
 
-        databse.getReference().child( "Itineraries" ).addValueEventListener( new ValueEventListener() {
+        obtenerProfesor();
+
+        databse.getReference( "Itineraries" ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 itinerarios.removeAll( itinerarios );
-                for (DataSnapshot snapshost : dataSnapshot.getChildren()) {
-                    Itinerary iti = snapshost.getValue( Itinerary.class );
-                    itinerarios.add( iti );
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Itinerary iti = dataSnapshot1.getValue( Itinerary.class );
+
+                   if(iti.getTeacherAlias().equals(prf[0].getAlias()) && iti.getCode().equals(prf[0].getCenterCode()))
+                   {
+                       itinerarios.add( iti );
+                   }
+
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -90,42 +93,11 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
 
             }
         } );
-        /*btnEl.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder( ItinerariosProfesorActivity.this );
-                    builder.setMessage( "¿Seguro qué quieres eliminar este itinerario de la lista?" )
-                            .setPositiveButton( "Si", new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    String seleccionado;
-                                    Itinerario iti = new Itinerario(  );
-                                    iti.setId( seleccionado.getId );
-                                    mLista.remove( mLista.get( position ).getId() );
-                                    reference.child( mLista.get( position ).getId() ).removeValue();
-                                    removeAt( position );
-                                }
-                            } ).setNegativeButton( "Cancelar", null );
-
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-            }
-        } );*/
 
         bntAniadir = findViewById( R.id.btnAniadir );
         btnEl = findViewById( R.id.btnEliminarItinerario );
 
-
-
         rv.setHasFixedSize( true );
-
-
-
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        emailPersona = firebaseUser.getEmail();
 
         //cargarCodCentro();
 
@@ -159,6 +131,27 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
         } );
 
 
+    }
+
+    public void obtenerProfesor(){
+
+        Query qq4 = mDatabaseRef.orderByChild( "mail" ).equalTo( emailPersona );
+
+        qq4.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    prf[0] = dataSnapshot1.getValue( Teacher.class );
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( ItinerariosProfesorActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+
+            }
+        } );
     }
 
     /*private void cargarCodCentro() {
