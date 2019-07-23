@@ -20,7 +20,7 @@
         android:layout_marginRight="15dp">
 
         <ImageButton
-            android:id="@+id/BotonSalir"
+            android:id="@+id/btnBack"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@android:color/transparent"

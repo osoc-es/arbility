@@ -115,9 +115,9 @@ public class MeasureElevator extends AppCompatActivity {
         confirm = (Button)findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
 
-        elevator_width = (TextView) findViewById(R.id.ancho_acensor);
-        elevDepth = (TextView) findViewById(R.id.profundo_ascensor);
-        ImageButton backButtn = (ImageButton) findViewById(R.id.btnAtras);
+        ancho_ascensor = (TextView) findViewById(R.id.ancho_acensor);
+        profundo_ascensor = (TextView) findViewById(R.id.profundo_ascensor);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();

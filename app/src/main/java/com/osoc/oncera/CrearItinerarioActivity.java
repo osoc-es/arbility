@@ -24,8 +24,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.javabean.Itinerary;
 import com.osoc.oncera.javabean.Obstacles;
+import com.osoc.oncera.javabean.Teacher;
 
 import java.util.ArrayList;
 
@@ -47,8 +56,32 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
     private Location currentLoc = new Location("");
 
     // TODO get teacher alias as extra from bundle and codCentro from Teacher alias
+
+    private DatabaseReference mDatabaseRef;
+    public static FirebaseAuth firebaseAuth;
+
+    private FirebaseUser user;
+
+
+    private String email;
+    private String alias;
+    private String codigo;
+    private String titulo;
+    private String descripcion;
+    private String codItinerario;
+
+    private final Profesor[] profesor = new Profesor[1];
+    private final Itinerario[] itinerario = new Itinerario[1];
+
+    private char[] conjunto = new char[6];
+    char[] elementos={'0','1','2','3','4','5','6','7','8','9' ,'a',
+            'b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t',
+            'u','v','w','x','y','z'};
+
     private String codCentro = null;
     private String aliasProfesor = null;
+
+    private String codigoItinerario;
 
     private int order = 1;
 
@@ -58,15 +91,23 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_itinerario);
+
+
+
         btn_new =(Button)findViewById(R.id.btn_new);
         btn_confirm = (Button) findViewById(R.id.btn_confirm);
         btn_save = (Button) findViewById(R.id.btn_save);
         imgCapture = (ImageView) findViewById(R.id.img_camera);
         imgIcone = (ImageView) findViewById( R.id.img_icon );
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnBack);
         //tv_loc = (TextView) findViewById(R.id.tv_loc);
         spin = (Spinner) findViewById(R.id.spin_access);
         spin.setOnItemSelectedListener(this);
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Usuarios");
+        user = firebaseAuth.getCurrentUser();
 
         btn_confirm.setEnabled(false);
         btn_save.setEnabled(false);
@@ -75,13 +116,16 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(aa);
 
+
+        obtenerAlias();
+
         btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cInt,Image_Capture_Code);
-                if (ContextCompat.checkSelfPermission(CrearItinerarioActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(CrearItinerarioActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
+                if (ContextCompat.checkSelfPermission( CrearItinerarioActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions( CrearItinerarioActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
                     return;
                 }
                 startLocation();
@@ -107,6 +151,8 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
                 // TODO guardar obstaculo en firebase
             }
         });
+
+
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +267,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
     }
 
     void guardarDialog() {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(CrearItinerarioActivity.this);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder( CrearItinerarioActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_guardar_itinerario, null);
 
         EditText title = (EditText) mView.findViewById(R.id.et_title);
@@ -234,9 +280,17 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
         mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(title.getText()!=null && description.getText()!=null)
-                    saveItinerario(title.getText().toString(), description.getText().toString());
-                dialogInterface.dismiss();
+                if(title.getText()!=null && description.getText()!=null){
+                    titulo = title.getText().toString().trim();
+                    descripcion = description.getText().toString().trim();
+                    guardarItinerario();
+                    dialogInterface.dismiss();
+
+                }else{
+                    Toast.makeText( CrearItinerarioActivity.this, "Debes introducir Titulo y Desripcion", Toast.LENGTH_SHORT ).show();
+                }
+                    //saveItinerario(title.getText().toString(), description.getText().toString());
+
             }
         });
 
@@ -253,11 +307,110 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
         dialog.show();
     }
 
-    public void saveItinerario(String title, String desc){
+   /* public void saveItinerario(String title, String desc){
         String id = null;
         Itinerary iter = new Itinerary(id, list_obst, aliasProfesor, title, desc, codCentro);
+        Itinerario iter = new Itinerario(id, list_obst, aliasProfesor, title, desc, codCentro,codItinerario);
 
         // TODO save itinerary in firebase
         finish();
+    }*/
+
+    public void obtenerAlias(){
+        email = user.getEmail();
+        Query qq4 = mDatabaseRef.orderByChild( "correo" ).equalTo( email );
+
+        qq4.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    profesor[0] = dataSnapshot1.getValue( Profesor.class );
+                }
+
+                if (email.equals( profesor[0].getCorreo() )) {
+
+                    alias = profesor[0].getAlias();
+                    codigo = profesor[0].getCodCentro();
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( CrearItinerarioActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+
+            }
+        } );
+    }
+    public void guardarItinerario(){
+
+        boolean[] repetido={false};
+
+        do {
+            repetido[0]=false;
+            codItinerario = crearcodItinerario();
+            Query qq4 = mDatabaseRef.orderByChild( "codItinerario" ).equalTo( codItinerario ).limitToFirst( 1 );
+            qq4.addListenerForSingleValueEvent( new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        itinerario[0] = dataSnapshot1.getValue( Itinerario.class );
+                    }
+
+                    if (itinerario[0] != null) {
+
+                        if (itinerario[0].getCodItinerario().equals( codItinerario ) && codItinerario != null) {
+                            Toast.makeText( CrearItinerarioActivity.this, "Generando codigo Itinerario", Toast.LENGTH_LONG ).show();
+                            repetido[0] = true;
+                        }
+
+                    }
+
+                    //qq4.removeEventListener( this );
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText( CrearItinerarioActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+
+                }
+            } );
+        } while(repetido[0] == true);
+
+        final DatabaseReference mDatabaseRef2 = FirebaseDatabase.getInstance().getReference("Itinerarios");
+
+
+        final String clave = mDatabaseRef2.push().getKey();
+
+        Itinerario iti = new Itinerario( clave, list_obst, alias, titulo, descripcion, codigo, codItinerario );
+        mDatabaseRef2.child( clave ).setValue( iti );
+        //mDatabaseRef2.push();
+
+
+
+    }
+    public String crearcodItinerario(){
+
+        for(int i=0;i<6;i++){
+            int el = (int)(Math.random()*36);
+            conjunto[i] = (char)elementos[el];
+        }
+        return codigoItinerario = new String(conjunto);
+    }
+
+    public String crearcodItinerario2(){
+
+        for(int i=0;i<6;i++){
+            int el = (int)(Math.random()*36);
+            conjunto[i] = (char)elementos[el];
+        }
+        return codigoItinerario = new String(conjunto);
     }
 }

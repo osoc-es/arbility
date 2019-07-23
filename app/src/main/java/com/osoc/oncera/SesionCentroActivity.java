@@ -51,7 +51,7 @@ public class SesionCentroActivity extends AppCompatActivity {
 
         codigo = (TextView) findViewById( R.id.tvCodCentro );
         copiar = (Button) findViewById( R.id.btnCopiarCod );
-        atras = (ImageButton) findViewById(R.id.btnAtras);
+        atras = (ImageButton) findViewById(R.id.btnBack);
 
         cargarCodCentro();
 

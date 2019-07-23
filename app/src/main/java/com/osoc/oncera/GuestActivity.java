@@ -31,7 +31,7 @@ public class GuestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest);
 
-        botonSalir = (ImageButton)findViewById(R.id.BotonSalir);
+        botonSalir = (ImageButton)findViewById(R.id.btnBack);
 
 
          botonPuertas= (LinearLayout)findViewById(R.id.BotonPuertas) ;

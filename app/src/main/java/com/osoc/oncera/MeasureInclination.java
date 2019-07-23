@@ -30,10 +30,10 @@ public class MeasureInclination extends AppCompatActivity {
     SensorManager sManager;
 
     private TextView pitch_text;
-    private Button button;
-    private ImageButton exit_button;
+    private Button btnMeasure;
+    private ImageButton btnBack;
 
-    private boolean barandilla;
+    private boolean railing;
     private String message;
 
     private DecimalFormat df = new DecimalFormat("#0.00º");
@@ -49,25 +49,25 @@ public class MeasureInclination extends AppCompatActivity {
         sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         pitch_text = (TextView) findViewById(R.id.pitch);
-        button = (Button) findViewById(R.id.BotonInclinacionMedir);
-        exit_button = (ImageButton) findViewById(R.id.BotonSalir);
+        btnMeasure = (Button) findViewById(R.id.btn_measure_inclination);
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        btnMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Medir();
             }
         });
 
-        exit_button.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        _rampa = (Ramps) getIntent().getExtras().get("rampaIntermedio");
-        barandilla = getIntent().getBooleanExtra("barandilla",false);
+        _ramp = (Ramps) getIntent().getExtras().get("rampaIntermedio");
+        railing = getIntent().getBooleanExtra("railing",false);
 
     }
 
@@ -95,19 +95,19 @@ public class MeasureInclination extends AppCompatActivity {
 
     private class casos {
 
-        public casos(float longitud, float pendiente, float minLong, float maxLong) {
-            this.longitud = longitud;
-            this.pendiente = pendiente;
+        public casos(float longitude, float slope, float minLong, float maxLong) {
+            this.longitude = longitude;
+            this.slope = slope;
             this.minLong = minLong;
             this.maxLong = maxLong;
         }
 
-        public float getLongitud() {
-            return longitud;
+        public float getLongitude() {
+            return longitude;
         }
 
-        public float getPendiente() {
-            return pendiente;
+        public float getSlope() {
+            return slope;
         }
 
         public float getMinLong() {
@@ -118,18 +118,17 @@ public class MeasureInclination extends AppCompatActivity {
             return maxLong;
         }
 
-        private float longitud, pendiente, minLong, maxLong;
+        private float longitude, slope, minLong, maxLong;
 
     }
 
-    private casos rampa1, rampa2, rampa3;
-    private float paramAnch;
-    private float minParamPomo, maxParamPomo;
-    private Ramps _rampa;
+    private casos ramp1, ramp2, ramp3;
+    private float paramWidth;
+    private float minParamKnob, maxParamKnob;
+    private Ramps _ramp;
 
 
-
-
+    
     private SensorEventListener mySensorEventListener = new SensorEventListener() {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
@@ -161,6 +160,9 @@ public class MeasureInclination extends AppCompatActivity {
         }
     };
 
+    /**
+     * Get and display the slope value and evaluate whether it is accessible
+     */
     private void Medir() {
         pitch_text.setText(df.format(pitch));
         _rampa.setSlope(pitch);
@@ -168,13 +170,16 @@ public class MeasureInclination extends AppCompatActivity {
        evaluate();
     }
 
+    /**
+     * Get values of accessibility standards from database
+     */
     private void getDBValues() {
         final DatabaseReference anchDB = FirebaseDatabase.getInstance().getReference("Estandares/Ramps/Anchura");
 
         anchDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                paramAnch = dataSnapshot.getValue(Float.class);
+                paramWidth = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -192,7 +197,7 @@ public class MeasureInclination extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     data.add(snapshot.getValue(Float.class));
                 }
-                rampa1 = new casos(data.get(0), data.get(1), -1, -1);
+                ramp1 = new casos(data.get(0), data.get(1), -1, -1);
             }
 
             @Override
@@ -211,7 +216,7 @@ public class MeasureInclination extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     data.add(snapshot.getValue(Float.class));
                 }
-                rampa2 = new casos(-1, data.get(0), data.get(1), data.get(2));
+                ramp2 = new casos(-1, data.get(0), data.get(1), data.get(2));
             }
 
             @Override
@@ -230,7 +235,7 @@ public class MeasureInclination extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     data.add(snapshot.getValue(Float.class));
                 }
-                rampa3 = new casos(-1, data.get(0), data.get(1), data.get(2));
+                ramp3 = new casos(-1, data.get(0), data.get(1), data.get(2));
             }
 
             @Override
@@ -245,7 +250,7 @@ public class MeasureInclination extends AppCompatActivity {
         minPomo.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                minParamPomo = dataSnapshot.getValue(Float.class);
+                minParamKnob = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -259,7 +264,7 @@ public class MeasureInclination extends AppCompatActivity {
         maxPomo.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                maxParamPomo = dataSnapshot.getValue(Float.class);
+                maxParamKnob = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -269,25 +274,28 @@ public class MeasureInclination extends AppCompatActivity {
         });
     }
 
+    /**
+     * Check whether the counter is accessible or not and start Axesibility activity to display the
+     * result
+     */
     private void evaluate() {
-
         String s ="";
 
        boolean cumpleAnch = Evaluator.IsGreaterThan(_rampa.getWidth(), paramAnch);
 
-        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_anpt) + paramAnch, cumpleAnch);
+        s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_anpt) + paramWidth, cumpleAnch);
 
         casos aux;
 
         float lng = _rampa.getLength();
 
-        if(lng < rampa1.getLongitud()) aux = rampa1;
-        else if(Evaluator.IsInRange(lng,rampa2.getMinLong(), rampa2.getMaxLong())) aux = rampa2;
-        else aux = rampa3;
+        if(lng < ramp1.getLongitude()) aux = ramp1;
+        else if(Evaluator.IsInRange(lng, ramp2.getMinLong(), ramp2.getMaxLong())) aux = ramp2;
+        else aux = ramp3;
 
         boolean cumpleIncl = Evaluator.IsLowerThan(_rampa.getSlope(),aux.getPendiente());
         s = UpdateStringIfNeeded(s, "y", s == "" || cumpleIncl);
-        s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_incl) + aux.getPendiente(), cumpleIncl);
+        s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_incl) + aux.getSlope(), cumpleIncl);
 
 
 
@@ -299,7 +307,7 @@ public class MeasureInclination extends AppCompatActivity {
         else cumplePasamanos = true;
 
         s = UpdateStringIfNeeded(s, "y", s == "" || cumplePasamanos);
-        s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_alt) + aux.getPendiente(), cumplePasamanos);
+        s = UpdateStringIfNeeded(s, getString(R.string.ramp_n_alt) + aux.getSlope(), cumplePasamanos);
 
         _rampa.setAccessible(cumpleAnch && cumpleIncl && cumplePasamanos);
 
@@ -309,20 +317,29 @@ public class MeasureInclination extends AppCompatActivity {
 
         Intent i = new Intent(this,AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.RAMPAS.getValue());
-        i.putExtra(TypesManager.RAMPA_OBS, _rampa);
+        i.putExtra(TypesManager.RAMPA_OBS, _ramp);
 
         startActivity(i);
         finish();
-
-
-
     }
 
+    /**
+     * Add string to another string if a condition is met
+     * @param base initial base string
+     * @param to_add string that will be added to the base if the condition is met
+     * @param condition condition that determines whether the string is altered or not
+     * @return result string
+     */
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
         return condition ? base : base + " " + to_add;
     }
 
+    /**
+     * Updates message to show whether an element is accessible or not with an explanation
+     * @param condition boolean determining whether the element is accessible or not
+     * @param aux explanation of the accessibility result
+     */
     private void UpdateMessage(boolean condition, String aux)
     {
         message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);

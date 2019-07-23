@@ -35,7 +35,7 @@ public class LoginProfesorActivity extends AppCompatActivity {
 
         correo = (EditText) findViewById( R.id.etCorreoLogin );
         password = (EditText) findViewById( R.id.etPasswordLogin );
-        atras = (ImageButton) findViewById(R.id.btnAtras);
+        atras = (ImageButton) findViewById(R.id.btnBack);
 
         auth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Usuarios");

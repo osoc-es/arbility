@@ -50,23 +50,23 @@ public class MeasureRamp extends AppCompatActivity {
 
     private List<AnchorNode> anchorNodes;
 
-    private boolean medir_anchura = false;
-    private boolean barandilla = true;
+    private boolean measuring_width = false;
+    private boolean railing = true;
 
     Button restart;
     Button confirm;
     TextView data;
-    TextView ancho_rampa;
-    TextView alto_barandilla;
-    TextView largo_rampa;
-    SeekBar z_axis;
+    TextView ramp_width;
+    TextView ledge_height;
+    TextView ramp_length;
+    SeekBar sk_height_control;
     private ImageView img_instr;
 
     private Anchor anchor1 = null, anchor2 = null;
 
     private HitResult myhit;
 
-    private Ramps rampa = new Ramps(null, null, null, null, null, null, null, null, null);
+    private Ramps ramp = new Ramps(null, null, null, null, null, null, null, null, null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -85,20 +85,20 @@ public class MeasureRamp extends AppCompatActivity {
         confirm = (Button) findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
 
-        ancho_rampa = (TextView) findViewById(R.id.ancho_rampa);
-        alto_barandilla = (TextView) findViewById(R.id.alto_barandilla);
-        largo_rampa = (TextView) findViewById(R.id.largo_rampa);
+        ramp_width = (TextView) findViewById(R.id.ramp_width);
+        ledge_height = (TextView) findViewById(R.id.ledge_height);
+        ramp_length = (TextView) findViewById(R.id.ramp_length);
 
-        z_axis = (SeekBar) findViewById(R.id.z_axis);
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        sk_height_control = (SeekBar) findViewById(R.id.sk_height_control);
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();
 
-        z_axis.setEnabled(false);
+        sk_height_control.setEnabled(false);
         confirm.setEnabled(false);
 
-        btnAtras.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -109,40 +109,20 @@ public class MeasureRamp extends AppCompatActivity {
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anchor1 = null;
-                anchor2 = null;
-                medir_anchura = false;
-                z_axis.setProgress(0);
-                z_axis.setEnabled(false);
-                confirm.setEnabled(false);
-                confirm.setText("Next");
-                data.setText(R.string.instr_rampa_01);
-                img_instr.setImageResource(R.drawable.rampa_01);
-
-                largo_rampa.setText("Longitud rampa: --");
-                ancho_rampa.setText("Anchura rampa: --");
-                alto_barandilla.setText("Altura barandilla: --");
-
-
-                for (AnchorNode n : anchorNodes) {
-                    arFragment.getArSceneView().getScene().removeChild(n);
-                    n.getAnchor().detach();
-                    n.setParent(null);
-                    n = null;
-                }
+                resetLayout();
             }
         });
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!medir_anchura) {
-                    medir_anchura = true;
-                    resetMedirAnchura();
+                if (!measuring_width) {
+                    measuring_width = true;
+                    measureWidth();
                 } else {
                     Intent guestActivity = new Intent(MeasureRamp.this, MeasureInclination.class);
-                    guestActivity.putExtra("rampaIntermedio", rampa);
-                    guestActivity.putExtra("barandilla", barandilla);
+                    guestActivity.putExtra("rampaIntermedio", ramp);
+                    guestActivity.putExtra("railing", railing);
                     startActivity(guestActivity);
                     finish();
                 }
@@ -150,13 +130,13 @@ public class MeasureRamp extends AppCompatActivity {
         });
 
 
-        z_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        sk_height_control.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 upDistance = progress;
                 ascend(myanchornode, upDistance);
                 confirm.setEnabled(true);
-                alto_barandilla.setText("Altura barandilla: " +
+                ledge_height.setText("Altura barandilla: " +
                         form_numbers.format(progress / 100f));
                 rampa.setHandRailHeight((float) progress * 100);
             }
@@ -206,21 +186,21 @@ public class MeasureRamp extends AppCompatActivity {
                         anchor1 = anchor;
                     } else {
                         anchor2 = anchor;
-                        if (!medir_anchura) {
-                            largo_rampa.setText("Longitud rampa: " +
+                        if (!measuring_width) {
+                            ramp_length.setText("Longitud rampa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
                             confirm.setEnabled(true);
-                            rampa.setLength(getMetersBetweenAnchors(anchor1, anchor2) * 100);
+                            ramp.setLength(getMetersBetweenAnchors(anchor1, anchor2) * 100);
                         } else {
-                            ancho_rampa.setText("Anchura rampa: " +
+                            ramp_width.setText("Anchura rampa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            rampa.setWidth(getMetersBetweenAnchors(anchor1, anchor2) * 100);
+                            ramp.setWidth(getMetersBetweenAnchors(anchor1, anchor2) * 100);
 
 
-                            if (!barandilla)
+                            if (!railing)
                                 confirm.setEnabled(true);
                             else {
-                                z_axis.setEnabled(true);
+                                sk_height_control.setEnabled(true);
                                 data.setText(R.string.instr_rampa_03);
                                 img_instr.setImageResource(R.drawable.rampa_03);
                             }
@@ -235,10 +215,14 @@ public class MeasureRamp extends AppCompatActivity {
                     andy.select();
                     andy.getScaleController().setEnabled(false);
                 });
-        barandillaDialog();
+        railingDialog();
     }
 
-
+    /**
+     * Function to raise an object perpendicular to the ArPlane a specific distance
+     * @param an anchor belonging to the object that should be raised
+     * @param up distance in centimeters the object should be raised vertically
+     */
     void ascend(AnchorNode an, float up) {
         Anchor anchor = myhit.getTrackable().createAnchor(
                 myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
@@ -246,7 +230,12 @@ public class MeasureRamp extends AppCompatActivity {
         an.setAnchor(anchor);
     }
 
-
+    /**
+     * Function to return the distance in meters between two objects placed in ArPlane
+     * @param anchor1 first object's anchor
+     * @param anchor2 second object's anchor
+     * @return the distance between the two anchors in meters
+     */
     float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
@@ -256,7 +245,10 @@ public class MeasureRamp extends AppCompatActivity {
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void barandillaDialog() {
+    /**
+     * Dialog to ask user whether the ramp has a railing or not
+     */
+    void railingDialog() {
         int[] spinnerImages = new int[]{R.drawable.rampa_barandilla
                 , R.drawable.rampa_sin_barandilla};
 
@@ -282,8 +274,8 @@ public class MeasureRamp extends AppCompatActivity {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 if (mSpinner.getSelectedItemPosition() == 1) {
-                    barandilla = false;
-                    alto_barandilla.setVisibility(View.INVISIBLE);
+                    railing = false;
+                    ledge_height.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -294,7 +286,10 @@ public class MeasureRamp extends AppCompatActivity {
         dialog.show();
     }
 
-    void resetMedirAnchura() {
+    /**
+     * Prepare layout to start measuring the ramp's width
+     */
+    private void measureWidth() {
         anchor1 = null;
         anchor2 = null;
         confirm.setEnabled(false);
@@ -309,8 +304,39 @@ public class MeasureRamp extends AppCompatActivity {
         }
     }
 
+    /**
+     * Reset layout to its initial state
+     */
+    private void resetLayout(){
+        anchor1 = null;
+        anchor2 = null;
+        measuring_width = false;
+        sk_height_control.setProgress(0);
+        sk_height_control.setEnabled(false);
+        confirm.setEnabled(false);
+        confirm.setText("Next");
+        data.setText(R.string.instr_rampa_01);
+        img_instr.setImageResource(R.drawable.rampa_01);
 
-    public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
+        ramp_length.setText("Longitud rampa: --");
+        ramp_width.setText("Anchura rampa: --");
+        ledge_height.setText("Altura barandilla: --");
+
+
+        for (AnchorNode n : anchorNodes) {
+            arFragment.getArSceneView().getScene().removeChild(n);
+            n.getAnchor().detach();
+            n.setParent(null);
+            n = null;
+        }
+    }
+
+    /**
+     * Check whether the device supports the tools required to use the measurement tools
+     * @param activity
+     * @return boolean determining whether the device is supported or not
+     */
+    private boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             Log.e(TAG, "Sceneform requires Android N or later");
             Toast.makeText(activity, "Sceneform requires Android N or later", Toast.LENGTH_LONG).show();

@@ -123,7 +123,7 @@ public class MeasureStairLift extends AppCompatActivity {
 
         ancho_plat = (TextView) findViewById(R.id.ancho_plat);
         largo_plat = (TextView) findViewById(R.id.largo_plat);
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();

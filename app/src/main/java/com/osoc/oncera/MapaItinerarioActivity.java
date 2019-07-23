@@ -10,10 +10,17 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
@@ -40,11 +47,17 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
     private MapView mapView;
     private MapboxMap mapboxMap;
 
+    private DatabaseReference mDatabaseRef;
+
     private Button btn_evaluar;
     private Spinner sp_obstaculo;
 
-    double longitud;
-    double latitud;
+
+    private String nombre;
+    private double longitud;
+    private double latitud;
+    private String tipo;
+    private int orden;
 
     private static final String SOURCE_ID = "SOURCE_ID";
     private static final String ICON_ID = "ICON_ID";
@@ -53,49 +66,38 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
     ArrayList<Feature> col = new ArrayList<>();
     private GeoJsonSource geoJsonSource;
 
-   // private Double[] latitudeList = new Double[] {40.347092, 40.346958, 40.346868, 40.347545};
-    //private Double[] longitudeList = new Double[] {-3.696092, -3.696356, -3.696554, -3.696323};
+    private final Itinerario[] iti = new Itinerario[1];
+    private ArrayList<Obstaculo> obs;
+
 
     private LocationListener locationListener;
     private LocationManager locationManager;
 
-    private Itinerary itinerary;
+    private String codigoItinerario;
 
-    private void createItinerario(){
-        ArrayList<Obstacles> aux = new ArrayList<>();
-
-        Obstacles p = new Obstacles("1",-3.696541,40.347230,TypesManager.DOOR_OBS,"foto",1,null);
-
-        Obstacles s = new Obstacles("2",-3.696155,40.347250,TypesManager.EMERGENC_OBS,"foto",2,null);
-
-        Obstacles t = new Obstacles("3",-3.696321,40.346862,TypesManager.ILLUM_OBS,"foto",3,null);
-
-        aux.add(p);
-        aux.add(s);
-        aux.add(t);
-
-        itinerary = new Itinerary("1",aux,"Pedro","ItinerarioTest","prueba it",null);
+    private Itinerario itinerario;
 
 
-    }
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, "pk.eyJ1IjoiZm9uY2UiLCJhIjoiY2p4b3B1NG53MDhsbTNjbnYzMXNpbjRjYiJ9.MkBM2G0smC9aOJ_IS804xg");
         setContentView(R.layout.activity_mapa_itinerario);
 
-        createItinerario();
-
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Itinerarios" );
+
+        Bundle bundle = getIntent().getExtras();
+        codigoItinerario = bundle.getString( "codigoItinerario" );
+
         btn_evaluar = (Button) findViewById(R.id.btn_evaluar);
         sp_obstaculo = (Spinner) findViewById(R.id.sp_obstaculo);
 
-        String[] list = new String[itinerary.getObstacles().size()];
-        /*for(int i = 0 ; i < longitudeList.length ; i++)
-            list[i] = "Obstáculo: "+Integer.toString(i+1);*/
+        String[] list = new String[itinerario.getObstaculos().size()];
 
         for(int i = 0; i < itinerary.getObstacles().size() ; i++){
             list[i]= "Obstacles: "+Integer.toString(i+1);
@@ -106,16 +108,14 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
 
         sp_obstaculo.setAdapter(adapter);
 
+
         btn_evaluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToEv();
             }
         });
-
-        Button btn_location = (Button) findViewById(R.id.btn_evaluar);
     }
-
 
     private void goToEv()
     {
@@ -139,10 +139,6 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
 
         MapaItinerarioActivity.this.mapboxMap = mapboxMap;
-        /*Bundle bu = getIntent().getExtras();
-        longitud = bu.getDouble( "longitud" );
-        latitud = bu.getDouble( "latitud" );
-        bu.clear();*/
 
         LatLng BOUND_CORNER_NW = new LatLng(itinerary.getObstacles().get(0).getLatitude()+0.002, itinerary.getObstacles().get(0).getLength()+0.002);
         LatLng BOUND_CORNER_SE = new LatLng(itinerary.getObstacles().get(0).getLatitude()-0.002, itinerary.getObstacles().get(0).getLength()-0.002);
@@ -237,6 +233,50 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+    }
+
+    public void cargarItinerario(){
+
+        Query qq2 = mDatabaseRef.orderByChild( "codItinerario" ).equalTo( codigoItinerario ).limitToFirst( 1 );
+        qq2.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    iti[0] = dataSnapshot1.getValue( Itinerario.class );
+                }
+
+                if (iti[0] != null) {
+
+                    if (iti[0].getCodItinerario().equals( codigoItinerario ) && codigoItinerario != null) {
+                        Toast.makeText( MapaItinerarioActivity.this, "Codigo correcto", Toast.LENGTH_LONG ).show();
+
+                       obs = iti[0].getObstaculos();
+                        //TODO HACER FOR EACH PARA SACAR LOS OBSTACULOS DE FIREBASE Y QUE EL ALUMNO PUEDO DESCARGAR EL ITINERARIO.
+                       /*for (Obstaculo cosas: obs){
+                           obs.get( cosas )
+
+                       }*/
+
+                    } else {
+                        Toast.makeText( MapaItinerarioActivity.this, "El Código no Existe", Toast.LENGTH_LONG ).show();
+                    }
+
+                } else {
+                    Toast.makeText( MapaItinerarioActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
+                }
+
+                qq2.removeEventListener( this );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( MapaItinerarioActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+
+            }
+        } );
+
     }
 
 

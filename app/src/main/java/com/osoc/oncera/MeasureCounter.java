@@ -102,12 +102,12 @@ public class MeasureCounter extends AppCompatActivity {
         restart = (Button) findViewById(R.id.btn_restart);
         confirm = (Button) findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
-        counter_width = (TextView) findViewById(R.id.ancho_util);
-        counter_height = (TextView) findViewById(R.id.alto_trabajo);
-        ledge_depth = (TextView) findViewById(R.id.profundo_repisa);
-        ledge_height = (TextView) findViewById(R.id.alto_repisa);
-        sk_height_control = (SeekBar) findViewById(R.id.z_axis);
-        ImageButton btnBack = (ImageButton) findViewById(R.id.btnAtras);
+        counter_width = (TextView) findViewById(R.id.counter_width);
+        counter_height = (TextView) findViewById(R.id.counter_height);
+        ledge_depth = (TextView) findViewById(R.id.ledge_depth);
+        ledge_height = (TextView) findViewById(R.id.ledge_height);
+        sk_height_control = (SeekBar) findViewById(R.id.sk_height_control);
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();

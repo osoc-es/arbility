@@ -86,7 +86,7 @@ public class WheelchairSimulation extends AppCompatActivity {
         Button accelerate = (Button)findViewById(R.id.accelerate);
         sb_size = (SeekBar) findViewById(R.id.sb_size);
         tv_width = (TextView) findViewById(R.id.tv_width);
-        btnSalir = (ImageButton) findViewById(R.id.BotonSalir);
+        btnSalir = (ImageButton) findViewById(R.id.btnBack);
         List<AnchorNode> anchorNodes = new ArrayList<>();
 
         sb_size.setEnabled(false);
