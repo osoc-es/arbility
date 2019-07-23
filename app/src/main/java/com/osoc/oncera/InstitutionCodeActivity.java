@@ -23,7 +23,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.javabean.Institution;
 
-public class SesionCentroActivity extends AppCompatActivity {
+public class InstitutionCodeActivity extends AppCompatActivity {
 
     TextView codigo;
     Button copiar;
@@ -53,7 +53,7 @@ public class SesionCentroActivity extends AppCompatActivity {
         copiar = (Button) findViewById( R.id.btnCopiarCod );
         atras = (ImageButton) findViewById(R.id.btnBack);
 
-        cargarCodCentro();
+        loadCenterCode();
 
         copiar.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -62,7 +62,7 @@ public class SesionCentroActivity extends AppCompatActivity {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService( Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("text",  text);
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText( SesionCentroActivity.this, "Copiado en el Portapapeles", Toast.LENGTH_LONG ).show();
+                Toast.makeText( InstitutionCodeActivity.this, "Copiado en el Portapapeles", Toast.LENGTH_LONG ).show();
 
 
             }
@@ -75,9 +75,8 @@ public class SesionCentroActivity extends AppCompatActivity {
             }
         });
     }
-    public void cargarCodCentro(){
 
-
+    public void loadCenterCode(){
         Query qq1 = mDatabaseRef.orderByChild("mail").equalTo(emailPersona);
 
         qq1.addListenerForSingleValueEvent(new ValueEventListener() {

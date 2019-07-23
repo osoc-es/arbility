@@ -118,7 +118,7 @@ public class MeasureRamp extends AppCompatActivity {
             public void onClick(View view) {
                 if (!measuring_width) {
                     measuring_width = true;
-                    measureWidth();
+                    measureWidthLayout();
                 } else {
                     Intent guestActivity = new Intent(MeasureRamp.this, MeasureInclination.class);
                     guestActivity.putExtra("rampaIntermedio", ramp);
@@ -223,7 +223,7 @@ public class MeasureRamp extends AppCompatActivity {
      * @param an anchor belonging to the object that should be raised
      * @param up distance in centimeters the object should be raised vertically
      */
-    void ascend(AnchorNode an, float up) {
+    private void ascend(AnchorNode an, float up) {
         Anchor anchor = myhit.getTrackable().createAnchor(
                 myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
 
@@ -236,7 +236,7 @@ public class MeasureRamp extends AppCompatActivity {
      * @param anchor2 second object's anchor
      * @return the distance between the two anchors in meters
      */
-    float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
+    private float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
         float totalDistanceSquared = 0;
@@ -248,7 +248,7 @@ public class MeasureRamp extends AppCompatActivity {
     /**
      * Dialog to ask user whether the ramp has a railing or not
      */
-    void railingDialog() {
+    private void railingDialog() {
         int[] spinnerImages = new int[]{R.drawable.rampa_barandilla
                 , R.drawable.rampa_sin_barandilla};
 
@@ -289,7 +289,7 @@ public class MeasureRamp extends AppCompatActivity {
     /**
      * Prepare layout to start measuring the ramp's width
      */
-    private void measureWidth() {
+    private void measureWidthLayout() {
         anchor1 = null;
         anchor2 = null;
         confirm.setEnabled(false);

@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
-import com.google.ar.core.Pose;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
@@ -44,18 +43,15 @@ import java.util.List;
 public class MeasureStairLift extends AppCompatActivity {
     private static final String TAG = MeasureDoor.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
-    private float upDistance = 0f;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
-    private Anchor myanchor;
-    private AnchorNode myanchornode;
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
     private List<AnchorNode> anchorNodes;
 
-    private boolean medir_profundidad = false;
+    private boolean measuring_length = false;
 
-    private boolean mando = false, carga = false, velocidad = false;
+    private boolean controls = false, supportedWeight = false, speed = false;
 
     private float paramAnch;
     private float paramLargo;
@@ -65,13 +61,11 @@ public class MeasureStairLift extends AppCompatActivity {
     Button restart;
     Button confirm;
     TextView data;
-    TextView ancho_plat;
-    TextView largo_plat;
+    TextView platform_width;
+    TextView platform_length;
     private ImageView img_instr;
 
     private Anchor anchor1 = null, anchor2 = null;
-
-    private HitResult myhit;
 
     private StairLifter stairLifter = new StairLifter(null,null,null,null,null,null,null,null,null,null,null);
 
@@ -121,16 +115,16 @@ public class MeasureStairLift extends AppCompatActivity {
         confirm = (Button) findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
 
-        ancho_plat = (TextView) findViewById(R.id.ancho_plat);
-        largo_plat = (TextView) findViewById(R.id.largo_plat);
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnBack);
+        platform_width = (TextView) findViewById(R.id.platform_width);
+        platform_length = (TextView) findViewById(R.id.platform_length);
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();
 
         confirm.setEnabled(false);
 
-        btnAtras.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -147,10 +141,10 @@ public class MeasureStairLift extends AppCompatActivity {
                 data.setText(R.string.instr_salvaescaleras_01);
                 img_instr.setImageResource(R.drawable.salvaescaleras_01);
 
-                ancho_plat.setText("Anchura plataforma: --");
-                largo_plat.setText("Longitud plataforma: --");
+                platform_width.setText("Anchura plataforma: --");
+                platform_length.setText("Longitud plataforma: --");
 
-                medir_profundidad = false;
+                measuring_length = false;
 
                 for (AnchorNode n : anchorNodes) {
                     arFragment.getArSceneView().getScene().removeChild(n);
@@ -165,9 +159,9 @@ public class MeasureStairLift extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!medir_profundidad) {
-                    medir_profundidad = true;
-                    resetMedirAnchura();
+                if (!measuring_length) {
+                    measuring_length = true;
+                    measureLengthLayout();
                 } else {
                     Toast.makeText(MeasureStairLift.this, "Confirmado", Toast.LENGTH_SHORT).show();
                     validate();
@@ -198,8 +192,6 @@ public class MeasureStairLift extends AppCompatActivity {
                     if (andyRenderable == null) {
                         return;
                     }
-                    myhit = hitResult;
-
                     // Create the Anchor.
                     Anchor anchor = hitResult.createAnchor();
 
@@ -214,18 +206,17 @@ public class MeasureStairLift extends AppCompatActivity {
                     } else {
                         anchor2 = anchor;
                         confirm.setEnabled(true);
-                        if (!medir_profundidad) {
-                            ancho_plat.setText("Anchura plataforma: " +
+                        if (!measuring_length) {
+                            platform_width.setText("Anchura plataforma: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
                             stairLifter.setWidth(getMetersBetweenAnchors(anchor1, anchor2)*100);
 
                         } else {
-                            largo_plat.setText("Longitud plataforma: " +
+                            platform_length.setText("Longitud plataforma: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
                             stairLifter.setLength(getMetersBetweenAnchors(anchor1, anchor2)*100);
                         }
                     }
-                    myanchornode = anchorNode;
 
                     // Create the transformable andy and add it to the anchor.
                     TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
@@ -234,10 +225,14 @@ public class MeasureStairLift extends AppCompatActivity {
                     andy.select();
                     andy.getScaleController().setEnabled(false);
                 });
-        barandillaDialog();
+        stairLiftQuestionDialog();
     }
-    private void validate() {
 
+    /**
+     * Check whether the stair lift is accessible or not and start Axesibility activity to display
+     * the result
+     */
+    private void validate() {
         String s = "";
 
         Boolean anch = Evaluator.IsGreaterThan(stairLifter.getWidth(),paramAnch);
@@ -270,15 +265,14 @@ public class MeasureStairLift extends AppCompatActivity {
         finish();
     }
 
-    void ascend(AnchorNode an, float up) {
-        Anchor anchor = myhit.getTrackable().createAnchor(
-                myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
 
-        an.setAnchor(anchor);
-    }
-
-
-    float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
+    /**
+     * Function to return the distance in meters between two objects placed in ArPlane
+     * @param anchor1 first object's anchor
+     * @param anchor2 second object's anchor
+     * @return the distance between the two anchors in meters
+     */
+    private float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
         float totalDistanceSquared = 0;
@@ -287,8 +281,10 @@ public class MeasureStairLift extends AppCompatActivity {
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void barandillaDialog() {
-
+    /**
+     * Dialog to ask user whether the stair lift meets certain standards for accessibility
+     */
+    private void stairLiftQuestionDialog() {
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureStairLift.this);
         View mView = getLayoutInflater().inflate(R.layout.diaglog_chair_lift, null);
@@ -309,15 +305,13 @@ public class MeasureStairLift extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                mando = chkMando.isChecked();
-                carga = chkCarga.isChecked();
-                velocidad = chkVelocidad.isChecked();
+                controls = chkMando.isChecked();
+                supportedWeight = chkCarga.isChecked();
+                speed = chkVelocidad.isChecked();
 
-                stairLifter.setShipmentControl(mando);
-                stairLifter.setCharge(carga);
-                stairLifter.setVelocity(velocidad);
-
-
+                stairLifter.setShipmentControl(controls);
+                stairLifter.setCharge(supportedWeight);
+                stairLifter.setVelocity(speed);
             }
         });
 
@@ -327,7 +321,10 @@ public class MeasureStairLift extends AppCompatActivity {
         dialog.show();
     }
 
-    void resetMedirAnchura() {
+    /**
+     * Prepare layout to start measuring the stairlift's length
+     */
+    private void measureLengthLayout() {
         anchor1 = null;
         anchor2 = null;
         confirm.setEnabled(false);
@@ -342,8 +339,12 @@ public class MeasureStairLift extends AppCompatActivity {
         }
     }
 
-
-    public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
+    /**
+     * Check whether the device supports the tools required to use the measurement tools
+     * @param activity
+     * @return boolean determining whether the device is supported or not
+     */
+    private boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             Log.e(TAG, "Sceneform requires Android N or later");
             Toast.makeText(activity, "Sceneform requires Android N or later", Toast.LENGTH_LONG).show();
@@ -364,11 +365,23 @@ public class MeasureStairLift extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Add string to another string if a condition is met
+     * @param base initial base string
+     * @param to_add string that will be added to the base if the condition is met
+     * @param condition condition that determines whether the string is altered or not
+     * @return result string
+     */
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
         return condition ? base : base + " " + to_add;
     }
 
+    /**
+     * Updates message to show whether an element is accessible or not with an explanation
+     * @param condition boolean determining whether the element is accessible or not
+     * @param aux explanation of the accessibility result
+     */
     private void UpdateMessage(boolean condition, String aux)
     {
         message = condition? getString(R.string.accessible) : getString(R.string.no_accesible);

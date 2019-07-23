@@ -60,6 +60,16 @@ public class MeasureDoor extends AppCompatActivity {
 
     private HitResult myhit;
 
+    private Button restart;
+    private Button confirm;
+    private TextView data;
+    private TextView width;
+    private TextView mechanism;
+    private TextView height;
+    private SeekBar sk_height_control;
+
+    List<AnchorNode> anchorNodes = new ArrayList<>();
+
     private String[] doorType = new String[]{"Giratoria", "Corredera", "Abatible", "Tornos"};
     private String[] mecTypes = new String[]{"Manibela", "Pomo", "Barra", "Agarrador"};
     private boolean measure_height = false;
@@ -83,18 +93,17 @@ public class MeasureDoor extends AppCompatActivity {
        GetDBValues();
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-        Button restart = (Button) findViewById(R.id.btn_restart);
-        Button confirm = (Button) findViewById(R.id.btn_ok);
-        TextView data = (TextView) findViewById(R.id.tv_distance);
-        TextView width = (TextView) findViewById(R.id.width);
-        TextView mechanism = (TextView) findViewById(R.id.height_mecha);
-        TextView height = (TextView) findViewById(R.id.height);
-        SeekBar z_axis = (SeekBar) findViewById(R.id.sk_height_control);
+        restart = (Button) findViewById(R.id.btn_restart);
+        confirm = (Button) findViewById(R.id.btn_ok);
+        data = (TextView) findViewById(R.id.tv_distance);
+        width = (TextView) findViewById(R.id.width);
+        mechanism = (TextView) findViewById(R.id.height_mecha);
+        height = (TextView) findViewById(R.id.height);
+        sk_height_control = (SeekBar) findViewById(R.id.sk_height_control);
         ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
-        List<AnchorNode> anchorNodes = new ArrayList<>();
 
-        z_axis.setEnabled(false);
+        sk_height_control.setEnabled(false);
         confirm.setEnabled(false);
 
 
@@ -108,24 +117,7 @@ public class MeasureDoor extends AppCompatActivity {
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anchor1 = null;
-                anchor2 = null;
-                z_axis.setProgress(0);
-                z_axis.setEnabled(false);
-                confirm.setEnabled(false);
-                confirm.setText("Siguiente");
-                data.setText(R.string.instr_puerta_01);
-                img_instr.setImageResource(R.drawable.puerta_01);
-                width.setText("Anchura Puerta: --");
-                mechanism.setText("Altura mecanismo: --");
-                height.setText("Altura door_: --");
-                measure_height = false;
-                for (AnchorNode n : anchorNodes) {
-                    arFragment.getArSceneView().getScene().removeChild(n);
-                    n.getAnchor().detach();
-                    n.setParent(null);
-                    n = null;
-                }
+                resetLayout();
             }
         });
 
@@ -140,12 +132,12 @@ public class MeasureDoor extends AppCompatActivity {
                     confirm.setEnabled(false);
                     confirm.setText("Confirm");
                 } else
-                    Confirmar();
+                    confirm();
             }
         });
 
 
-        z_axis.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        sk_height_control.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 upDistance = progress;
@@ -213,7 +205,7 @@ public class MeasureDoor extends AppCompatActivity {
                         img_instr.setImageResource(R.drawable.puerta_02);
                         data.setText(R.string.instr_puerta_02);
 
-                        z_axis.setEnabled(true);
+                        sk_height_control.setEnabled(true);
                     }
                     myanchornode = anchorNode;
 
@@ -224,7 +216,7 @@ public class MeasureDoor extends AppCompatActivity {
                     andy.select();
                     andy.getScaleController().setEnabled(false);
                 });
-        puertaDialog();
+        doorTypeDialog();
     }
 
     /**
@@ -295,7 +287,7 @@ public class MeasureDoor extends AppCompatActivity {
      * @param an anchor belonging to the object that should be raised
      * @param up distance in centimeters the object should be raised vertically
      */
-    void ascend(AnchorNode an, float up) {
+    private void ascend(AnchorNode an, float up) {
         Anchor anchor = myhit.getTrackable().createAnchor(
                 myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
 
@@ -308,7 +300,7 @@ public class MeasureDoor extends AppCompatActivity {
      * @param anchor2 second object's anchor
      * @return the distance between the two anchors in meters
      */
-    float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
+    private float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
         float totalDistanceSquared = 0;
@@ -321,7 +313,7 @@ public class MeasureDoor extends AppCompatActivity {
      * Check whether the counter is accessible or not and start Axesibility activity to display the
      * result
      */
-    void Confirmar()
+    private void confirm()
     {
         String s = "";
 
@@ -363,7 +355,7 @@ public class MeasureDoor extends AppCompatActivity {
     /**
      * Dialog to ask user for the type of door and opening mechanism
      */
-    void puertaDialog() {
+    private void doorTypeDialog() {
         int[] spinnerImages = new int[]{R.drawable.puerta_giratoria, R.drawable.puerta_corredera
                 , R.drawable.puerta_abatible, R.drawable.puerta_torno};
 
@@ -431,6 +423,31 @@ public class MeasureDoor extends AppCompatActivity {
         }
         return true;
     }
+
+    /**
+     * Set layout to its initial state
+     */
+    private void resetLayout(){
+        anchor1 = null;
+        anchor2 = null;
+        sk_height_control.setProgress(0);
+        sk_height_control.setEnabled(false);
+        confirm.setEnabled(false);
+        confirm.setText("Siguiente");
+        data.setText(R.string.instr_puerta_01);
+        img_instr.setImageResource(R.drawable.puerta_01);
+        width.setText("Anchura Puerta: --");
+        mechanism.setText("Altura mecanismo: --");
+        height.setText("Altura door_: --");
+        measure_height = false;
+        for (AnchorNode n : anchorNodes) {
+            arFragment.getArSceneView().getScene().removeChild(n);
+            n.getAnchor().detach();
+            n.setParent(null);
+            n = null;
+        }
+}
+
 
     /**
      * Add string to another string if a condition is met

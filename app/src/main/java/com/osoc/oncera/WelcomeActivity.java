@@ -30,17 +30,17 @@ public class WelcomeActivity extends AppCompatActivity {
         });
 
         btnAlumno.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { changeWindowTo(LoginAlumnoActivity.class); }
+            public void onClick(View v) { changeWindowTo(LoginStudentActivity.class); }
         });
 
         btnCentro.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View view) { changeWindowTo( LoginCentroEscolarActivity.class); }
+            public void onClick(View view) { changeWindowTo( LoginInstitutionActivity.class); }
         } );
 
         btnProfesor.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View view) { changeWindowTo( LoginProfesorActivity.class); }
+            public void onClick(View view) { changeWindowTo( LoginTeacherActivity.class); }
         } );
 
 

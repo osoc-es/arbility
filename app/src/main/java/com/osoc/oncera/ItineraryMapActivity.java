@@ -42,7 +42,7 @@ import com.osoc.oncera.javabean.StairLifter;
 
 import java.util.ArrayList;
 
-public class MapaItinerarioActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ItineraryMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -89,7 +89,7 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
 
         Bundle bundle = getIntent().getExtras();
         codigoItinerario = bundle.getString( "itineraryCode" );
-        cargarItinerario();
+        loadItinerary();
 
         Mapbox.getInstance(this, "pk.eyJ1IjoiZm9uY2UiLCJhIjoiY2p4b3B1NG53MDhsbTNjbnYzMXNpbjRjYiJ9.MkBM2G0smC9aOJ_IS804xg");
         setContentView(R.layout.activity_mapa_itinerario);
@@ -137,7 +137,7 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
 
-        MapaItinerarioActivity.this.mapboxMap = mapboxMap;
+        ItineraryMapActivity.this.mapboxMap = mapboxMap;
 
         /*LatLng BOUND_CORNER_NW = new LatLng(itinerario.getObstaculos().get(0).getLatitud()+0.002, itinerario.getObstaculos().get(0).getLongtiud()+0.002);
         LatLng BOUND_CORNER_SE = new LatLng(itinerario.getObstaculos().get(0).getLatitud()-0.002, itinerario.getObstaculos().get(0).getLongtiud()-0.002);
@@ -161,7 +161,7 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
             public void onStyleLoaded(@NonNull Style style) {
 
                 style.addImage(ICON_ID, BitmapFactory.decodeResource(
-                        MapaItinerarioActivity.this.getResources(), R.drawable.map_marker));
+                        ItineraryMapActivity.this.getResources(), R.drawable.map_marker));
 
 
 
@@ -245,7 +245,7 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
         mapView.onSaveInstanceState(outState);
     }
 
-    public void cargarItinerario(){
+    public void loadItinerary(){
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Itineraries");
 
@@ -264,7 +264,7 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
 
                     if (iti[0].getItineraryCode().equals( codigoItinerario )) {
                        String prueba = iti[0].getItineraryCode();
-                        Toast.makeText( MapaItinerarioActivity.this, prueba, Toast.LENGTH_LONG ).show();
+                        Toast.makeText( ItineraryMapActivity.this, prueba, Toast.LENGTH_LONG ).show();
 
                         obs = iti[0].getObstacles();
                         //TODO HACER FOR EACH PARA SACAR LOS OBSTACULOS DE FIREBASE Y QUE EL ALUMNO PUEDO DESCARGAR EL ITINERARIO.
@@ -279,24 +279,24 @@ public class MapaItinerarioActivity extends AppCompatActivity implements OnMapRe
                        }
 
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MapaItinerarioActivity.this,
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ItineraryMapActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,list);
 
                         sp_obstaculo.setAdapter(adapter);
 
                     } else {
-                        Toast.makeText( MapaItinerarioActivity.this, "AAAAAAAAAAAAAAAAAAAAAAA", Toast.LENGTH_LONG ).show();
+                        Toast.makeText( ItineraryMapActivity.this, "AAAAAAAAAAAAAAAAAAAAAAA", Toast.LENGTH_LONG ).show();
                     }
 
                 //} else {
-                //    Toast.makeText( MapaItinerarioActivity.this, "AAAAAAAAAAAAAAAAAAAAAAA", Toast.LENGTH_LONG ).show();
+                //    Toast.makeText( ItineraryMapActivity.this, "AAAAAAAAAAAAAAAAAAAAAAA", Toast.LENGTH_LONG ).show();
                // }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( MapaItinerarioActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( ItineraryMapActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
 
             }
         } );

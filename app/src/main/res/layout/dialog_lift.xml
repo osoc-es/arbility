@@ -5,45 +5,45 @@
     android:padding="20dp">
 
     <CheckBox
-        android:id="@+id/chkBraile"
+        android:id="@+id/chkBraille"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="La botonera tiene braile" />
+        android:text="@string/question_lift_braile" />
 
 
     <CheckBox
-        android:id="@+id/chkSonido"
+        android:id="@+id/chkSound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="El ascensor hace sonidos de apertura y cierre" />
+        android:text="@string/question_lift_sound" />
 
     <CheckBox
-        android:id="@+id/chkAutomatico"
+        android:id="@+id/chkAutomatic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="La apertura y cierre de la puerta son automaticos" />
+        android:text="@string/question_lift_automatic" />
 
     <CheckBox
-        android:id="@+id/chkEscalon"
+        android:id="@+id/chkStep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="Hay un escalón visible de más de 1 cm" />
+        android:text="@string/question_lift_step" />
 
     <CheckBox
-        android:id="@+id/chkHueco"
+        android:id="@+id/chkGap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="Hay una distancia entre el suelo y la cabina de más de 2 cm" />
+        android:text="@string/question_lift_gap" />
 
 
 </LinearLayout>

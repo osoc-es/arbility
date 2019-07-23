@@ -27,14 +27,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.javabean.Institution;
 import com.osoc.oncera.javabean.Teacher;
 
-public class RegisterProfesorActivity extends AppCompatActivity {
+public class RegisterTeacherActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
-    private EditText etnombre;
-    private EditText codCentro;
-    private EditText etcorreo;
-    private EditText etPassword, etPasswordRepeatProfesor;
-    private Button btnRegistrar;
+    private EditText etname;
+    private EditText centerCode;
+    private EditText etemail;
+    private EditText etPassword, etPasswordRepeatTeacher;
+    private Button btnRegister;
 
     private DatabaseReference mDatabaseRef;
     private FirebaseAuth firebaseAuthProfe;
@@ -44,7 +44,6 @@ public class RegisterProfesorActivity extends AppCompatActivity {
     private String password2;
     private String alias;
     private String mail;
-    private String cod;
 
     private Teacher profe;
 
@@ -58,14 +57,14 @@ public class RegisterProfesorActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_register_profesor );
 
-        codCentro = (EditText) findViewById( R.id.etCodigoCentroProfesor );
-        etnombre = (EditText) findViewById( R.id.etAlias );
-        etcorreo = (EditText) findViewById( R.id.etEmailRegProfesor );
+        centerCode = (EditText) findViewById( R.id.etCenterCodeTeacher);
+        etname = (EditText) findViewById( R.id.etAlias );
+        etemail = (EditText) findViewById( R.id.etEmailRegProfesor );
 
         etPassword = (EditText) findViewById( R.id.etPasswordRegProfesor );
-        etPasswordRepeatProfesor = (EditText) findViewById( R.id.etPasswordRepeatProfesor );
+        etPasswordRepeatTeacher = (EditText) findViewById( R.id.etPasswordRepeatTeacher);
 
-        btnRegistrar = (Button) findViewById( R.id.btnRegistrar );
+        btnRegister = (Button) findViewById( R.id.btnRegister);
 
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Users" );
@@ -76,13 +75,15 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Save new Teacher in the database or generate an error message
+     */
+    private void registerTeacher() {
 
-    public void registrarProfesor() {
-
-        mail = etcorreo.getText().toString().trim();
+        mail = etemail.getText().toString().trim();
         password = etPassword.getText().toString().trim();
-        password2 = etPasswordRepeatProfesor.getText().toString().trim();
-        alias = etnombre.getText().toString().trim();
+        password2 = etPasswordRepeatTeacher.getText().toString().trim();
+        alias = etname.getText().toString().trim();
 
         if (mail.isEmpty() || password.isEmpty()) {
             Toast.makeText( this, "Debe introducirse el email y la password", Toast.LENGTH_SHORT ).show();
@@ -105,10 +106,10 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
                             String clave = user.getUid();
 
-                            profe = new Teacher( clave, etnombre.getText().toString(), codCentro.getText().toString(), etcorreo.getText().toString().toLowerCase() );
+                            profe = new Teacher( clave, etname.getText().toString(), centerCode.getText().toString(), etemail.getText().toString().toLowerCase() );
                             mDatabaseRef.child( clave ).setValue( profe );
 
-                            Intent i = new Intent( RegisterProfesorActivity.this, LoginProfesorActivity.class );
+                            Intent i = new Intent( RegisterTeacherActivity.this, LoginTeacherActivity.class );
                             startActivity( i );
                         }
                     } );
@@ -118,10 +119,11 @@ public class RegisterProfesorActivity extends AppCompatActivity {
     }
 
 
-
-    public void comprobarCodigo() {
-
-        RegisterProfesorActivity.this.codigo = codCentro.getText().toString();
+    /**
+     * Check whether the code written by the teacher matches the one of any center
+     */
+    private void checkCenterCode() {
+        RegisterTeacherActivity.this.codigo = centerCode.getText().toString();
         Query qq2 = mDatabaseRef.orderByChild( "centerCode" ).equalTo( codigo ).limitToFirst( 1 );
         qq2.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
@@ -135,14 +137,14 @@ public class RegisterProfesorActivity extends AppCompatActivity {
                 if (prf[0] != null) {
 
                     if (prf[0].getCenterCode().equals( codigo ) && codigo != null) {
-                        Toast.makeText( RegisterProfesorActivity.this, "Codigo correcto", Toast.LENGTH_LONG ).show();
-                        registrarProfesor();
+                        Toast.makeText( RegisterTeacherActivity.this, "Codigo correcto", Toast.LENGTH_LONG ).show();
+                        registerTeacher();
                     } else {
-                        Toast.makeText( RegisterProfesorActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
+                        Toast.makeText( RegisterTeacherActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
                     }
 
                 } else {
-                    Toast.makeText( RegisterProfesorActivity.this, "Prof null", Toast.LENGTH_LONG ).show();
+                    Toast.makeText( RegisterTeacherActivity.this, "Prof null", Toast.LENGTH_LONG ).show();
                 }
 
                 qq2.removeEventListener( this );
@@ -150,14 +152,20 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( RegisterProfesorActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( RegisterTeacherActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
 
             }
         } );
 
     }
-    public void comprobarAlias(View v){
-        RegisterProfesorActivity.this.alias = etnombre.getText().toString().trim();
+
+    /**
+     * Function to check that the users alias is unique, creating a code if it is and displaying an
+     * error on the contrary
+     * @param v
+     */
+    private void checkUniqueAlias(View v){
+        RegisterTeacherActivity.this.alias = etname.getText().toString().trim();
         Query qq4 = mDatabaseRef.orderByChild( "alias" ).equalTo( alias ).limitToFirst( 1 );
         qq4.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
@@ -171,16 +179,16 @@ public class RegisterProfesorActivity extends AppCompatActivity {
                 if (teacher[0] != null) {
 
                     if (teacher[0].getAlias().equals( alias ) && alias != null) {
-                        Toast.makeText( RegisterProfesorActivity.this, "Alias Repetido, por favor introduzca otro Alias", Toast.LENGTH_LONG ).show();
+                        Toast.makeText( RegisterTeacherActivity.this, "Alias Repetido, por favor introduzca otro Alias", Toast.LENGTH_LONG ).show();
 
                     } else {
-                        Toast.makeText( RegisterProfesorActivity.this, "Alias correcto", Toast.LENGTH_LONG ).show();
-                        comprobarCodigo();
+                        Toast.makeText( RegisterTeacherActivity.this, "Alias correcto", Toast.LENGTH_LONG ).show();
+                        checkCenterCode();
                     }
 
                 } else {
-                    Toast.makeText( RegisterProfesorActivity.this, "Codigo correcto", Toast.LENGTH_LONG ).show();
-                    comprobarCodigo();
+                    Toast.makeText( RegisterTeacherActivity.this, "Codigo correcto", Toast.LENGTH_LONG ).show();
+                    checkCenterCode();
 
                 }
 
@@ -189,7 +197,7 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( RegisterProfesorActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( RegisterTeacherActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
 
             }
         } );

@@ -259,4 +259,9 @@
     <string name="instr_rampa_01">Toca en los extremos inferiores de la rampa a lo largo</string>
     <string name="instr_rampa_03">Sube el cubo con el deslizador hasta que su base de con el lado inferior de la barandilla</string>
     <string name="instr_rampa_02">Toca en los extremos inferiores de la rampa a lo ancho</string>
+    <string name="question_lift_braile">La botonera tiene braile</string>
+    <string name="question_lift_sound">El ascensor hace sonidos de apertura y cierre</string>
+    <string name="question_lift_automatic">La apertura y cierre de la puerta son automaticos</string>
+    <string name="question_lift_step">No hay un escalón visible de más de 1 cm</string>
+    <string name="question_lift_gap">No hay una distancia entre el suelo y la cabina de más de 2 cm</string>
 </resources>

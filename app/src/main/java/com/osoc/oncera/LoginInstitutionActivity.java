@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginCentroEscolarActivity extends AppCompatActivity {
+public class LoginInstitutionActivity extends AppCompatActivity {
     private EditText correo;
     private EditText password;
     private FirebaseAuth auth;
@@ -47,15 +47,13 @@ public class LoginCentroEscolarActivity extends AppCompatActivity {
         });
     }
     public void register(View v) {
-
-
-            Intent i= new Intent( LoginCentroEscolarActivity.this, RegisterCentroEscolarActivity.class);
+            Intent i= new Intent( LoginInstitutionActivity.this, RegisterInstitutionActivity.class);
             startActivity(i);
 
             finish();
         }
 
-    public void loguearse(View v){
+    public void login(View v){
 
         email = correo.getText().toString();
         final String contrasenia = password.getText().toString();
@@ -75,16 +73,16 @@ public class LoginCentroEscolarActivity extends AppCompatActivity {
 
 
         auth.signInWithEmailAndPassword(email, contrasenia)
-                .addOnCompleteListener(LoginCentroEscolarActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(LoginInstitutionActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent i = new Intent( LoginCentroEscolarActivity.this, SesionCentroActivity.class );
+                            Intent i = new Intent( LoginInstitutionActivity.this, InstitutionCodeActivity.class );
                             startActivity( i );
                             finish();
 
                         } else {
-                            Toast.makeText( LoginCentroEscolarActivity.this, "El email o la contraseña no es correcta", Toast.LENGTH_LONG ).show();
+                            Toast.makeText( LoginInstitutionActivity.this, "El email o la contraseña no es correcta", Toast.LENGTH_LONG ).show();
                         }
                     }
                 });

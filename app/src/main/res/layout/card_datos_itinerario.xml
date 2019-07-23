@@ -33,7 +33,7 @@
 
     <ImageButton
         android:layout_gravity="center_vertical"
-        android:id="@+id/btnEliminarItinerario"
+        android:id="@+id/btnDeleteItinerary"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="15dp"

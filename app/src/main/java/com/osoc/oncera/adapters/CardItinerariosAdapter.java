@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.R;
-import com.osoc.oncera.RegisterProfesorActivity;
 import com.osoc.oncera.javabean.Itinerary;
 import com.osoc.oncera.javabean.Teacher;
 
@@ -107,7 +105,7 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
             tvNombre = itemView.findViewById( R.id.tvNombre );
             tvDescripcion = itemView.findViewById( R.id.tvDescripcion );
             tvCodItinerario = itemView.findViewById( R.id.tvCodItinerario );
-            btnEl =(ImageButton) itemView.findViewById( R.id.btnEliminarItinerario );
+            btnEl =(ImageButton) itemView.findViewById( R.id.btnDeleteItinerary);
         }
     }
 

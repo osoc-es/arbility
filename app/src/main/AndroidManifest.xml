@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginAlumnoActivity"
+            android:name=".LoginStudentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".WheelchairSimulation"
@@ -35,13 +35,13 @@
             android:name=".MeasureEmergencies"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SesionCentroActivity"
+            android:name=".InstitutionCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegisterProfesorActivity"
+            android:name=".RegisterTeacherActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginProfesorActivity"
+            android:name=".LoginTeacherActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MeasureStairLift"
@@ -82,10 +82,10 @@
             android:name=".GuestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegisterCentroEscolarActivity"
+            android:name=".RegisterInstitutionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginCentroEscolarActivity"
+            android:name=".LoginInstitutionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".WelcomeActivity"

@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginProfesorActivity extends AppCompatActivity {
+public class LoginTeacherActivity extends AppCompatActivity {
 
     private EditText correo;
     private EditText password;
@@ -50,12 +50,12 @@ public class LoginProfesorActivity extends AppCompatActivity {
     public void register(View v) {
 
 
-        Intent i= new Intent( LoginProfesorActivity.this, RegisterProfesorActivity.class);
+        Intent i= new Intent( LoginTeacherActivity.this, RegisterTeacherActivity.class);
         startActivity(i);
 
     }
 
-    public void loguearse(View v){
+    public void login(View v){
 
         email = correo.getText().toString();
         final String contrasenia = password.getText().toString();
@@ -75,15 +75,15 @@ public class LoginProfesorActivity extends AppCompatActivity {
 
 
         auth.signInWithEmailAndPassword(email, contrasenia)
-                .addOnCompleteListener(LoginProfesorActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(LoginTeacherActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent i = new Intent( LoginProfesorActivity.this, ItinerariosProfesorActivity.class );
+                            Intent i = new Intent( LoginTeacherActivity.this, TeacherItineraryList.class );
                             startActivity( i );
 
                         } else {
-                            Toast.makeText( LoginProfesorActivity.this, "El email o la contraseña no es correcta", Toast.LENGTH_LONG ).show();
+                            Toast.makeText( LoginTeacherActivity.this, "El email o la contraseña no es correcta", Toast.LENGTH_LONG ).show();
                         }
                     }
                 });

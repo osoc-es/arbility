@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginProfesorActivity">
+    tools:context=".LoginTeacherActivity">
 
     <ImageButton
         android:id="@+id/btnBack"
@@ -104,7 +104,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:onClick="loguearse"
+        android:onClick="login"
         android:text="@string/btn_Iniciar_Sesion"
         android:textSize="20dp"
         android:autoSizeTextType="uniform"

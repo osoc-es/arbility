@@ -42,7 +42,7 @@ import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 
-public class CrearItinerarioActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, OnLocationUpdatedListener {
+public class CreateItineraryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, OnLocationUpdatedListener {
     private Button btn_new, btn_confirm, btn_save;
     private Spinner spin;
     private ImageView imgCapture;
@@ -124,8 +124,8 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
             public void onClick(View v) {
                 Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cInt,Image_Capture_Code);
-                if (ContextCompat.checkSelfPermission( CrearItinerarioActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions( CrearItinerarioActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
+                if (ContextCompat.checkSelfPermission( CreateItineraryActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions( CreateItineraryActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
                     return;
                 }
                 startLocation();
@@ -276,7 +276,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
     }
 
     void guardarDialog() {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder( CrearItinerarioActivity.this);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder( CreateItineraryActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_guardar_itinerario, null);
 
         EditText title = (EditText) mView.findViewById(R.id.et_title);
@@ -296,7 +296,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
                     dialogInterface.dismiss();
 
                 }else{
-                    Toast.makeText( CrearItinerarioActivity.this, "Debes introducir Titulo y Desripcion", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( CreateItineraryActivity.this, "Debes introducir Titulo y Desripcion", Toast.LENGTH_SHORT ).show();
                 }
                     //saveItinerario(title.getText().toString(), description.getText().toString());
 
@@ -350,7 +350,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( CrearItinerarioActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( CreateItineraryActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
 
             }
         } );
@@ -375,7 +375,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
                     if (itinerario[0] != null) {
 
                         if (itinerario[0].getItineraryCode().equals( codItinerario ) && codItinerario != null) {
-                            Toast.makeText( CrearItinerarioActivity.this, "Generando codigo Itinerario", Toast.LENGTH_LONG ).show();
+                            Toast.makeText( CreateItineraryActivity.this, "Generando codigo Itinerario", Toast.LENGTH_LONG ).show();
                             repetido[0] = true;
                         }
 
@@ -386,7 +386,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText( CrearItinerarioActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( CreateItineraryActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
 
                 }
             } );

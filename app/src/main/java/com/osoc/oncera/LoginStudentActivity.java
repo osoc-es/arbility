@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.osoc.oncera.javabean.Itinerary;
 
-public class LoginAlumnoActivity extends AppCompatActivity {
+public class LoginStudentActivity extends AppCompatActivity {
 
     private EditText etCodigoItinerario;
     private Button btnItineratio;
@@ -62,7 +62,7 @@ public class LoginAlumnoActivity extends AppCompatActivity {
         btnItineratio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                obtenerCodigoItinerario();
+                getItineraryCode();
 
 
 
@@ -75,10 +75,9 @@ public class LoginAlumnoActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
-    public void obtenerCodigoItinerario(){
+
+    public void getItineraryCode(){
         itinerario = etCodigoItinerario.getText().toString().trim();
         Query qq2 = mDatabaseRef.orderByChild( "itineraryCode" ).equalTo( itinerario ).limitToFirst( 1 );
         qq2.addListenerForSingleValueEvent( new ValueEventListener() {
@@ -93,16 +92,16 @@ public class LoginAlumnoActivity extends AppCompatActivity {
                 if (iti[0] != null) {
 
                     if (iti[0].getItineraryCode().equals( itinerario ) && itinerario != null) {
-                        //Toast.makeText( LoginAlumnoActivity.this, "REALIZANDO ACTIVITY PARA DESCARGAR ITINERARIOS", Toast.LENGTH_LONG ).show();
-                        Intent i = new Intent(LoginAlumnoActivity.this, MapaItinerarioActivity.class);
+                        //Toast.makeText( LoginStudentActivity.this, "REALIZANDO ACTIVITY PARA DESCARGAR ITINERARIOS", Toast.LENGTH_LONG ).show();
+                        Intent i = new Intent(LoginStudentActivity.this, ItineraryMapActivity.class);
                         i.putExtra( "itineraryCode", itinerario );
                         startActivity(i);
                     } else {
-                        Toast.makeText( LoginAlumnoActivity.this, "El Código no Existe", Toast.LENGTH_LONG ).show();
+                        Toast.makeText( LoginStudentActivity.this, "El Código no Existe", Toast.LENGTH_LONG ).show();
                     }
 
                 } else {
-                    Toast.makeText( LoginAlumnoActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
+                    Toast.makeText( LoginStudentActivity.this, "Codigo Incorrecto", Toast.LENGTH_LONG ).show();
                 }
 
                 qq2.removeEventListener( this );
@@ -110,7 +109,7 @@ public class LoginAlumnoActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( LoginAlumnoActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( LoginStudentActivity.this, "Algo salio Mal ahí", Toast.LENGTH_SHORT ).show();
 
             }
         } );

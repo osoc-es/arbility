@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     android:background="@drawable/fondo_login"
-    tools:context=".RegisterCentroEscolarActivity">
+    tools:context=".RegisterInstitutionActivity">
 
     <Button
-        android:id="@+id/btnValidar"
+        android:id="@+id/btnValidate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etPasswordRepeat"
@@ -44,7 +44,7 @@
         tools:ignore="VectorDrawableCompat" />
 
     <EditText
-        android:id="@+id/etNombreReg"
+        android:id="@+id/etNameReg"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/imgvFotoPerfil"
@@ -59,10 +59,10 @@
         android:paddingLeft="5dp" />
 
     <EditText
-        android:id="@+id/etDireccion"
+        android:id="@+id/etAddress"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/etNombreReg"
+        android:layout_below="@+id/etNameReg"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
@@ -74,10 +74,10 @@
 />
 
     <EditText
-        android:id="@+id/etCiudadReg"
+        android:id="@+id/etCityReg"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/etDireccion"
+        android:layout_below="@+id/etAddress"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_buildings"
@@ -90,7 +90,7 @@
         android:id="@+id/etEmailReg"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/etCiudadReg"
+        android:layout_below="@+id/etCityReg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_send"
@@ -130,14 +130,14 @@
 
 
     <Button
-        android:id="@+id/btnRegistrarCentro"
+        android:id="@+id/btnRegisterInstitution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etPasswordRepeat"
         android:layout_centerVertical="true"
         android:layout_marginTop="92dp"
         android:background="@drawable/ic_button_red"
-        android:onClick="registrar"
+        android:onClick="register"
         android:text="@string/btn_RegistrarUsuario"
         android:textColor="@color/blanco"
         android:textSize="18sp" />

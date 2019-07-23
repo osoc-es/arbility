@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ItinerariosProfesorActivity">
+    tools:context=".TeacherItineraryList">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvItinerario"
+        android:id="@+id/rvItinerary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="8dp"
@@ -18,7 +18,7 @@
 
 
     <Button
-        android:id="@+id/btnAniadir"
+        android:id="@+id/btnAddItinerary"
         android:layout_width="150dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"

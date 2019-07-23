@@ -21,16 +21,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.osoc.oncera.javabean.Institution;
 
-public class RegisterCentroEscolarActivity extends AppCompatActivity {
+public class RegisterInstitutionActivity extends AppCompatActivity {
 
-    private EditText etNombre;
-    private EditText etCiudad;
+    private EditText etName;
+    private EditText etCity;
     private EditText etEmail;
-    private EditText etDireccion;
+    private EditText etAddress;
     private EditText etPassword, etPasswordRepeat;
     private ProgressDialog progressDialog;
-    private Button btnRegistrar;
-    private Button btnValidar;
+    private Button btnRegister;
+    private Button btnValidate;
 
 
     private DatabaseReference mDatabaseRef;
@@ -41,20 +41,21 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
 
     private String password;
     private String password2;
-    private String nombre;
-    private String ciudad;
-    private String direccion;
-    private Boolean validarCentro;
+    private String name;
+    private String city;
+    private String address;
+    private Boolean validateCenter;
 
-    private String correo;
+    private String emailDani;
 
 
     private Institution institution;
 
-    private String codCentro;
+    private String centerCode;
 
-    private char[] conjunto = new char[6];
-    char[] elementos={'0','1','2','3','4','5','6','7','8','9' ,'a',
+    private char[] centerCodePlaceholder = new char[6];
+    //Possible characters to be used in the institution's code
+    char[] elements ={'0','1','2','3','4','5','6','7','8','9' ,'a',
             'b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t',
             'u','v','w','x','y','z'};
     String codigoCentro;
@@ -66,25 +67,29 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
-        validarCentro = false;
-        etNombre = (EditText) findViewById(R.id.etNombreReg);
-        etCiudad = (EditText) findViewById(R.id.etCiudadReg);
-        etDireccion = (EditText) findViewById( R.id.etDireccion );
+        validateCenter = false;
+        etName = (EditText) findViewById(R.id.etNameReg);
+        etCity = (EditText) findViewById(R.id.etCityReg);
+        etAddress = (EditText) findViewById( R.id.etAddress);
         etEmail = (EditText) findViewById(R.id.etEmailReg);
         etPassword = (EditText) findViewById(R.id.etPasswordReg);
         etPasswordRepeat = (EditText) findViewById(R.id.etPasswordRepeat);
-        btnRegistrar = (Button) findViewById( R.id.btnRegistrarCentro);
-        btnValidar = (Button) findViewById( R.id.btnValidar );
+        btnRegister = (Button) findViewById( R.id.btnRegisterInstitution);
+        btnValidate = (Button) findViewById( R.id.btnValidate);
 
 
 
 
         //progressDialog = new ProgressDialog(this);
-        correo = "danisom1b@gmail.com";
+        emailDani = "danisom1b@gmail.com";
     }
-    public void registrar(View v) {
-        String warning = validarDatos();
 
+    /**
+     * Save new Institution in the database or generate an error message
+     * @param v view taken as a parameter
+     */
+    private void register(View v) {
+        String warning = validarDatos();
 
         if (warning == null) {
             //progressDialog.setMessage( "Realizando registro en linea. . ." );
@@ -96,24 +101,23 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                codCentro=crearcodCentro();
+                                centerCode = createCodeCenter();
                                 mDatabaseRef=FirebaseDatabase.getInstance().getReference().child("Users");
 
                                 user = firebaseAuth.getCurrentUser();
 
 
-                                String clave = user.getUid();
+                                String keyword = user.getUid();
 
-                                    institution = new Institution(clave, codCentro,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
+                                    institution = new Institution(keyword, centerCode,  etName.getText().toString(), etEmail.getText().toString().toLowerCase(), etCity.getText().toString(), etAddress.getText().toString(), validateCenter);
                                     mDatabaseRef.child(user.getUid()).setValue(institution);
-                                    Toast.makeText( RegisterCentroEscolarActivity.this, "Registrado Correcto, Valídalo para porder Loguearte", Toast.LENGTH_LONG ).show();
+                                    Toast.makeText( RegisterInstitutionActivity.this, "Registrado Correcto, Valídalo para porder Loguearte", Toast.LENGTH_LONG ).show();
 
-                                    btnRegistrar.setVisibility(View.INVISIBLE);
+                                    btnRegister.setVisibility(View.INVISIBLE);
 
 
                             } else {
-                                Toast.makeText( RegisterCentroEscolarActivity.this, getString(R.string.msj_no_registrado), Toast.LENGTH_SHORT).show();
-
+                                Toast.makeText( RegisterInstitutionActivity.this, getString(R.string.msj_no_registrado), Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -123,34 +127,36 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
             Toast.makeText(this, warning,
                     Toast.LENGTH_LONG).show();
             //progressDialog.dismiss();
-
-
-
         }
 
     }
-    public void validar(View v){
-        Intent i = new Intent( Intent.ACTION_VIEW, Uri.parse( "mailto:" + correo ) );
-        i.putExtra(Intent.EXTRA_SUBJECT,etNombre.getText().toString());
-        i.putExtra(Intent.EXTRA_TEXT,etDireccion.getText().toString());
+
+
+    private void validar(View v){
+        Intent i = new Intent( Intent.ACTION_VIEW, Uri.parse( "mailto:" + emailDani) );
+        i.putExtra(Intent.EXTRA_SUBJECT, etName.getText().toString());
+        i.putExtra(Intent.EXTRA_TEXT, etAddress.getText().toString());
         startActivity( i );
     }
 
+    /**
+     * Check whether all the data entered is correct
+     * @return the error message if some value is missing
+     */
     private String validarDatos() {
-
         String msj = null;
 
         email = etEmail.getText().toString().trim();
         password = etPassword.getText().toString().trim();
         password2 = etPasswordRepeat.getText().toString().trim();
-        nombre = etNombre.getText().toString().trim();
-        ciudad = etCiudad.getText().toString().trim();
-        direccion = etDireccion.getText().toString().trim();
+        name = etName.getText().toString().trim();
+        city = etCity.getText().toString().trim();
+        address = etAddress.getText().toString().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
             msj = "Debe introducirse el email y la password";
-        }else if (nombre.isEmpty() || ciudad.isEmpty() || direccion.isEmpty()) {
-            msj = "Debe introducir el name, la ciudad y la direccion";
+        }else if (name.isEmpty() || city.isEmpty() || address.isEmpty()) {
+            msj = "Debe introducir el name, la city y la address";
         }else if (password.length() < 6) {
             msj = "La password debe contener al menos 6 caracteres";
         } else if (!password.equals(password2)) {
@@ -160,12 +166,15 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
         return msj;
     }
 
-    public String crearcodCentro(){
-
+    /**
+     * Create an institution code randomly
+     * @return String with the value of the institution's code
+     */
+    private String createCodeCenter(){
         for(int i=0;i<6;i++){
             int el = (int)(Math.random()*36);
-            conjunto[i] = (char)elementos[el];
+            centerCodePlaceholder[i] = (char) elements[el];
         }
-        return codigoCentro = new String(conjunto);
+        return codigoCentro = new String(centerCodePlaceholder);
     }
 }

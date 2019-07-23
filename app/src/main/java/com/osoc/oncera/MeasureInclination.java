@@ -55,7 +55,7 @@ public class MeasureInclination extends AppCompatActivity {
         btnMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Medir();
+                Measure();
             }
         });
 
@@ -93,9 +93,9 @@ public class MeasureInclination extends AppCompatActivity {
     private float pitch;
     private float roll;
 
-    private class casos {
+    private class cases {
 
-        public casos(float longitude, float slope, float minLong, float maxLong) {
+        public cases(float longitude, float slope, float minLong, float maxLong) {
             this.longitude = longitude;
             this.slope = slope;
             this.minLong = minLong;
@@ -122,13 +122,15 @@ public class MeasureInclination extends AppCompatActivity {
 
     }
 
-    private casos ramp1, ramp2, ramp3;
+    private cases ramp1, ramp2, ramp3;
     private float paramWidth;
     private float minParamKnob, maxParamKnob;
     private Ramps _ramp;
 
 
-    
+    /**
+     * Sensor event to listen to the device's rotation and get its inclination
+     */
     private SensorEventListener mySensorEventListener = new SensorEventListener() {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
@@ -163,7 +165,7 @@ public class MeasureInclination extends AppCompatActivity {
     /**
      * Get and display the slope value and evaluate whether it is accessible
      */
-    private void Medir() {
+    private void Measure() {
         pitch_text.setText(df.format(pitch));
         _ramp.setSlope(pitch);
 
@@ -197,7 +199,7 @@ public class MeasureInclination extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     data.add(snapshot.getValue(Float.class));
                 }
-                ramp1 = new casos(data.get(0), data.get(1), -1, -1);
+                ramp1 = new cases(data.get(0), data.get(1), -1, -1);
             }
 
             @Override
@@ -216,7 +218,7 @@ public class MeasureInclination extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     data.add(snapshot.getValue(Float.class));
                 }
-                ramp2 = new casos(-1, data.get(0), data.get(1), data.get(2));
+                ramp2 = new cases(-1, data.get(0), data.get(1), data.get(2));
             }
 
             @Override
@@ -235,7 +237,7 @@ public class MeasureInclination extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     data.add(snapshot.getValue(Float.class));
                 }
-                ramp3 = new casos(-1, data.get(0), data.get(1), data.get(2));
+                ramp3 = new cases(-1, data.get(0), data.get(1), data.get(2));
             }
 
             @Override
@@ -275,7 +277,7 @@ public class MeasureInclination extends AppCompatActivity {
     }
 
     /**
-     * Check whether the counter is accessible or not and start Axesibility activity to display the
+     * Check whether the ramp is accessible or not and start Axesibility activity to display the
      * result
      */
     private void evaluate() {
@@ -285,7 +287,7 @@ public class MeasureInclination extends AppCompatActivity {
 
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_anpt) + paramWidth, cumpleAnch);
 
-        casos aux;
+        cases aux;
 
         float lng = _ramp.getLength();
 

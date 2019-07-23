@@ -22,7 +22,7 @@
         android:src="@drawable/ic_cruz"/>
 
     <TextView
-        android:id="@+id/ancho_acensor"
+        android:id="@+id/elevator_width"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -32,7 +32,7 @@
         android:text="Anchura ascensor: --" />
 
     <TextView
-        android:id="@+id/profundo_ascensor"
+        android:id="@+id/elevator_depth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
