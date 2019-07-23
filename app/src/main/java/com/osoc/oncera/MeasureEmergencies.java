@@ -15,12 +15,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.osoc.oncera.javabean.EvacuacionEmergencia;
+import com.osoc.oncera.javabean.EmergencyNEvacuation;
 
 public class MeasureEmergencies extends AppCompatActivity {
 
 
-    private EvacuacionEmergencia emergencia = new EvacuacionEmergencia(null, null, null, null, null, null);
+    private EmergencyNEvacuation emergencia = new EmergencyNEvacuation(null, null, null, null, null, null);
     private boolean db_alumbrado, db_simulacro;
     private String message;
 
@@ -58,20 +58,20 @@ public class MeasureEmergencies extends AppCompatActivity {
 
                 String s ="";
 
-                emergencia.setAlumbradoEmergencia(chk_alumbrado.isChecked());
-                emergencia.setSimulacros(chk_simulacro.isChecked());
+                emergencia.setEmergencyLighting(chk_alumbrado.isChecked());
+                emergencia.setSimulation(chk_simulacro.isChecked());
 
-                boolean cumple_alumbrado = Evaluator.IsEqualsTo(emergencia.getAlumbradoEmergencia(), db_alumbrado);
+                boolean cumple_alumbrado = Evaluator.IsEqualsTo(emergencia.getEmergencyLighting(), db_alumbrado);
                 s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_alumbrado), cumple_alumbrado);
 
-                boolean cumple_simulacro = Evaluator.IsEqualsTo(emergencia.getSimulacros(), db_simulacro);
+                boolean cumple_simulacro = Evaluator.IsEqualsTo(emergencia.getSimulation(), db_simulacro);
                 s = UpdateStringIfNeeded(s, "y", (s == "" || cumple_simulacro));
                 s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_simulacro), cumple_simulacro);
 
-                emergencia.setAccesible(cumple_alumbrado && cumple_simulacro);
+                emergencia.setAccessible(cumple_alumbrado && cumple_simulacro);
 
-                UpdateMessage(emergencia.getAccesible(), s);
-                emergencia.setMensaje(message);
+                UpdateMessage(emergencia.getAccessible(), s);
+                emergencia.setMessage(message);
 
                 Intent i = new Intent(getApplicationContext(),AxesibilityActivity.class);
                 i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.EMERGENCIAS.getValue());

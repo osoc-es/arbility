@@ -23,14 +23,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.CardItinerariosAdapter;
-import com.osoc.oncera.javabean.Itinerario;
-import com.osoc.oncera.javabean.Profesor;
+import com.osoc.oncera.javabean.Itinerary;
+import com.osoc.oncera.javabean.Teacher;
 
 import java.util.ArrayList;
 
 public class ItinerariosProfesorActivity extends AppCompatActivity {
 
-    private ArrayList<Itinerario> lista;
+    private ArrayList<Itinerary> lista;
 
     private RecyclerView recyclerView;
     private CardItinerariosAdapter adapter;
@@ -39,7 +39,7 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     private DatabaseReference reference;
 
-    private final Profesor[] prf = new Profesor[1];
+    private final Teacher[] prf = new Teacher[1];
 
 
     String emailPersona;
@@ -118,11 +118,11 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    prf[0] = dataSnapshot1.getValue( Profesor.class );
+                    prf[0] = dataSnapshot1.getValue( Teacher.class );
                     cargarItinerarios();
                 }
 
-                if (emailPersona.equals( prf[0].getCorreo() )) codCentro = prf[0].getCodCentro();
+                if (emailPersona.equals( prf[0].getMail() )) codCentro = prf[0].getCenterCode();
 
             }
 
@@ -144,12 +144,12 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
 
                 lista.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Itinerario art;
+                    Itinerary art;
 
                     try {
-                        art = snapshot.getValue( Itinerario.class );
+                        art = snapshot.getValue( Itinerary.class );
 
-                        if (art.getCodCentro().equals( codCentro )) {
+                        if (art.getCenterCode().equals( codCentro )) {
                             lista.add( art );
                         }
                     } catch (DatabaseException de) {
@@ -162,8 +162,8 @@ public class ItinerariosProfesorActivity extends AppCompatActivity {
 
                 }
 
-                for (Itinerario art : lista) {
-                    System.out.println( art.getNombre() );
+                for (Itinerary art : lista) {
+                    System.out.println( art.getName() );
                 }
                 adapter = new CardItinerariosAdapter( lista );
                 recyclerView.setAdapter( adapter );

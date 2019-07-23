@@ -29,7 +29,7 @@
         android:layout_above="@+id/tvLogIn"
         android:layout_centerInParent="true"
         android:layout_marginBottom="100dp"
-        android:src="@drawable/nombre"
+        android:src="@drawable/name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -15,16 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.osoc.oncera.R;
-import com.osoc.oncera.javabean.Itinerario;
+import com.osoc.oncera.javabean.Itinerary;
 
 import java.util.List;
 
 public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerariosAdapter.CardItinerarioViewHolder> {
-    List<Itinerario> mLista;
+    List<Itinerary> mLista;
     DatabaseReference reference;
     private Context context;
 
-    public CardItinerariosAdapter(List<Itinerario> mLista) {
+    public CardItinerariosAdapter(List<Itinerary> mLista) {
         this.mLista = mLista;
         reference= FirebaseDatabase.getInstance().getReference("Itinerarios");
     }
@@ -41,24 +41,24 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
     @Override
     public void onBindViewHolder(@NonNull CardItinerariosAdapter.CardItinerarioViewHolder holder, int position) {
 
-        final Itinerario itinerario = mLista.get( position );
+        final Itinerary itinerary = mLista.get( position );
 
-        String upperString = itinerario.getNombre().substring( 0,1 ).toUpperCase() + itinerario.getNombre().substring( 1 );
+        String upperString = itinerary.getName().substring( 0,1 ).toUpperCase() + itinerary.getName().substring( 1 );
 
         holder.tvNombre.setText( upperString );
-        if(itinerario.getDescripcion().trim().equals( "" )){
+        if(itinerary.getDescription().trim().equals( "" )){
             holder.tvDescripcion.setText( "Descripcion: No especificada" );
-            holder.tvNombre.setText( itinerario.getNombre());
+            holder.tvNombre.setText( itinerary.getName());
         }else{
-            holder.tvDescripcion.setText( itinerario.getDescripcion() );
-            holder.tvNombre.setText( itinerario.getNombre());
+            holder.tvDescripcion.setText( itinerary.getDescription() );
+            holder.tvNombre.setText( itinerary.getName());
         }
         holder.btnEl.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder( context );
 
-                builder.setMessage( "¿Seguro qué quieres eliminar este itinerario de la lista?" )
+                builder.setMessage( "¿Seguro qué quieres eliminar este itinerary de la lista?" )
                         .setPositiveButton( "Si", new DialogInterface.OnClickListener() {
 
                             @Override

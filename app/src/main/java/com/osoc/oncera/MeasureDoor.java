@@ -39,7 +39,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.ImageTitleAdapter;
-import com.osoc.oncera.javabean.Puerta;
+import com.osoc.oncera.javabean.Door;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -52,7 +52,6 @@ public class MeasureDoor extends AppCompatActivity {
     private float upDistance = 0f;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
-    private Anchor myanchor;
     private AnchorNode myanchornode;
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
@@ -61,20 +60,17 @@ public class MeasureDoor extends AppCompatActivity {
 
     private HitResult myhit;
 
-    private String[] tipoPuerta = new String[]{"Giratoria", "Corredera", "Abatible", "Tornos"};
-    private String[] tipoMecanismo = new String[]{"Manibela", "Pomo", "Barra", "Agarrador"};
+    private String[] doorType = new String[]{"Giratoria", "Corredera", "Abatible", "Tornos"};
+    private String[] mecTypes = new String[]{"Manibela", "Pomo", "Barra", "Agarrador"};
     private boolean measure_height = false;
 
-    private float paramAltura,paramAnchura,minMecApertura,maxMecApertura;
+    private float paramHeight,paramWidth, minOpeningMc, maxOpeningMc;
     private String message;
 
-    private Puerta puerta = new Puerta(-1, -1, null, -1, null, null, null, null, null);
+    private Door door_ = new Door(-1, -1, null, -1, null, null, null, null, null);
 
 
     @Override
-    @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
-    // CompletableFuture requires api level 24
-    // FutureReturnValueIgnored is not valid
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -94,7 +90,7 @@ public class MeasureDoor extends AppCompatActivity {
         TextView mechanism = (TextView) findViewById(R.id.height_mecha);
         TextView height = (TextView) findViewById(R.id.height);
         SeekBar z_axis = (SeekBar) findViewById(R.id.z_axis);
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        ImageButton backButtn = (ImageButton) findViewById(R.id.btnAtras);
         img_instr = (ImageView) findViewById(R.id.img_instr);
         List<AnchorNode> anchorNodes = new ArrayList<>();
 
@@ -102,7 +98,7 @@ public class MeasureDoor extends AppCompatActivity {
         confirm.setEnabled(false);
 
 
-        btnAtras.setOnClickListener(new View.OnClickListener() {
+        backButtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -117,12 +113,12 @@ public class MeasureDoor extends AppCompatActivity {
                 z_axis.setProgress(0);
                 z_axis.setEnabled(false);
                 confirm.setEnabled(false);
-                confirm.setText("Next");
+                confirm.setText("Siguiente");
                 data.setText(R.string.instr_puerta_01);
                 img_instr.setImageResource(R.drawable.puerta_01);
-                width.setText("Anchura puerta: --");
+                width.setText("Anchura Puerta: --");
                 mechanism.setText("Altura mecanismo: --");
-                height.setText("Altura puerta: --");
+                height.setText("Altura door_: --");
                 measure_height = false;
                 for (AnchorNode n : anchorNodes) {
                     arFragment.getArSceneView().getScene().removeChild(n);
@@ -144,7 +140,7 @@ public class MeasureDoor extends AppCompatActivity {
                     confirm.setEnabled(false);
                     confirm.setText("Confirm");
                 } else
-                    Confirmar();
+                    Confirm();
             }
         });
 
@@ -157,12 +153,12 @@ public class MeasureDoor extends AppCompatActivity {
                 if (measure_height) {
                     height.setText("Altura puerta: " +
                             form_numbers.format(progress / 100f));
-                    puerta.setAltura(progress);
+                    door_.setHeight(progress);
                 }
                 else {
                     mechanism.setText("Altura mecanismo: " +
                             form_numbers.format(progress / 100f));
-                    puerta.setAlturaPomo(progress);
+                    door_.setKnobHeight(progress);
                 }
                 confirm.setEnabled(true);
             }
@@ -211,10 +207,10 @@ public class MeasureDoor extends AppCompatActivity {
                         anchor1 = anchor;
                     } else {
                         anchor2 = anchor;
-                        width.setText("Anchura puerta: " +
+                        width.setText("Anchura door_: " +
                                 form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
-                        puerta.setAnchura((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
+                        door_.setWidth((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
 
                         img_instr.setImageResource(R.drawable.puerta_02);
                         data.setText(R.string.instr_puerta_02);
@@ -230,17 +226,17 @@ public class MeasureDoor extends AppCompatActivity {
                     andy.select();
                     andy.getScaleController().setEnabled(false);
                 });
-        puertaDialog();
+        doorDialog();
     }
 
     private void GetDBValues() {
 
-        final DatabaseReference alt = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/Altura");
+        final DatabaseReference alt = FirebaseDatabase.getInstance().getReference("Standards/Door/Height");
 
         alt.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                paramAltura = dataSnapshot.getValue(Float.class);
+                paramHeight = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -249,12 +245,12 @@ public class MeasureDoor extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/Anchura");
+        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Standards/Door/Width");
 
         anch.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                paramAnchura = dataSnapshot.getValue(Float.class);
+                paramWidth = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -263,12 +259,12 @@ public class MeasureDoor extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference minMec = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/minMecApertura");
+        final DatabaseReference minMec = FirebaseDatabase.getInstance().getReference("Standards/Door/minOpeningMec");
 
         minMec.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                minMecApertura = dataSnapshot.getValue(Float.class);
+                minOpeningMc = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -277,12 +273,12 @@ public class MeasureDoor extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference maxMec = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/maxMecApertura");
+        final DatabaseReference maxMec = FirebaseDatabase.getInstance().getReference("Standards/Door/maxOpeningMec");
 
         maxMec.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                maxMecApertura = dataSnapshot.getValue(Float.class);
+                maxOpeningMc = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -310,46 +306,46 @@ public class MeasureDoor extends AppCompatActivity {
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void Confirmar()
+    void Confirm()
     {
         String s = "";
 
-        boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), paramAltura);
-        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura) + paramAltura, cumple_altura);
+        boolean ffill_Height = Evaluator.IsGreaterThan(door_.getHeight(), paramHeight);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura) + paramHeight, ffill_Height);
 
-        boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(),paramAnchura);
-        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_anchura);
-        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_ancho) + paramAnchura, cumple_anchura);
-
-
-        boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, puerta.getTipoPuerta());
-        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_tipo_puerta);
-        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_puerta), cumple_tipo_puerta);
+        boolean ffill_Width = Evaluator.IsGreaterThan(door_.getWidth(),paramWidth);
+        s = UpdateStringIfNeeded(s, "y", s == "" || ffill_Width);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_ancho) + paramWidth, ffill_Width);
 
 
-        boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, puerta.getTipoMecanismo());
-        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_tipo_mecanismos);
-        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_mec), cumple_tipo_mecanismos);
-
-        boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), minMecApertura, maxMecApertura);
-        s = UpdateStringIfNeeded(s, "y", s == "" || cumple_alto_mecanismo);
-        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura_mec) + minMecApertura + " y " + maxMecApertura, cumple_alto_mecanismo);
+        boolean ffill_door_type = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, door_.getDoorType());
+        s = UpdateStringIfNeeded(s, "y", s == "" || ffill_door_type);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_puerta), ffill_door_type);
 
 
-        puerta.setAccesible(cumple_altura && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta && cumple_alto_mecanismo);
+        boolean ffill_mec_type = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, door_.getMecType());
+        s = UpdateStringIfNeeded(s, "y", s == "" || ffill_mec_type);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_mec), ffill_mec_type);
 
-        UpdateMessage(puerta.getAccesible(), s);
-        puerta.setMensaje(message);
+        boolean ffill_mec_high = Evaluator.IsInRange(door_.getKnobHeight(), minOpeningMc, maxOpeningMc);
+        s = UpdateStringIfNeeded(s, "y", s == "" || ffill_mec_high);
+        s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura_mec) + minOpeningMc + " y " + maxOpeningMc, ffill_mec_high);
+
+
+        door_.setAccessible(ffill_Height && ffill_Height && ffill_Width && ffill_mec_type && ffill_door_type && ffill_mec_high);
+
+        UpdateMessage(door_.getAccessible(), s);
+        door_.setMessage(message);
 
         Intent i = new Intent(this, AxesibilityActivity.class);
-        i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.PUERTAS.getValue());
-        i.putExtra(TypesManager.PUERTAS_OBS, puerta);
+        i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.DOOR.getValue());
+        i.putExtra(TypesManager.DOOR_OBS, door_);
 
         startActivity(i);
         finish();
     }
 
-    void puertaDialog() {
+    void doorDialog() {
         int[] spinnerImages = new int[]{R.drawable.puerta_giratoria, R.drawable.puerta_corredera
                 , R.drawable.puerta_abatible, R.drawable.puerta_torno};
 
@@ -364,10 +360,10 @@ public class MeasureDoor extends AppCompatActivity {
         Spinner mSpinnerDoor = (Spinner) mView.findViewById(R.id.spinner_puerta);
         Spinner mSpinnerMecha = (Spinner) mView.findViewById(R.id.spinner_mecanismo);
 
-        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MeasureDoor.this, spinnerImages, tipoPuerta);
+        ImageTitleAdapter mCustomAdapter = new ImageTitleAdapter(MeasureDoor.this, spinnerImages, doorType);
         mSpinnerDoor.setAdapter(mCustomAdapter);
 
-        ImageTitleAdapter mCustomAdapter2 = new ImageTitleAdapter(MeasureDoor.this, spinnerImages2, tipoMecanismo);
+        ImageTitleAdapter mCustomAdapter2 = new ImageTitleAdapter(MeasureDoor.this, spinnerImages2, mecTypes);
         mSpinnerMecha.setAdapter(mCustomAdapter2);
 
 
@@ -381,8 +377,8 @@ public class MeasureDoor extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                puerta.setTipoPuerta(tipoPuerta[mSpinnerDoor.getSelectedItemPosition()]);
-                puerta.setTipoMecanismo(tipoMecanismo[mSpinnerMecha.getSelectedItemPosition()]);
+                door_.setDoorType(doorType[mSpinnerDoor.getSelectedItemPosition()]);
+                door_.setMecType(mecTypes[mSpinnerMecha.getSelectedItemPosition()]);
             }
         });
 
@@ -421,7 +417,7 @@ public class MeasureDoor extends AppCompatActivity {
 
     private void UpdateMessage(boolean condition, String aux)
     {
-        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message = condition? getString(R.string.accessible) : getString(R.string.no_accesible);
         message += aux;
     }
 

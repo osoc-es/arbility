@@ -2,14 +2,14 @@ package com.osoc.oncera.javabean;
 
 import java.io.Serializable;
 
-public class Invitado implements Serializable {
+public class Guest implements Serializable {
     private String id;
 
-    public Invitado(String id) {
+    public Guest(String id) {
         this.id = id;
     }
 
-    public Invitado() {
+    public Guest() {
     }
 
     public String getId() {

@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
-import com.google.ar.core.Pose;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
@@ -35,49 +34,45 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.osoc.oncera.javabean.Ascensores;
+import com.osoc.oncera.javabean.Elevator;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeasureLift extends AppCompatActivity {
+public class MeasureElevator extends AppCompatActivity {
 
-    private static final String TAG = MeasureDoor.class.getSimpleName();
+    private static final String TAG = MeasureElevator.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
-    private float upDistance=0f;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
-    private Anchor myanchor;
-    private AnchorNode myanchornode;
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
-    private float paramAnchura;
-    private float paramProf;
+    private float widthParam;
+    private float depthParam;
     private ImageView img_instr;
 
     private List<AnchorNode> anchorNodes;
 
-    private boolean medir_profundidad = false;
+    private boolean depthMeasure = false;
 
-    private boolean braile = false, automatico = false, sonido = false, hueco = false, escalon = false;
+    private boolean braille = false, auto = false, sound = false, gap = false, step = false;
 
-    private Ascensores ascensor = new Ascensores(null,null,null,null,null,null,null,null,null,null, null);
+    private Elevator elevator = new Elevator(null,null,null,null,null,null,null,null,null,null, null);
 
     Button restart;
     Button confirm;
     TextView data;
-    TextView ancho_ascensor;
-    TextView profundo_ascensor;
+    TextView elevator_width;
+    TextView elevDepth;
     private String message;
 
     private Anchor anchor1=null, anchor2=null;
 
     private HitResult myhit;
 
+    private AnchorNode myanchornode;
+
     @Override
-    @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
-    // CompletableFuture requires api level 24
-    // FutureReturnValueIgnored is not valid
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -87,12 +82,12 @@ public class MeasureLift extends AppCompatActivity {
 
         setContentView(R.layout.activity_measure_lift);
 
-        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Estandares/Ascensores/Anchura");
+        final DatabaseReference anch = FirebaseDatabase.getInstance().getReference("Standards/Elevator/Width");
 
         anch.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                paramAnchura = dataSnapshot.getValue(Float.class);
+                widthParam = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -101,12 +96,12 @@ public class MeasureLift extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference prof = FirebaseDatabase.getInstance().getReference("Estandares/Ascensores/Profundidad");
+        final DatabaseReference prof = FirebaseDatabase.getInstance().getReference("Standards/Elevator/Depth");
 
         prof.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                paramProf = dataSnapshot.getValue(Float.class);
+                depthParam = dataSnapshot.getValue(Float.class);
             }
 
             @Override
@@ -120,9 +115,9 @@ public class MeasureLift extends AppCompatActivity {
         confirm = (Button)findViewById(R.id.btn_ok);
         data = (TextView) findViewById(R.id.tv_distance);
 
-        ancho_ascensor = (TextView) findViewById(R.id.ancho_acensor);
-        profundo_ascensor = (TextView) findViewById(R.id.profundo_ascensor);
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        elevator_width = (TextView) findViewById(R.id.ancho_acensor);
+        elevDepth = (TextView) findViewById(R.id.profundo_ascensor);
+        ImageButton backButtn = (ImageButton) findViewById(R.id.btnAtras);
         img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();
@@ -130,7 +125,7 @@ public class MeasureLift extends AppCompatActivity {
         confirm.setEnabled(false);
 
 
-        btnAtras.setOnClickListener(new View.OnClickListener() {
+        backButtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -145,14 +140,14 @@ public class MeasureLift extends AppCompatActivity {
                 anchor1=null;
                 anchor2=null;
                 confirm.setEnabled(false);
-                confirm.setText("Next");
+                confirm.setText("Siguiente");
                 img_instr.setImageResource(R.drawable.ascensor_01);
                 data.setText(R.string.instr_ascensor_01);
 
-                ancho_ascensor.setText("Anchura ascensor: --");
-                profundo_ascensor.setText("Profundidad ascensor: --");
+                elevator_width.setText("Anchura ascensor: --");
+                elevDepth.setText("Profundidad ascensor: --");
 
-                medir_profundidad = false;
+                depthMeasure = false;
 
                 for(AnchorNode n : anchorNodes){
                     arFragment.getArSceneView().getScene().removeChild(n);
@@ -166,12 +161,12 @@ public class MeasureLift extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!medir_profundidad){
-                    medir_profundidad = true;
-                    resetMedirAnchura();
+                if(!depthMeasure){
+                    depthMeasure = true;
+                    resetWidthMeasure();
                 }
                 else{
-                    Toast.makeText(MeasureLift.this, "Confirmado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeasureElevator.this, "Confirmado", Toast.LENGTH_SHORT).show();
                     validateEvaluation();
 
                 }
@@ -216,18 +211,18 @@ public class MeasureLift extends AppCompatActivity {
                     else {
                         anchor2 = anchor;
                         confirm.setEnabled(true);
-                        if(!medir_profundidad){
-                            ancho_ascensor.setText("Anchura ascensor: " +
+                        if(!depthMeasure){
+                            elevator_width.setText("Anchura ascensor: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            ascensor.setAnchuraCabina((getMetersBetweenAnchors(anchor1, anchor2))*100);
+                            elevator.setStallWidth((getMetersBetweenAnchors(anchor1, anchor2))*100);
                         }
                         else {
-                            profundo_ascensor.setText("Profundidad ascensor: " +
+                            elevDepth.setText("Profundidad ascensor: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            ascensor.setProfundidadCabina(getMetersBetweenAnchors(anchor1, anchor2)*100);
+                            elevator.setStallDepth(getMetersBetweenAnchors(anchor1, anchor2)*100);
                         }
                     }
-                    myanchornode = anchorNode;
+                     myanchornode = anchorNode;
 
                     // Create the transformable andy and add it to the anchor.
                     TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
@@ -236,16 +231,16 @@ public class MeasureLift extends AppCompatActivity {
                     andy.select();
                     andy.getScaleController().setEnabled(false);
                 });
-        barandillaDialog();
+        handrailDialog();
     }
 
-    void ascend(AnchorNode an, float up){
+ /*   void ascend(AnchorNode an, float up){
         Anchor anchor =  myhit.getTrackable().createAnchor(
                 myhit.getHitPose().compose(Pose.makeTranslation(0, up/100f, 0)));
 
         an.setAnchor(anchor);
     }
-
+*/
 
     float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
         float[] distance_vector = anchor1.getPose().inverse()
@@ -256,10 +251,10 @@ public class MeasureLift extends AppCompatActivity {
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
-    void barandillaDialog(){
+    void handrailDialog(){
 
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureLift.this);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureElevator.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_lift, null);
         mBuilder.setTitle("Rellena el cuestionario");
         CheckBox chkBraile = (CheckBox) mView.findViewById(R.id.chkBraile);
@@ -279,15 +274,15 @@ public class MeasureLift extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                braile = chkBraile.isChecked();
-                automatico = chkAutomatico.isChecked();
-                sonido = chkSonido.isChecked();
-                hueco = chkHueco.isChecked();
-                escalon = chkEscalon.isChecked();
+                braille = chkBraile.isChecked();
+                auto = chkAutomatico.isChecked();
+                sound = chkSonido.isChecked();
+                gap = chkHueco.isChecked();
+                step = chkEscalon.isChecked();
 
-                ascensor.setBotoneraBraile(braile);
-                ascensor.setPuertasAutomaticas(automatico);
-                ascensor.setSenialAudible(sonido);
+                elevator.setBrailleButtons(braille);
+                elevator.setAutoDoors(auto);
+                elevator.setAudioMark(sound);
 
             }
         });
@@ -303,51 +298,51 @@ public class MeasureLift extends AppCompatActivity {
 
         String s = "";
 
-    Boolean anchura = Evaluator.IsGreaterThan(ascensor.getAnchuraCabina(),
-            paramAnchura);
+    Boolean width = Evaluator.IsGreaterThan(elevator.getStallWidth(),
+            widthParam);
 
-        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_anch) + paramAnchura, anchura);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_anch) + widthParam, width);
 
-    Boolean prof = Evaluator.IsGreaterThan(ascensor.getProfundidadCabina(),
-            paramProf);
+    Boolean depth = Evaluator.IsGreaterThan(elevator.getStallDepth(),
+            depthParam);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || prof);
-        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_prof) + paramProf, prof);
+        s = UpdateStringIfNeeded(s, "y", s == "" || depth);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_prof) + depthParam, depth);
 
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || braile);
-        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_braille), braile);
+        s = UpdateStringIfNeeded(s, "y", s == "" || braille);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_braille), braille);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || automatico);
-        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_automat), automatico);
+        s = UpdateStringIfNeeded(s, "y", s == "" || auto);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_automat), auto);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || sonido);
-        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_audio), sonido);
+        s = UpdateStringIfNeeded(s, "y", s == "" || sound);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_audio), sound);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || hueco);
-        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_dist), hueco);
+        s = UpdateStringIfNeeded(s, "y", s == "" || gap);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_dist), gap);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || escalon);
-        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_alt_resal), automatico);
+        s = UpdateStringIfNeeded(s, "y", s == "" || step);
+        s = UpdateStringIfNeeded(s, getString(R.string.asc_n_alt_resal), auto);
 
-        ascensor.setAccesible(anchura && prof && braile && automatico && sonido && hueco && escalon);
+        elevator.setAccessible(width && depth && braille && auto && sound && gap && step);
 
-        UpdateMessage(ascensor.getAccesible(), s);
+        UpdateMessage(elevator.getAccessible(), s);
 
-        ascensor.setMensaje(message);
+        elevator.setMessage(message);
 
         Intent i = new Intent(this,AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ASCENSORES.getValue());
-        i.putExtra(TypesManager.ASCENSOR_OBS, ascensor);
+        i.putExtra(TypesManager.ASCENSOR_OBS, elevator);
 
         startActivity(i);
         finish();
     }
-    void resetMedirAnchura(){
+    void resetWidthMeasure(){
         anchor1=null;
         anchor2=null;
         confirm.setEnabled(false);
-        confirm.setText("Confirm");
+        confirm.setText("Confirmar");
         img_instr.setImageResource(R.drawable.ascensor_02);
         data.setText(R.string.instr_ascensor_02);
         for(AnchorNode n : anchorNodes){
@@ -387,7 +382,7 @@ public class MeasureLift extends AppCompatActivity {
 
     private void UpdateMessage(boolean condition, String aux)
     {
-        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message = condition? getString(R.string.accessible) : getString(R.string.no_accesible);
         message += aux;
     }
 }

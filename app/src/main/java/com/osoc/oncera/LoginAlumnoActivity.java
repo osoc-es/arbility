@@ -1,10 +1,8 @@
 package com.osoc.oncera;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,20 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import com.osoc.oncera.javabean.Centro;
-import com.osoc.oncera.javabean.Profesor;
+import com.osoc.oncera.javabean.Institution;
 
 public class LoginAlumnoActivity extends AppCompatActivity {
 
@@ -42,7 +27,7 @@ public class LoginAlumnoActivity extends AppCompatActivity {
 
     private String codigo = "patata";
 
-    private final Centro[] prf = new Centro[1];
+    private final Institution[] prf = new Institution[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

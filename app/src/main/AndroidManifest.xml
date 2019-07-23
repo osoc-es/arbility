@@ -54,7 +54,7 @@
             android:name=".MeasureStairLift"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MeasureLift"
+            android:name=".MeasureElevator"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MeasureInclination"

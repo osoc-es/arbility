@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.osoc.oncera.javabean.Centro;
+import com.osoc.oncera.javabean.Institution;
 
 public class RegisterCentroEscolarActivity extends AppCompatActivity {
 
@@ -49,7 +49,7 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
     private String correo;
 
 
-    private Centro centro;
+    private Institution institution;
 
     private String codCentro;
 
@@ -104,8 +104,8 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
 
                                 String clave = user.getUid();
 
-                                    centro = new Centro(clave, codCentro,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
-                                    mDatabaseRef.child(user.getUid()).setValue(centro);
+                                    institution = new Institution(clave, codCentro,  etNombre.getText().toString(), etEmail.getText().toString().toLowerCase(),etCiudad.getText().toString(), etDireccion.getText().toString(),validarCentro);
+                                    mDatabaseRef.child(user.getUid()).setValue(institution);
                                     Toast.makeText( RegisterCentroEscolarActivity.this, "Registrado Correcto, Valídalo para porder Loguearte", Toast.LENGTH_LONG ).show();
 
                                     btnRegistrar.setVisibility(View.INVISIBLE);
@@ -150,7 +150,7 @@ public class RegisterCentroEscolarActivity extends AppCompatActivity {
         if (email.isEmpty() || password.isEmpty()) {
             msj = "Debe introducirse el email y la password";
         }else if (nombre.isEmpty() || ciudad.isEmpty() || direccion.isEmpty()) {
-            msj = "Debe introducir el nombre, la ciudad y la direccion";
+            msj = "Debe introducir el name, la ciudad y la direccion";
         }else if (password.length() < 6) {
             msj = "La password debe contener al menos 6 caracteres";
         } else if (!password.equals(password2)) {

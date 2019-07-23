@@ -35,7 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.osoc.oncera.javabean.SalvaEscaleras;
+import com.osoc.oncera.javabean.StairLifter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class MeasureStairLift extends AppCompatActivity {
 
     private HitResult myhit;
 
-    private SalvaEscaleras salvaEscaleras = new SalvaEscaleras(null,null,null,null,null,null,null,null,null,null,null);
+    private StairLifter stairLifter = new StairLifter(null,null,null,null,null,null,null,null,null,null,null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -217,12 +217,12 @@ public class MeasureStairLift extends AppCompatActivity {
                         if (!medir_profundidad) {
                             ancho_plat.setText("Anchura plataforma: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            salvaEscaleras.setAnchuraPlataforma(getMetersBetweenAnchors(anchor1, anchor2)*100);
+                            stairLifter.setWidth(getMetersBetweenAnchors(anchor1, anchor2)*100);
 
                         } else {
                             largo_plat.setText("Longitud plataforma: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            salvaEscaleras.setLargoPlataforma(getMetersBetweenAnchors(anchor1, anchor2)*100);
+                            stairLifter.setLength(getMetersBetweenAnchors(anchor1, anchor2)*100);
                         }
                     }
                     myanchornode = anchorNode;
@@ -240,31 +240,31 @@ public class MeasureStairLift extends AppCompatActivity {
 
         String s = "";
 
-        Boolean anch = Evaluator.IsGreaterThan(salvaEscaleras.getAnchuraPlataforma(),paramAnch);
+        Boolean anch = Evaluator.IsGreaterThan(stairLifter.getWidth(),paramAnch);
         s = UpdateStringIfNeeded(s, getString(R.string.se_n_ancho) + paramAnch, anch);
 
-        Boolean largo = Evaluator.IsGreaterThan(salvaEscaleras.getLargoPlataforma(),paramLargo);
+        Boolean largo = Evaluator.IsGreaterThan(stairLifter.getLength(),paramLargo);
         s = UpdateStringIfNeeded(s, "y", s == "" || largo);
         s = UpdateStringIfNeeded(s, getString(R.string.se_n_largo) + paramLargo, largo);
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || salvaEscaleras.getMandoEmbarque());
-        s = UpdateStringIfNeeded(s, getString(R.string.se_n_mando), salvaEscaleras.getMandoEmbarque());
+        s = UpdateStringIfNeeded(s, "y", s == "" || stairLifter.getShipmentControl());
+        s = UpdateStringIfNeeded(s, getString(R.string.se_n_mando), stairLifter.getShipmentControl());
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || salvaEscaleras.getCarga());
-        s = UpdateStringIfNeeded(s, getString(R.string.se_n_carga), salvaEscaleras.getCarga());
+        s = UpdateStringIfNeeded(s, "y", s == "" || stairLifter.getCharge());
+        s = UpdateStringIfNeeded(s, getString(R.string.se_n_carga), stairLifter.getCharge());
 
-        s = UpdateStringIfNeeded(s, "y", s == "" || salvaEscaleras.getVelocidad());
-        s = UpdateStringIfNeeded(s, getString(R.string.se_n_velocidad), salvaEscaleras.getVelocidad());
+        s = UpdateStringIfNeeded(s, "y", s == "" || stairLifter.getVelocity());
+        s = UpdateStringIfNeeded(s, getString(R.string.se_n_velocidad), stairLifter.getVelocity());
 
-        salvaEscaleras.setAccesible(anch && largo && salvaEscaleras.getMandoEmbarque() && salvaEscaleras.getCarga() && salvaEscaleras.getVelocidad());
+        stairLifter.setAccessible(anch && largo && stairLifter.getShipmentControl() && stairLifter.getCharge() && stairLifter.getVelocity());
 
-        UpdateMessage(salvaEscaleras.getAccesible(), s);
+        UpdateMessage(stairLifter.getAccessible(), s);
 
-        salvaEscaleras.setMensaje(message);
+        stairLifter.setMessage(message);
 
         Intent i = new Intent(this,AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.SALVAESCALERAS.getValue());
-        i.putExtra(TypesManager.SALVAESC_OBS, salvaEscaleras);
+        i.putExtra(TypesManager.SALVAESC_OBS, stairLifter);
 
         startActivity(i);
         finish();
@@ -313,9 +313,9 @@ public class MeasureStairLift extends AppCompatActivity {
                 carga = chkCarga.isChecked();
                 velocidad = chkVelocidad.isChecked();
 
-                salvaEscaleras.setMandoEmbarque(mando);
-                salvaEscaleras.setCarga(carga);
-                salvaEscaleras.setVelocidad(velocidad);
+                stairLifter.setShipmentControl(mando);
+                stairLifter.setCharge(carga);
+                stairLifter.setVelocity(velocidad);
 
 
             }
@@ -371,7 +371,7 @@ public class MeasureStairLift extends AppCompatActivity {
 
     private void UpdateMessage(boolean condition, String aux)
     {
-        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message = condition? getString(R.string.accessible) : getString(R.string.no_accesible);
         message += aux;
     }
 }

@@ -38,7 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.osoc.oncera.adapters.ImageTitleAdapter;
-import com.osoc.oncera.javabean.PuntosAtencion;
+import com.osoc.oncera.javabean.AttPoints;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class MeasureCounter extends AppCompatActivity {
 
     private HitResult myhit;
 
-    private PuntosAtencion counter = new PuntosAtencion(null, null, null, null, null, null, null, null, null);
+    private AttPoints counter = new AttPoints(null, null, null, null, null, null, null, null, null);
 
     float db_counter_width,
             db_counter_height,
@@ -153,11 +153,11 @@ public class MeasureCounter extends AppCompatActivity {
                 if (!measuring_ledge) {
                     counter_height.setText("Altura trabajo: " +
                             form_numbers.format(progress / 100f));
-                    counter.setAlturaPlanoTrabajo((float) progress);
+                    counter.setWorkFlatHeight((float) progress);
                 } else {
                     ledge_height.setText("Altura repisa: " +
                             form_numbers.format(progress / 100f));
-                    counter.setAlturaEspacioInferiorLibre((float) progress);
+                    counter.setFreeLowerSpaceHeight((float) progress);
                 }
             }
 
@@ -209,8 +209,8 @@ public class MeasureCounter extends AppCompatActivity {
                         if (!measuring_ledge) {
                             counter_width.setText("Anchura util: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            counter.setAnchuraPlanoTrabajo(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
-                            counter.setAnchuraEspacioInferiorLibre(counter.getAnchuraPlanoTrabajo() * 100f);
+                            counter.setWorkFlatWidth(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
+                            counter.setFreeLowerSpaceWidth(counter.getWorkFlatWidth() * 100f);
 
                             img_instr.setImageResource(R.drawable.mostrador_02);
                             data.setText(R.string.instr_mostrador_02);
@@ -218,7 +218,7 @@ public class MeasureCounter extends AppCompatActivity {
                             ledge_depth.setText("Profundidad repisa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
-                            counter.setProfundidadEspacioInferiorLibre(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
+                            counter.setFreeLowerSpaceDepth(getMetersBetweenAnchors(anchor1, anchor2) * 100f);
 
                             img_instr.setImageResource(R.drawable.mostrador_04);
                             data.setText(R.string.instr_mostrador_04);
@@ -361,33 +361,33 @@ public class MeasureCounter extends AppCompatActivity {
     private void Confirmar() {
         String s = "";
 
-        boolean cumple_anpt = Evaluator.IsGreaterThan(counter.getAnchuraPlanoTrabajo(), db_counter_width);
+        boolean cumple_anpt = Evaluator.IsGreaterThan(counter.getWorkFlatWidth(), db_counter_width);
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_anpt) + db_counter_width, cumple_anpt);
 
-        boolean cumple_alpt = Evaluator.IsLowerThan(counter.getAlturaPlanoTrabajo(), db_counter_height);
+        boolean cumple_alpt = Evaluator.IsLowerThan(counter.getWorkFlatHeight(), db_counter_height);
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_alpt);
         s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_alpt) + db_counter_height, cumple_alpt);
 
         if (ledge) {
-            boolean cumple_aleif = Evaluator.IsGreaterThan(counter.getAlturaEspacioInferiorLibre(), db_ledge_height);
+            boolean cumple_aleif = Evaluator.IsGreaterThan(counter.getFreeLowerSpaceHeight(), db_ledge_height);
             s = UpdateStringIfNeeded(s, "y", s == "" || cumple_aleif);
             s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aleil) + db_ledge_height, cumple_aleif);
 
-            boolean cumple_aneif = Evaluator.IsGreaterThan(counter.getAnchuraEspacioInferiorLibre(), db_ledge_width);
+            boolean cumple_aneif = Evaluator.IsGreaterThan(counter.getFreeLowerSpaceWidth(), db_ledge_width);
             s = UpdateStringIfNeeded(s, "y", s == "" || cumple_aneif);
             s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_aneil) + db_ledge_width, cumple_aneif);
 
-            boolean cumple_peif = Evaluator.IsGreaterThan(counter.getProfundidadEspacioInferiorLibre(), db_ledge_depth);
+            boolean cumple_peif = Evaluator.IsGreaterThan(counter.getFreeLowerSpaceDepth(), db_ledge_depth);
             s = UpdateStringIfNeeded(s, "y", s == "" || cumple_peif);
             s = UpdateStringIfNeeded(s, getString(R.string.mostr_n_peil) + db_ledge_depth, cumple_peif);
 
-            counter.setAccesible(cumple_aleif && cumple_anpt && cumple_alpt && cumple_aneif && cumple_peif);
+            counter.setAccessible(cumple_aleif && cumple_anpt && cumple_alpt && cumple_aneif && cumple_peif);
 
         } else
-            counter.setAccesible(cumple_anpt && cumple_alpt );
+            counter.setAccessible(cumple_anpt && cumple_alpt );
 
-        UpdateMessage(counter.getAccesible(), s);
-        counter.setMensaje(message);
+        UpdateMessage(counter.getAccessible(), s);
+        counter.setMessage(message);
 
         Intent i = new Intent(this, AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.MOSTRADORES.getValue());
@@ -489,7 +489,7 @@ public class MeasureCounter extends AppCompatActivity {
      * @param aux explanation of the accessibility result
      */
     private void UpdateMessage(boolean condition, String aux) {
-        message = condition ? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message = condition ? getString(R.string.accessible) : getString(R.string.no_accesible);
         message += aux;
     }
 

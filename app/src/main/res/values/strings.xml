@@ -22,32 +22,32 @@
     ////////////////////////////////////////////////////////////////////////////
     -->
 
-    <string name="accesible">Es accesible</string>
-    <string name="no_accesible">No es accesible porque</string>
+    <string name="accessible">Es accessible</string>
+    <string name="no_accesible">No es accessible porque</string>
 
 
-    <string name="descAseos">Un aseo es accesible si:
+    <string name="descAseos">Un aseo es accessible si:
         \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
-        \t\n•La altura de las barras de apoyo está comprendida entre 70 y 75 centímetros.\n
-        \t\n•La longitud de la barra de apoyo es 70 centímetros.\n
+        \t\n•La height de las barras de apoyo está comprendida entre 70 y 75 centímetros.\n
+        \t\n•La length de la barra de apoyo es 70 centímetros.\n
         \t\n•El diámetro de la barra de apoyo está comprendido entre 3 y 5 centímetros.\n
-        \t\n•La anchura del espacio de transferencia al lavabo es mayor a 80 centímetros.\n
+        \t\n•La width del espacio de transferencia al lavabo es mayor a 80 centímetros.\n
         \t\n•El fondo del espacio de transferencia es mayor a 75 centímetros.\n
-        \t\n•La altura del hueco libre del lavabo está entre 65 y 70 centímetros.\n
+        \t\n•La height del hueco libre del lavabo está entre 65 y 70 centímetros.\n
         \t\n•Tiene dispositivo de llamada de asistencia.\n
         \t\n•Tiene acceso de nivel a las duchas.\n
-        \t\n•La anchura del espacio de transferencia a la ducha es mayor a 80 centímetros.\n
-        \t\n•La anchura del asiento de la ducha es mayor a 45 centímetros.\n
-        \t\n•La altura del asiento de la ducha está entre 45 y 48 centímetros.\n
+        \t\n•La width del espacio de transferencia a la ducha es mayor a 80 centímetros.\n
+        \t\n•La width del asiento de la ducha es mayor a 45 centímetros.\n
+        \t\n•La height del asiento de la ducha está entre 45 y 48 centímetros.\n
         \t\n •La distancia de la barra de apoyo a la esquina es de 60 centímetros.\n
         \t\n • La separación de la barra de apoyo al paramento está entre 4,5 y 5,5 centímetros.\n
 
     </string>
 
-    <string name="descPuertas">Una puerta es accesible si:
-            \t\n•Su anchura es mayor a 80 centímetros.\n
-           \t\n•Su altura es mayor a 200 centímetros.\n
-            \t\n•La altura de su mecanismo de apertura esté entre 80 centímetros y 120 centímetros.\n
+    <string name="descPuertas">Una puerta es accessible si:
+            \t\n•Su width es mayor a 80 centímetros.\n
+           \t\n•Su height es mayor a 200 centímetros.\n
+            \t\n•La height de su mecanismo de apertura esté entre 80 centímetros y 120 centímetros.\n
     </string>
 
     <string name="descIlum">Una estancia está correctamente iluminada si:
@@ -56,42 +56,42 @@
             \t\n•En interior habitable es mayor a 300 lux.\n
     </string>
 
-    <string name="descAscensor">Un ascensor es accesible si:
-            \t\n•La anchura de la cabina es mayor a 110 centímetros.\n
+    <string name="descAscensor">Un ascensor es accessible si:
+            \t\n•La width de la cabina es mayor a 110 centímetros.\n
             \t\n•La profundidad de la cabina es mayor a 140 centímetros.\n
-            \t\n•La altura del resalte es menor a 1 centímetro.\n
+            \t\n•La height del resalte es menor a 1 centímetro.\n
            \t\n•La distancia de la cabina es menor a 2 centímetros.\n
             \t\n•Tiene apertura/cierre de puertas automático.\n
         \t\n•Tiene señal audible de apertura/cierre.\n
             \t\n•Tiene botonera de Braile.\n
     </string>
 
-    <string name="descMostrador">Un mostrador es accesible si:
-            \t\n•La anchura del plano de trabajo es mayor a 80 centímetros.\n
-            \t\n•La altura del plano de trabajo es menor a 85 centímetros.\n
-            \t\n•La altura del espacio inferior libre es mayor a 70 centímetros.\n
+    <string name="descMostrador">Un mostrador es accessible si:
+            \t\n•La width del plano de trabajo es mayor a 80 centímetros.\n
+            \t\n•La height del plano de trabajo es menor a 85 centímetros.\n
+            \t\n•La height del espacio inferior libre es mayor a 70 centímetros.\n
         \t\n•La profundidad del espacio inferior libre es mayor a 50 centímetros.\n
     </string>
 
-    <string name="descRampa">Una rampa es accesible si:
-            \t\n•Su anchura es mayor a 120 centímetros.\n
-            \t\n•La longitud es menor a 3 metros y la pendiente es menor o igual a 10.\n
-        \t\n•La longitud está entre 3 y 6 metros y la pendiente es menor o igual a 8.\n
-        \t\n•La longitud está entre 6 y 9 metros y la pendiente es menor o igual a 6.\n
-        \t\n•La altura del pasamanos superior está comprendida entre 85 y 100 centímetros.\n
-            \t\n•La altura del pasamanos inferior está entre 60 y 75 centímetros.\n
+    <string name="descRampa">Una rampa es accessible si:
+            \t\n•Su width es mayor a 120 centímetros.\n
+            \t\n•La length es menor a 3 metros y la slope es menor o igual a 10.\n
+        \t\n•La length está entre 3 y 6 metros y la slope es menor o igual a 8.\n
+        \t\n•La length está entre 6 y 9 metros y la slope es menor o igual a 6.\n
+        \t\n•La height del pasamanos superior está comprendida entre 85 y 100 centímetros.\n
+            \t\n•La height del pasamanos inferior está entre 60 y 75 centímetros.\n
                     \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
     </string>
 
-    <string name="descSalvaescaleras">Un salvaescaleras es accesible si:
-            \t\n•La anchura de la plataforma es mayor a 70 centímetros.\n
+    <string name="descSalvaescaleras">Un salvaescaleras es accessible si:
+            \t\n•La width de la plataforma es mayor a 70 centímetros.\n
            \t\n•El largo de la plataforma es mayor a 100 centímetros.\n
             \t\n•Existen mandos en la plataforma, en el embarque y en el desembarque.\n
-        \t\n•La carga es mayor a 250kg.\n
-                \t\n•La velocidad es mayor a 0,15 m/s.\n
+        \t\n•La charge es mayor a 250kg.\n
+                \t\n•La velocity es mayor a 0,15 m/s.\n
     </string>
 
-    <string name="descEstancias">Una estancia es accesible si:
+    <string name="descEstancias">Una estancia es accessible si:
             \t\n•Tiene asientos reservados ( 2 cada 50).\n
            \t\n•La separación del mobiliario es de 80 centímetros.\n
             \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
@@ -99,23 +99,23 @@
         \t\n•Tiene tarima con rampa.\n
     </string>
 
-    <string name="descPasillos">Un pasillo es accesible si:
-            \t\n•Su anchura es mayor a 120 centímetros.\n
-           \t\n•La altura es mayor a 210 centímetros.\n
-            \t\n•La anchura de los salientes es menor a 10 centímetros.\n
+    <string name="descPasillos">Un pasillo es accessible si:
+            \t\n•Su width es mayor a 120 centímetros.\n
+           \t\n•La height es mayor a 210 centímetros.\n
+            \t\n•La width de los salientes es menor a 10 centímetros.\n
         \t\n•Los salientes miden entre 15 y 220 centímetros.\n
         \t\n•El diámetro de maniobra es mayor a 150 centímetros.\n
-                \t\n•Existe señalización entre 90 y 140 centímetros de altura en cristales.\n
+                \t\n•Existe señalización entre 90 y 140 centímetros de height en cristales.\n
     </string>
 
     <string name="descEmergencias">Se cumplen los parámetros de evacuación si:
-            \t\n•Existen simulacros de emergencia.\n
+            \t\n•Existen simulation de emergencia.\n
            \t\n•Hay alumbrado de emergencia.\n
     </string>
 
     <string name="et_CorreoLogin"> Email Ej: ejemplo@ejemplo.es</string>
     <string name="et_PasswordLogin"> Contraseña</string>
-    <string name="btn_IrItinerario">Ir al itinerario</string>
+    <string name="btn_IrItinerario">Ir al itinerary</string>
     <string name="tvLogIn">Log In</string>
     <string name="btn_Iniciar_Sesion">Iniciar Sesión</string>
     <string name="tv_logo">rbility</string>
@@ -123,12 +123,12 @@
     <string name="et_PasswordReg">Introduce tu contraseña</string>
     <string name="btn_RegistrarUsuario">registrar</string>
     <string name="btn_Registrarse">¿No tienes cuenta? Regístrate</string>
-    <string name="btn_Validar">validar</string>
+    <string name="btn_Validar">validate</string>
     <string name="et_NombreReg">Nombre del Centro</string>
     <string name="et_CiudadReg">Ciudad</string>
     <string name="et_Direccion">Dirección</string>
     <string name="et_PasswordRepeat">Repite la contraseña</string>
-    <string name="et_EscribirItinerario">Código del itinerario</string>
+    <string name="et_EscribirItinerario">Código del itinerary</string>
     <string name="tvRegistro">Nuevo Centro Escolar</string>
     <string name="tvItinerario">Itinerario</string>
 
@@ -146,10 +146,10 @@
      -->
 
     <string name="emergencia_e">De las siguientes preguntas, marque aquellas que sean ciertas.</string>
-    <string name="emergencia_p1">¿Se realizan simulacros de seguridad?</string>
+    <string name="emergencia_p1">¿Se realizan simulation de seguridad?</string>
     <string name="emergencia_p2">¿Hay alumbrado de emergencia?</string>
     <string name="emergencia_n_alumbrado">no hay alumbrado de emergencia</string>
-    <string name="emergencia_n_simulacro">no se realizan simulacros</string>
+    <string name="emergencia_n_simulacro">no se realizan simulation</string>
 
     <!--
     ////////////////////////////////////////////////////////////////////////////
@@ -160,14 +160,14 @@
     <string name="lux_exterior">Exterior </string>
     <string name="lux_interior_escalera">Interior con rampa y/o escalera </string>
     <string name="lux_interior_habitable">Interior habitable </string>
-    <string name="lux_instrucciones">En el menú desplegable superior selecciona en qué tipo de espacio estás y orienta
-    la pantalla del móvil hacia la fuente de luz antes de darle al botón de medir.
+    <string name="lux_instrucciones">En el menú desplegable superior selecciona en qué type de espacio estás y orienta
+    la pantalla del móvil hacia la fuente de ligth antes de darle al botón de medir.
         \nUna vez tengas la medición deseada, presiona el botón \"Ok\". \n\n
     Presiona este recuadro para continuar.</string>
 
-    <string name="lux_n_exterior">en exterior, la intensidad de la luz ha de ser superior a </string>
-    <string name="lux_n_int_ramp">en interior con rampa y/o escaleras, la intensidad de la luz ha de ser entre </string>
-    <string name="lux_n_int_hab">en interior habitable, la intensidad de la luz ha de ser superior a </string>
+    <string name="lux_n_exterior">en exterior, la intensidad de la ligth ha de ser superior a </string>
+    <string name="lux_n_int_ramp">en interior con rampa y/o escaleras, la intensidad de la ligth ha de ser entre </string>
+    <string name="lux_n_int_hab">en interior habitable, la intensidad de la ligth ha de ser superior a </string>
 
     <!--
     ////////////////////////////////////////////////////////////////////////////
@@ -175,21 +175,21 @@
     ////////////////////////////////////////////////////////////////////////////
     -->
 
-    <string name="puerta_n_altura">su altura no es superior a </string>
-    <string name="puerta_n_ancho">su anchura no es superior a </string>
-    <string name="puerta_n_tipo_puerta">el tipo de puerta no es accesible </string>
-    <string name="puerta_n_tipo_mec">el tipo de mecanismo no es accesible </string>
-    <string name="puerta_n_altura_mec">la altura del mecanismo no se encuentra entre los valores: </string>
+    <string name="puerta_n_altura">su height no es superior a </string>
+    <string name="puerta_n_ancho">su width no es superior a </string>
+    <string name="puerta_n_tipo_puerta">el type de puerta no es accessible </string>
+    <string name="puerta_n_tipo_mec">el type de mecanismo no es accessible </string>
+    <string name="puerta_n_altura_mec">la height del mecanismo no se encuentra entre los valores: </string>
 
     <!--
     ////////////////////////////////////////////////////////////////////////////
-    Ascensores
+    Elevator
     ////////////////////////////////////////////////////////////////////////////
     -->
 
-    <string name="asc_n_anch">la anchura de la cabina no es superior a </string>
+    <string name="asc_n_anch">la width de la cabina no es superior a </string>
     <string name="asc_n_prof">la profundidad de la cabina no es superior a </string>
-    <string name="asc_n_alt_resal">la altura del resalte es superior a 1cm </string>
+    <string name="asc_n_alt_resal">la height del resalte es superior a 1cm </string>
     <string name="asc_n_dist">el hueco entre el piso y la cabina es superior a 2cm </string>
     <string name="asc_n_audio">no hay señal audible de apertura y cierre </string>
     <string name="asc_n_braille">no hay botonera con Braille </string>
@@ -201,21 +201,21 @@
     ////////////////////////////////////////////////////////////////////////////
     -->
 
-    <string name="mostr_n_anpt">la anchura del plano de trabajo no es superior a </string>
-    <string name="mostr_n_alpt">la altura del plano de trabajo no es inferior a </string>
-    <string name="mostr_n_aleil">la altura del espacio inferior libre no es superior a </string>
-    <string name="mostr_n_aneil">la anchura del espacio inferior libre no es superior a </string>
+    <string name="mostr_n_anpt">la width del plano de trabajo no es superior a </string>
+    <string name="mostr_n_alpt">la height del plano de trabajo no es inferior a </string>
+    <string name="mostr_n_aleil">la height del espacio inferior libre no es superior a </string>
+    <string name="mostr_n_aneil">la width del espacio inferior libre no es superior a </string>
     <string name="mostr_n_peil">la profundidad del espacio inferior libre no es superior a </string>
 
     <!--
    ////////////////////////////////////////////////////////////////////////////
-   Rampas
+   Ramps
    ////////////////////////////////////////////////////////////////////////////
    -->
 
-    <string name="ramp_n_anch">la anchura de la rampa no es superior a </string>
+    <string name="ramp_n_anch">la width de la rampa no es superior a </string>
     <string name="ramp_n_incl"> la inclinación no es inferior a </string>
-    <string name="ramp_n_alt">la altura del pasamanos no está entre los valores </string>
+    <string name="ramp_n_alt">la height del pasamanos no está entre los valores </string>
 
     <!--
     ////////////////////////////////////////////////////////////////////////////
@@ -223,11 +223,11 @@
     ////////////////////////////////////////////////////////////////////////////
     -->
 
-    <string name="se_n_ancho">la anchura de la plataforma no es superior a </string>
+    <string name="se_n_ancho">la width de la plataforma no es superior a </string>
     <string name="se_n_largo">el largo de la plataforma no es superior a </string>
     <string name="se_n_mando">no hay mandos en las zonas de embarque, desembarque y en la plataforma </string>
-    <string name="se_n_carga">la carga no supera los </string>
-    <string name="se_n_velocidad">la velocidad no es inferior a </string>
+    <string name="se_n_carga">la charge no supera los </string>
+    <string name="se_n_velocidad">la velocity no es inferior a </string>
 
 
     <!--
@@ -239,12 +239,12 @@
     <string name="btnCopiarCodCentro">Copiar código centro</string>
     <string name="btnEvaluarObst">Evaluar el obstáculo</string>
     <string name="descriptionLabel">Descripción</string>
-    <string name="descriptionHint">Descripción del itinerario</string>
+    <string name="descriptionHint">Descripción del itinerary</string>
     <string name="titleLabel">Título</string>
-    <string name="titleHint">Título del itinerario</string>
+    <string name="titleHint">Título del itinerary</string>
     <string name="btnNuevoObstaculoText">Nuevo obstaculo</string>
     <string name="btnConfirmarObstaculoText">Confirmar obstaculo</string>
-    <string name="btnCrearItinerarioText">Crear itinerario</string>
+    <string name="btnCrearItinerarioText">Crear itinerary</string>
     <string name="instr_puerta_01">Haz click en las esquinas inferiores de la puerta tras calibrar</string>
     <string name="instr_puerta_02">Sube el cubo con el deslizador hasta que su base de con el mecanismo de apertura</string>
     <string name="instr_puerta_03">Sube el cubo con el deslizador hasta que su base de con el marco de la puerta</string>

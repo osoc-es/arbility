@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="La carga soportada es mayor a 250kg" />
+        android:text="La charge soportada es mayor a 250kg" />
 
     <CheckBox
         android:id="@+id/chkVelocidad"
@@ -33,6 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="La velocidad es mayor a 0,15 m/s" />
+        android:text="La velocity es mayor a 0,15 m/s" />
 
 </LinearLayout>

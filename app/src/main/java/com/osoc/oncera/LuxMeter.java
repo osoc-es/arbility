@@ -23,7 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.osoc.oncera.javabean.Iluminacion;
+import com.osoc.oncera.javabean.Illuminance;
 
 import java.text.DecimalFormat;
 
@@ -56,7 +56,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
     private DecimalFormat form_numbers = new DecimalFormat("#0.00");
 
     //Obstacle
-    private Iluminacion iluminacion = new Iluminacion(null, null, null, null, null);
+    private Illuminance Illuminance = new Illuminance(null, null, null, null, null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +157,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
     public void Measure() {
         if (instructions_hidden) {
             lux_text.setText(form_numbers.format(value) + " lx");
-            iluminacion.setLuz(value);
+            Illuminance.setLigth(value);
         }
     }
 
@@ -180,7 +180,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
      */
     private void UpdateMessage(boolean condition, String aux)
     {
-        message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);
+        message = condition? getString(R.string.accessible) : getString(R.string.no_accesible);
         message += aux;
     }
 
@@ -192,36 +192,36 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
 
     String s= "";
 
-        if(iluminacion.getLuz() != null && instructions_hidden) {
+        if(Illuminance.getLigth() != null && instructions_hidden) {
 
 
             if (LocationType == getString(R.string.lux_exterior))
             {
-                accessible = Evaluator.IsGreaterThan(iluminacion.getLuz(), outDoorParam);
+                accessible = Evaluator.IsGreaterThan(Illuminance.getLigth(), outDoorParam);
 
                 s = UpdateStringIfNeeded(s, getString(R.string.lux_n_exterior) + " "+ outDoorParam, accessible);
 
             }
             else if (LocationType == getString(R.string.lux_interior_habitable))
             {
-                accessible = Evaluator.IsGreaterThan(iluminacion.getLuz(), indoorWRampParam);
+                accessible = Evaluator.IsGreaterThan(Illuminance.getLigth(), indoorWRampParam);
                 s = UpdateStringIfNeeded(s, getString(R.string.lux_n_int_hab) + " "+ indoorWRampParam, accessible);
             }
             else if (LocationType == getString(R.string.lux_interior_escalera))
             {
-                accessible = Evaluator.IsInRange(iluminacion.getLuz(), minIndoorH, maxIndoorH);
+                accessible = Evaluator.IsInRange(Illuminance.getLigth(), minIndoorH, maxIndoorH);
                 s = UpdateStringIfNeeded(s, getString(R.string.lux_n_int_ramp) + " "+ minIndoorH + " y " + maxIndoorH, accessible);
             }
 
-            iluminacion.setAccesible(accessible);
+            Illuminance.setAccessible(accessible);
 
 
-            UpdateMessage(iluminacion.getAccesible(),s);
-            iluminacion.setMensaje(message);
+            UpdateMessage(Illuminance.getAccessible(),s);
+            Illuminance.setMessage(message);
 
             Intent i = new Intent(this,AxesibilityActivity.class);
-            i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ILUM.getValue());
-            i.putExtra(TypesManager.ILUM_OBS, iluminacion);
+            i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.ILLUM.getValue());
+            i.putExtra(TypesManager.ILLUM_OBS, Illuminance);
 
             startActivity(i);
             finish();
@@ -243,7 +243,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
      */
     private void UpdateDatabaseValues()
     {
-        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Estandares/Iluminacion/Exterior");
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Standards/Illuminance/Outdoor");
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -257,7 +257,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
             }
         });
 
-        final DatabaseReference interiorHabDB = FirebaseDatabase.getInstance().getReference("Estandares/Iluminacion/InteriorHab");
+        final DatabaseReference interiorHabDB = FirebaseDatabase.getInstance().getReference("Standards/Illuminance/Indoor");
 
         interiorHabDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -271,7 +271,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
             }
         });
 
-        final DatabaseReference minRangeDB = FirebaseDatabase.getInstance().getReference("Estandares/Iluminacion/minInteriorRE");
+        final DatabaseReference minRangeDB = FirebaseDatabase.getInstance().getReference("Standards/Illuminance/minIndoorWR");
 
         minRangeDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -285,7 +285,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
             }
         });
 
-        final DatabaseReference maxRangeDB = FirebaseDatabase.getInstance().getReference("Estandares/Iluminacion/maxInteriorRE");
+        final DatabaseReference maxRangeDB = FirebaseDatabase.getInstance().getReference("Standards/Illuminance/maxIndoorWR");
 
         maxRangeDB.addValueEventListener(new ValueEventListener() {
             @Override

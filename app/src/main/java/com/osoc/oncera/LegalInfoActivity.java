@@ -46,7 +46,7 @@ public class LegalInfoActivity extends AppCompatActivity {
 
                 if (type == TypesManager.obsType.PUERTAS)  changeWindowTo(MeasureDoor.class);
                 else if (type == TypesManager.obsType.ILUM) changeWindowTo(LuxMeter.class);
-                else if (type == TypesManager.obsType.ASCENSORES) changeWindowTo(MeasureLift.class);
+                else if (type == TypesManager.obsType.ASCENSORES) changeWindowTo(MeasureElevator.class);
                 else if (type == TypesManager.obsType.MOSTRADORES) changeWindowTo(MeasureCounter.class);
                 else if (type == TypesManager.obsType.RAMPAS) changeWindowTo(MeasureRamp.class);
                 else if (type == TypesManager.obsType.SALVAESCALERAS) changeWindowTo(MeasureStairLift.class);

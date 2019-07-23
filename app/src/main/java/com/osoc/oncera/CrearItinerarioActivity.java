@@ -24,8 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.osoc.oncera.javabean.Itinerario;
-import com.osoc.oncera.javabean.Obstaculo;
+import com.osoc.oncera.javabean.Itinerary;
+import com.osoc.oncera.javabean.Obstacles;
 
 import java.util.ArrayList;
 
@@ -40,8 +40,8 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
     private ImageView imgIcone;
     //private TextView tv_loc;
     private static final int Image_Capture_Code = 1;
-    String[] access = { "Rampa", "Bordillo", "Ascensor", "Puerta", "Other"};
-    ArrayList<Obstaculo> list_obst = new ArrayList<Obstaculo>();
+    String[] access = { "Rampa", "Bordillo", "Ascensor", "Door", "Other"};
+    ArrayList<Obstacles> list_obst = new ArrayList<Obstacles>();
 
     private LocationGooglePlayServicesProvider provider;
     private Location currentLoc = new Location("");
@@ -95,7 +95,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
             public void onClick(View view) {
                 // TODO generate obstacle id
                 String id = null;
-                list_obst.add(new Obstaculo(id,
+                list_obst.add(new Obstacles(id,
                         currentLoc.getLongitude(),
                         currentLoc.getLatitude(),
                         spin.getSelectedItem().toString(),
@@ -151,7 +151,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
         else if (access[position] == "Ascensor") {
             imgIcone.setImageResource(R.drawable.ascensor);
         }
-        else if (access[position] == "Puerta") {
+        else if (access[position] == "Door") {
             imgIcone.setImageResource(R.drawable.puerta);
         }
         else if (access[position] == "Other") {
@@ -227,7 +227,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
         EditText title = (EditText) mView.findViewById(R.id.et_title);
         EditText description = (EditText) mView.findViewById(R.id.et_desc);
 
-        mBuilder.setTitle("Guardar Itinerario");
+        mBuilder.setTitle("Guardar Itinerary");
         Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
 
 
@@ -255,7 +255,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
 
     public void saveItinerario(String title, String desc){
         String id = null;
-        Itinerario iter = new Itinerario(id, list_obst, aliasProfesor, title, desc, codCentro);
+        Itinerary iter = new Itinerary(id, list_obst, aliasProfesor, title, desc, codCentro);
 
         // TODO save itinerary in firebase
         finish();

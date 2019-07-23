@@ -58,7 +58,7 @@
         android:layout_height="207px"
         android:layout_centerInParent="true"
         android:layout_above="@+id/BotonInvitado"
-        android:src="@drawable/nombre"
+        android:src="@drawable/name"
         android:layout_marginBottom="100dp"
 
         />

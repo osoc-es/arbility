@@ -24,8 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import com.osoc.oncera.javabean.Centro;
-import com.osoc.oncera.javabean.Profesor;
+import com.osoc.oncera.javabean.Institution;
+import com.osoc.oncera.javabean.Teacher;
 
 public class RegisterProfesorActivity extends AppCompatActivity {
 
@@ -46,12 +46,12 @@ public class RegisterProfesorActivity extends AppCompatActivity {
     private String mail;
     private String cod;
 
-    private Profesor profe;
+    private Teacher profe;
 
     private String codigo;
 
-    private final Centro[] prf = new Centro[1];
-    private final Profesor[] profesor = new Profesor[1];
+    private final Institution[] prf = new Institution[1];
+    private final Teacher[] teacher = new Teacher[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class RegisterProfesorActivity extends AppCompatActivity {
         if (mail.isEmpty() || password.isEmpty()) {
             Toast.makeText( this, "Debe introducirse el email y la password", Toast.LENGTH_SHORT ).show();
         } else if (alias.isEmpty()) {
-            Toast.makeText( this, "Debe introducir el nombre", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( this, "Debe introducir el name", Toast.LENGTH_SHORT ).show();
         } else if (password.length() < 6) {
             Toast.makeText( this, "La password debe contener al menos 6 caracteres", Toast.LENGTH_SHORT ).show();
         } else if (!password.equals( password2 )) {
@@ -105,7 +105,7 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
                             String clave = user.getUid();
 
-                            profe = new Profesor( clave, etnombre.getText().toString(), codCentro.getText().toString(), etcorreo.getText().toString().toLowerCase() );
+                            profe = new Teacher( clave, etnombre.getText().toString(), codCentro.getText().toString(), etcorreo.getText().toString().toLowerCase() );
                             mDatabaseRef.child( clave ).setValue( profe );
 
                             Intent i = new Intent( RegisterProfesorActivity.this, LoginProfesorActivity.class );
@@ -129,12 +129,12 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    prf[0] = dataSnapshot1.getValue( Centro.class );
+                    prf[0] = dataSnapshot1.getValue( Institution.class );
                 }
 
                 if (prf[0] != null) {
 
-                    if (prf[0].getCodCentro().equals( codigo ) && codigo != null) {
+                    if (prf[0].getCenterCode().equals( codigo ) && codigo != null) {
                         Toast.makeText( RegisterProfesorActivity.this, "Codigo correcto", Toast.LENGTH_LONG ).show();
                         registrarProfesor();
                     } else {
@@ -165,12 +165,12 @@ public class RegisterProfesorActivity extends AppCompatActivity {
 
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    profesor[0] = dataSnapshot1.getValue( Profesor.class );
+                    teacher[0] = dataSnapshot1.getValue( Teacher.class );
                 }
 
-                if (profesor[0] != null) {
+                if (teacher[0] != null) {
 
-                    if (profesor[0].getCodCentro().equals( alias ) && alias != null) {
+                    if (teacher[0].getCenterCode().equals( alias ) && alias != null) {
                         Toast.makeText( RegisterProfesorActivity.this, "Alias correcto", Toast.LENGTH_LONG ).show();
                         comprobarCodigo();
                     } else {

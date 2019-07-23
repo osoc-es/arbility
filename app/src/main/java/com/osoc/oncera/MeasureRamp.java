@@ -31,7 +31,7 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 import com.osoc.oncera.adapters.ImageTitleAdapter;
-import com.osoc.oncera.javabean.Rampas;
+import com.osoc.oncera.javabean.Ramps;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class MeasureRamp extends AppCompatActivity {
 
     private HitResult myhit;
 
-    private Rampas rampa = new Rampas(null, null, null, null, null, null, null, null, null);
+    private Ramps rampa = new Ramps(null, null, null, null, null, null, null, null, null);
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -158,7 +158,7 @@ public class MeasureRamp extends AppCompatActivity {
                 confirm.setEnabled(true);
                 alto_barandilla.setText("Altura barandilla: " +
                         form_numbers.format(progress / 100f));
-                rampa.setAlturaPasamanosSuperior((float) progress * 100);
+                rampa.setHandRailHeight((float) progress * 100);
             }
 
             @Override
@@ -210,11 +210,11 @@ public class MeasureRamp extends AppCompatActivity {
                             largo_rampa.setText("Longitud rampa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
                             confirm.setEnabled(true);
-                            rampa.setLongitud(getMetersBetweenAnchors(anchor1, anchor2) * 100);
+                            rampa.setLength(getMetersBetweenAnchors(anchor1, anchor2) * 100);
                         } else {
                             ancho_rampa.setText("Anchura rampa: " +
                                     form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
-                            rampa.setAnchura(getMetersBetweenAnchors(anchor1, anchor2) * 100);
+                            rampa.setWidth(getMetersBetweenAnchors(anchor1, anchor2) * 100);
 
 
                             if (!barandilla)

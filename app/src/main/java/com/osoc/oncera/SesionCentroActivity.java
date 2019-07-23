@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.osoc.oncera.javabean.Centro;
+import com.osoc.oncera.javabean.Institution;
 
 public class SesionCentroActivity extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class SesionCentroActivity extends AppCompatActivity {
     private String codCentro;
     private ImageButton atras;
 
-    private final Centro[] cen = new Centro[1];
+    private final Institution[] cen = new Institution[1];
     private DatabaseReference mDatabaseRef;
 
     @Override
@@ -87,12 +87,12 @@ public class SesionCentroActivity extends AppCompatActivity {
 
 
                 for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
-                        cen[0] = dataSnapshot1.getValue(Centro.class);
+                        cen[0] = dataSnapshot1.getValue(Institution.class);
                 }
 
-                if (emailPersona.equals( cen[0].getCorreo() )){
+                if (emailPersona.equals( cen[0].getMail() )){
 
-                    codCentro=cen[0].getCodCentro();
+                    codCentro=cen[0].getCenterCode();
 
                     codigo.setText( codCentro );
                 }
