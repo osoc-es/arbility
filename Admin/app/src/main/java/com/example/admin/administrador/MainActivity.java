@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-        databse.getReference().child( "Usuarios" ).addValueEventListener( new ValueEventListener() {
+        databse.getReference().child( "Users" ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 centros.removeAll( centros );

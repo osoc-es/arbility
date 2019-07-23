@@ -52,11 +52,11 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_name"
-        android:drawablePadding="10dp"
+        android:drawablePadding="8dp"
         android:hint="@string/et_NombreReg"
         android:textColorHint="@color/blue"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="5dp" />
 
     <EditText
         android:id="@+id/etDireccion"
@@ -66,12 +66,12 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/ic_name"
-        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/ic_interface"
+        android:drawablePadding="8dp"
         android:hint="@string/et_Direccion"
         android:textColorHint="@color/blue"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp" />
+/>
 
     <EditText
         android:id="@+id/etCiudadReg"
@@ -80,7 +80,7 @@
         android:layout_below="@+id/etDireccion"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/ic_dog_tag"
+        android:drawableLeft="@drawable/ic_buildings"
         android:drawablePadding="10dp"
         android:hint="@string/et_CiudadReg"
         android:textColorHint="@color/blue"
