@@ -9,7 +9,6 @@ import android.location.Location;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -101,7 +99,7 @@ public class CrearItinerarioActivity extends AppCompatActivity implements Adapte
         btn_save = (Button) findViewById(R.id.btn_save);
         imgCapture = (ImageView) findViewById(R.id.img_camera);
         imgIcone = (ImageView) findViewById( R.id.img_icon );
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnBack);
         //tv_loc = (TextView) findViewById(R.id.tv_loc);
         spin = (Spinner) findViewById(R.id.spin_access);
         spin.setOnItemSelectedListener(this);

@@ -20,8 +20,8 @@ import com.osoc.oncera.javabean.EvacuacionEmergencia;
 public class MeasureEmergencies extends AppCompatActivity {
 
 
-    private EvacuacionEmergencia emergencia = new EvacuacionEmergencia(null, null, null, null, null, null);
-    private boolean db_alumbrado, db_simulacro;
+    private EvacuacionEmergencia emergency = new EvacuacionEmergencia(null, null, null, null, null, null);
+    private boolean db_lighting, db_drill;
     private String message;
 
 
@@ -32,16 +32,19 @@ public class MeasureEmergencies extends AppCompatActivity {
 
         UpdateDatabaseValues();
 
-        dialog();
+        dialogEmergencies();
     }
 
-    private void dialog()
+    /**
+     * Dialog to ask user questions about accessibility in the emergency aspect
+     */
+    private void dialogEmergencies()
     {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureEmergencies.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_emergencies, null);
         mBuilder.setTitle("Rellena el cuestionario");
-        CheckBox chk_simulacro = (CheckBox) mView.findViewById(R.id.chk1);
-        CheckBox chk_alumbrado = (CheckBox) mView.findViewById(R.id.chk2);
+        CheckBox chk_drill = (CheckBox) mView.findViewById(R.id.chk1);
+        CheckBox chk_lighting = (CheckBox) mView.findViewById(R.id.chk2);
 
 
 
@@ -58,24 +61,24 @@ public class MeasureEmergencies extends AppCompatActivity {
 
                 String s ="";
 
-                emergencia.setAlumbradoEmergencia(chk_alumbrado.isChecked());
-                emergencia.setSimulacros(chk_simulacro.isChecked());
+                emergency.setAlumbradoEmergencia(chk_lighting.isChecked());
+                emergency.setSimulacros(chk_drill.isChecked());
 
-                boolean cumple_alumbrado = Evaluator.IsEqualsTo(emergencia.getAlumbradoEmergencia(), db_alumbrado);
+                boolean cumple_alumbrado = Evaluator.IsEqualsTo(emergency.getAlumbradoEmergencia(), db_lighting);
                 s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_alumbrado), cumple_alumbrado);
 
-                boolean cumple_simulacro = Evaluator.IsEqualsTo(emergencia.getSimulacros(), db_simulacro);
+                boolean cumple_simulacro = Evaluator.IsEqualsTo(emergency.getSimulacros(), db_drill);
                 s = UpdateStringIfNeeded(s, "y", (s == "" || cumple_simulacro));
                 s = UpdateStringIfNeeded(s, getString(R.string.emergencia_n_simulacro), cumple_simulacro);
 
-                emergencia.setAccesible(cumple_alumbrado && cumple_simulacro);
+                emergency.setAccesible(cumple_alumbrado && cumple_simulacro);
 
-                UpdateMessage(emergencia.getAccesible(), s);
-                emergencia.setMensaje(message);
+                UpdateMessage(emergency.getAccesible(), s);
+                emergency.setMensaje(message);
 
                 Intent i = new Intent(getApplicationContext(),AxesibilityActivity.class);
                 i.putExtra(TypesManager.OBS_TYPE,TypesManager.obsType.EMERGENCIAS.getValue());
-                i.putExtra(TypesManager.EMERGENC_OBS, emergencia);
+                i.putExtra(TypesManager.EMERGENC_OBS, emergency);
 
                 startActivity(i);
                 finish();
@@ -89,6 +92,9 @@ public class MeasureEmergencies extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Get values of accessibility standards from database
+     */
     private void UpdateDatabaseValues()
     {
         final DatabaseReference dbr_a = FirebaseDatabase.getInstance().getReference("Estandares/Emergencias/AlumbradoEmerg");
@@ -96,7 +102,7 @@ public class MeasureEmergencies extends AppCompatActivity {
         dbr_a.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                db_alumbrado = dataSnapshot.getValue(boolean.class);
+                db_lighting = dataSnapshot.getValue(boolean.class);
             }
 
             @Override
@@ -110,7 +116,7 @@ public class MeasureEmergencies extends AppCompatActivity {
         dbr_s.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                db_simulacro = dataSnapshot.getValue(boolean.class);
+                db_drill = dataSnapshot.getValue(boolean.class);
             }
 
             @Override
@@ -121,11 +127,23 @@ public class MeasureEmergencies extends AppCompatActivity {
 
     }
 
+    /**
+     * Add string to another string if a condition is met
+     * @param base initial base string
+     * @param to_add string that will be added to the base if the condition is met
+     * @param condition condition that determines whether the string is altered or not
+     * @return result string
+     */
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
         return condition ? base : base + " " + to_add;
     }
 
+    /**
+     * Updates message to show whether an element is accessible or not with an explanation
+     * @param condition boolean determining whether the element is accessible or not
+     * @param aux explanation of the accessibility result
+     */
     private void UpdateMessage(boolean condition, String aux)
     {
         message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);

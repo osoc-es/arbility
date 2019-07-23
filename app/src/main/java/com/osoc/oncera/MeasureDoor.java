@@ -68,7 +68,7 @@ public class MeasureDoor extends AppCompatActivity {
     private float paramAltura,paramAnchura,minMecApertura,maxMecApertura;
     private String message;
 
-    private Puerta puerta = new Puerta(-1, -1, null, -1, null, null, null, null, null);
+    private Puerta door = new Puerta(-1, -1, null, -1, null, null, null, null, null);
 
 
     @Override
@@ -93,8 +93,8 @@ public class MeasureDoor extends AppCompatActivity {
         TextView width = (TextView) findViewById(R.id.width);
         TextView mechanism = (TextView) findViewById(R.id.height_mecha);
         TextView height = (TextView) findViewById(R.id.height);
-        SeekBar z_axis = (SeekBar) findViewById(R.id.z_axis);
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        SeekBar z_axis = (SeekBar) findViewById(R.id.sk_height_control);
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
         List<AnchorNode> anchorNodes = new ArrayList<>();
 
@@ -102,7 +102,7 @@ public class MeasureDoor extends AppCompatActivity {
         confirm.setEnabled(false);
 
 
-        btnAtras.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -157,12 +157,12 @@ public class MeasureDoor extends AppCompatActivity {
                 if (measure_height) {
                     height.setText("Altura puerta: " +
                             form_numbers.format(progress / 100f));
-                    puerta.setAltura(progress);
+                    door.setAltura(progress);
                 }
                 else {
                     mechanism.setText("Altura mecanismo: " +
                             form_numbers.format(progress / 100f));
-                    puerta.setAlturaPomo(progress);
+                    door.setAlturaPomo(progress);
                 }
                 confirm.setEnabled(true);
             }
@@ -176,8 +176,6 @@ public class MeasureDoor extends AppCompatActivity {
             }
         });
 
-        // When you build a Renderable, Sceneform loads its resources in the background while returning
-        // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
         ModelRenderable.builder()
                 .setSource(this, R.raw.cubito)
                 .build()
@@ -214,7 +212,7 @@ public class MeasureDoor extends AppCompatActivity {
                         width.setText("Anchura puerta: " +
                                 form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
-                        puerta.setAnchura((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
+                        door.setAnchura((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
 
                         img_instr.setImageResource(R.drawable.puerta_02);
                         data.setText(R.string.instr_puerta_02);
@@ -233,6 +231,9 @@ public class MeasureDoor extends AppCompatActivity {
         puertaDialog();
     }
 
+    /**
+     * Get values of accessibility standards from database
+     */
     private void GetDBValues() {
 
         final DatabaseReference alt = FirebaseDatabase.getInstance().getReference("Estandares/Puertas/Altura");
@@ -293,6 +294,11 @@ public class MeasureDoor extends AppCompatActivity {
 
     }
 
+    /**
+     * Function to raise an object perpendicular to the ArPlane a specific distance
+     * @param an anchor belonging to the object that should be raised
+     * @param up distance in centimeters the object should be raised vertically
+     */
     void ascend(AnchorNode an, float up) {
         Anchor anchor = myhit.getTrackable().createAnchor(
                 myhit.getHitPose().compose(Pose.makeTranslation(0, up / 100f, 0)));
@@ -300,7 +306,12 @@ public class MeasureDoor extends AppCompatActivity {
         an.setAnchor(anchor);
     }
 
-
+    /**
+     * Function to return the distance in meters between two objects placed in ArPlane
+     * @param anchor1 first object's anchor
+     * @param anchor2 second object's anchor
+     * @return the distance between the two anchors in meters
+     */
     float getMetersBetweenAnchors(Anchor anchor1, Anchor anchor2) {
         float[] distance_vector = anchor1.getPose().inverse()
                 .compose(anchor2.getPose()).getTranslation();
@@ -310,45 +321,52 @@ public class MeasureDoor extends AppCompatActivity {
         return (float) Math.sqrt(totalDistanceSquared);
     }
 
+    /**
+     * Check whether the counter is accessible or not and start Axesibility activity to display the
+     * result
+     */
     void Confirmar()
     {
         String s = "";
 
-        boolean cumple_altura = Evaluator.IsGreaterThan(puerta.getAltura(), paramAltura);
+        boolean cumple_altura = Evaluator.IsGreaterThan(door.getAltura(), paramAltura);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura) + paramAltura, cumple_altura);
 
-        boolean cumple_anchura = Evaluator.IsGreaterThan(puerta.getAnchura(),paramAnchura);
+        boolean cumple_anchura = Evaluator.IsGreaterThan(door.getAnchura(),paramAnchura);
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_anchura);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_ancho) + paramAnchura, cumple_anchura);
 
 
-        boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, puerta.getTipoPuerta());
+        boolean cumple_tipo_puerta = ArrayUtils.contains(new String[]{"Abatible", "Tornos"}, door.getTipoPuerta());
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_tipo_puerta);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_puerta), cumple_tipo_puerta);
 
 
-        boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, puerta.getTipoMecanismo());
+        boolean cumple_tipo_mecanismos = ArrayUtils.contains(new String[]{"Manibela", "Barra", "Agarrador"}, door.getTipoMecanismo());
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_tipo_mecanismos);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_tipo_mec), cumple_tipo_mecanismos);
 
-        boolean cumple_alto_mecanismo = Evaluator.IsInRange(puerta.getAlturaPomo(), minMecApertura, maxMecApertura);
+        boolean cumple_alto_mecanismo = Evaluator.IsInRange(door.getAlturaPomo(), minMecApertura, maxMecApertura);
         s = UpdateStringIfNeeded(s, "y", s == "" || cumple_alto_mecanismo);
         s = UpdateStringIfNeeded(s, getString(R.string.puerta_n_altura_mec) + minMecApertura + " y " + maxMecApertura, cumple_alto_mecanismo);
 
 
-        puerta.setAccesible(cumple_altura && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta && cumple_alto_mecanismo);
+        door.setAccesible(cumple_altura && cumple_altura && cumple_anchura && cumple_tipo_mecanismos && cumple_tipo_puerta && cumple_alto_mecanismo);
 
-        UpdateMessage(puerta.getAccesible(), s);
-        puerta.setMensaje(message);
+        UpdateMessage(door.getAccesible(), s);
+        door.setMensaje(message);
 
         Intent i = new Intent(this, AxesibilityActivity.class);
         i.putExtra(TypesManager.OBS_TYPE, TypesManager.obsType.PUERTAS.getValue());
-        i.putExtra(TypesManager.PUERTAS_OBS, puerta);
+        i.putExtra(TypesManager.PUERTAS_OBS, door);
 
         startActivity(i);
         finish();
     }
 
+    /**
+     * Dialog to ask user for the type of door and opening mechanism
+     */
     void puertaDialog() {
         int[] spinnerImages = new int[]{R.drawable.puerta_giratoria, R.drawable.puerta_corredera
                 , R.drawable.puerta_abatible, R.drawable.puerta_torno};
@@ -381,8 +399,8 @@ public class MeasureDoor extends AppCompatActivity {
         mBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                puerta.setTipoPuerta(tipoPuerta[mSpinnerDoor.getSelectedItemPosition()]);
-                puerta.setTipoMecanismo(tipoMecanismo[mSpinnerMecha.getSelectedItemPosition()]);
+                door.setTipoPuerta(tipoPuerta[mSpinnerDoor.getSelectedItemPosition()]);
+                door.setTipoMecanismo(tipoMecanismo[mSpinnerMecha.getSelectedItemPosition()]);
             }
         });
 
@@ -392,8 +410,12 @@ public class MeasureDoor extends AppCompatActivity {
         dialog.show();
     }
 
-
-    public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
+    /**
+     * Check whether the device supports the tools required to use the measurement tools
+     * @param activity
+     * @return boolean determining whether the device is supported or not
+     */
+    private boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
         if (Build.VERSION.SDK_INT < VERSION_CODES.N) {
             Log.e(TAG, "Sceneform requires Android N or later");
             Toast.makeText(activity, "Sceneform requires Android N or later", Toast.LENGTH_LONG).show();
@@ -414,11 +436,23 @@ public class MeasureDoor extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Add string to another string if a condition is met
+     * @param base initial base string
+     * @param to_add string that will be added to the base if the condition is met
+     * @param condition condition that determines whether the string is altered or not
+     * @return result string
+     */
     private String UpdateStringIfNeeded(String base, String to_add, boolean condition)
     {
         return condition ? base : base + " " + to_add;
     }
 
+    /**
+     * Updates message to show whether an element is accessible or not with an explanation
+     * @param condition boolean determining whether the element is accessible or not
+     * @param aux explanation of the accessibility result
+     */
     private void UpdateMessage(boolean condition, String aux)
     {
         message = condition? getString(R.string.accesible) : getString(R.string.no_accesible);

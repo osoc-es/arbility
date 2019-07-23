@@ -4,8 +4,6 @@ package com.osoc.oncera;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -15,9 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,9 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import com.osoc.oncera.javabean.Centro;
 import com.osoc.oncera.javabean.Itinerario;
-import com.osoc.oncera.javabean.Profesor;
 
 public class LoginAlumnoActivity extends AppCompatActivity {
 
@@ -57,7 +50,7 @@ public class LoginAlumnoActivity extends AppCompatActivity {
         etCodigoItinerario.setInputType(InputType.TYPE_CLASS_TEXT);
 
         btnItineratio = (Button) findViewById( R.id.btnItinerario );
-        atras = (ImageButton) findViewById(R.id.btnAtras);
+        atras = (ImageButton) findViewById(R.id.btnBack);
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Itinerarios" );
 

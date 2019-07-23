@@ -12,7 +12,7 @@
         android:layout_height="match_parent" />
 
     <ImageButton
-        android:id="@+id/btnAtras"
+        android:id="@+id/btnBack"
         android:layout_gravity="right"
         android:layout_margin="10dp"
         android:layout_width="50dp"
@@ -78,7 +78,7 @@
 
 
     <SeekBar
-        android:id="@+id/z_axis"
+        android:id="@+id/sk_height_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

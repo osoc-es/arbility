@@ -74,7 +74,7 @@ public class LuxMeter extends AppCompatActivity implements SensorEventListener, 
         spinner = (Spinner) findViewById(R.id.lux_spinner);
         button = (Button) findViewById(R.id.BotonLuxometroMedir);
         confirmButton = (Button) findViewById(R.id.BotonConfirmar);
-        exit_button = (ImageButton) findViewById(R.id.BotonSalir);
+        exit_button = (ImageButton) findViewById(R.id.btnBack);
 
 
         ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_item,spinner_options);

@@ -22,7 +22,7 @@ public class LegalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_legal_info);
 
-        botonSalir = (ImageButton)findViewById(R.id.BotonSalir);
+        botonSalir = (ImageButton)findViewById(R.id.btnBack);
         botonEvaluar = (Button)findViewById(R.id.BotonEvaluar);
         desc = (TextView)findViewById(R.id.descText);
 

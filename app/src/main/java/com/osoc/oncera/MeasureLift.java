@@ -122,7 +122,7 @@ public class MeasureLift extends AppCompatActivity {
 
         ancho_ascensor = (TextView) findViewById(R.id.ancho_acensor);
         profundo_ascensor = (TextView) findViewById(R.id.profundo_ascensor);
-        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnAtras);
+        ImageButton btnAtras = (ImageButton) findViewById(R.id.btnBack);
         img_instr = (ImageView) findViewById(R.id.img_instr);
 
         anchorNodes = new ArrayList<>();
