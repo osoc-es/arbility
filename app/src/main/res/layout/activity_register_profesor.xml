@@ -40,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
-        android:drawableLeft="@drawable/ic_name"
+        android:drawableLeft="@drawable/ic_fingerprint"
         android:drawablePadding="10dp"
         android:hint="@string/et_CodigoCentro"
         android:inputType="textPersonName"

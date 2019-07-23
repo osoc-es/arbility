@@ -23,21 +23,6 @@
         app:srcCompat="@drawable/ic_cruz_red"
         tools:ignore="VectorDrawableCompat" />
 
-    <ImageView
-        android:layout_width="503px"
-        android:layout_height="207px"
-        android:layout_above="@+id/tvLogIn"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="100dp"
-        android:src="@drawable/name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.148"
-
-        />
 
 
     <EditText
@@ -53,7 +38,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/edit_text_style"
-        android:drawableLeft="@drawable/ic_key"
+        android:drawableLeft="@drawable/ic_fingerprint"
         android:drawablePadding="10dp"
         android:ems="10"
         android:hint="@string/et_EscribirItinerario"
