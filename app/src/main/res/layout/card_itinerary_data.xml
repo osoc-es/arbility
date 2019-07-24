@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
+        android:padding="10dp"
         android:layout_width="315dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -16,27 +17,35 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="10dp"/>
 
         <TextView
             android:id="@+id/tvDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="10dp"/>
 
         <TextView
             android:id="@+id/tvCodItinerario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/red"/>
     </LinearLayout>
 
     <ImageButton
         android:layout_gravity="center_vertical"
         android:id="@+id/btnDeleteItinerary"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="15dp"
-        android:background="@android:drawable/ic_menu_delete" />
+        android:background="@drawable/bin" />
 
 </LinearLayout>

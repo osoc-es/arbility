@@ -117,17 +117,23 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         spin.setAdapter(aa);
 
 
-        obtenerAlias();
+        getAlias();
 
         btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cInt,Image_Capture_Code);
                 if (ContextCompat.checkSelfPermission( CreateItineraryActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions( CreateItineraryActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
                     return;
                 }
+
+                if (ContextCompat.checkSelfPermission( CreateItineraryActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions( CreateItineraryActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
+                    return;
+                }
+
+                Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cInt,Image_Capture_Code);
                 startLocation();
                 btn_confirm.setEnabled(true);
                 btn_save.setEnabled(true);
@@ -157,7 +163,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                guardarDialog();
+                saveItineraryDialog();
             }
         });
 
@@ -275,7 +281,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         showLocation(location);
     }
 
-    void guardarDialog() {
+    void saveItineraryDialog() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder( CreateItineraryActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_save_itinerary, null);
 
@@ -292,9 +298,8 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
                 if(title.getText()!=null && description.getText()!=null){
                     titulo = title.getText().toString().trim();
                     descripcion = description.getText().toString().trim();
-                    guardarItinerario();
+                    saveItinerary();
                     dialogInterface.dismiss();
-
                 }else{
                     Toast.makeText( CreateItineraryActivity.this, "Debes introducir Titulo y Desripcion", Toast.LENGTH_SHORT ).show();
                 }
@@ -316,15 +321,8 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         dialog.show();
     }
 
-   /* public void saveItinerario(String title, String desc){
-        String id = null;
-        Itinerario iter = new Itinerario(id, list_obst, aliasProfesor, title, desc, codCentro,codItinerario);
 
-        // TODO save itinerary in firebase
-        finish();
-    }*/
-
-    public void obtenerAlias(){
+    public void getAlias(){
         email = user.getEmail();
         Query qq4 = mDatabaseRef.orderByChild( "mail" ).equalTo( email );
 
@@ -355,8 +353,8 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
             }
         } );
     }
-    public void guardarItinerario(){
 
+    public void saveItinerary(){
         boolean[] repetido={false};
 
         do {
@@ -413,12 +411,4 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         return codigoItinerario = new String(conjunto);
     }
 
-    public String crearcodItinerario2(){
-
-        for(int i=0;i<6;i++){
-            int el = (int)(Math.random()*36);
-            conjunto[i] = (char)elementos[el];
-        }
-        return codigoItinerario = new String(conjunto);
-    }
 }

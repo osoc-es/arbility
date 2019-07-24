@@ -19,7 +19,8 @@
             android:id="@+id/et_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/titleHint"/>
+            android:hint="@string/titleHint"
+            android:maxLength="20"/>
     </LinearLayout>
 
     <LinearLayout
@@ -37,7 +38,8 @@
             android:id="@+id/et_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/descriptionHint"/>
+            android:hint="@string/descriptionHint"
+            android:maxLength="140"/>
     </LinearLayout>
 
 
