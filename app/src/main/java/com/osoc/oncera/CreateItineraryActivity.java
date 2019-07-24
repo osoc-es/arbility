@@ -46,8 +46,8 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
     private Button btn_new, btn_confirm, btn_save;
     private Spinner spin;
     private ImageView imgCapture;
-    private ImageView imgIcone;
-    //private TextView tv_loc;
+    private ImageView imgIcon;
+
     private static final int Image_Capture_Code = 1;
     String[] access = { "Rampa", "Mostrador", "Ascensor", "Puerta", "Emergencias", "Luz", "Salvaescaleras", "Simulacion"};
     ArrayList<Obstacles> list_obst = new ArrayList<Obstacles>();
@@ -55,7 +55,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
     private LocationGooglePlayServicesProvider provider;
     private Location currentLoc = new Location("");
 
-    // TODO get teacher alias as extra from bundle and codCentro from Teacher alias
+    // TODO get teacher teacher_alias as extra from bundle and centerCode from Teacher teacher_alias
 
     private DatabaseReference mDatabaseRef;
     public static FirebaseAuth firebaseAuth;
@@ -63,25 +63,22 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
     private FirebaseUser user;
 
 
-    private String email;
-    private String alias;
-    private String codigo;
-    private String titulo;
-    private String descripcion;
-    private String codItinerario;
+    private String teacher_email;
+    private String teacher_alias;
+    private String myCenterCode;
+    private String title;
+    private String description;
+    private String itineraryCode;
 
-    private final Teacher[] profesor = new Teacher[1];
-    private final Itinerary[] itinerario = new Itinerary[1];
+    private final Teacher[] teacher = new Teacher[1];
+    private final Itinerary[] itinerary = new Itinerary[1];
 
-    private char[] conjunto = new char[6];
-    char[] elementos={'0','1','2','3','4','5','6','7','8','9' ,'a',
+    private char[] itineraryCodePlaceholder = new char[6];
+    char[] elements ={'0','1','2','3','4','5','6','7','8','9' ,'a',
             'b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t',
             'u','v','w','x','y','z'};
 
-    private String codCentro = null;
-    private String aliasProfesor = null;
-
-    private String codigoItinerario;
+    private String centerCode = null;
 
     private int order = 1;
 
@@ -98,9 +95,9 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         btn_confirm = (Button) findViewById(R.id.btn_confirm);
         btn_save = (Button) findViewById(R.id.btn_save);
         imgCapture = (ImageView) findViewById(R.id.img_camera);
-        imgIcone = (ImageView) findViewById( R.id.img_icon );
+        imgIcon = (ImageView) findViewById( R.id.img_icon );
         ImageButton btnAtras = (ImageButton) findViewById(R.id.btnBack);
-        //tv_loc = (TextView) findViewById(R.id.tv_loc);
+
         spin = (Spinner) findViewById(R.id.spin_access);
         spin.setOnItemSelectedListener(this);
 
@@ -151,7 +148,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
                         spin.getSelectedItem().toString(),
                         imgCapture.getDrawable().toString(),
                         order,
-                        codCentro));
+                        centerCode));
                 order++;
                 btn_confirm.setEnabled(false);
                 // TODO guardar Obstacles en firebase
@@ -173,7 +170,6 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
                 finish();
             }
         });
-        /*getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);*/
 
         showLast();
 
@@ -196,28 +192,28 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         //Toast.makeText(getApplicationContext(),access[position] , Toast.LENGTH_LONG).show();
 
         if (access[position] == "Rampa") {
-            imgIcone.setImageResource(R.drawable.rampas);
+            imgIcon.setImageResource(R.drawable.rampas);
         }
         else if (access[position] == "Mostrador") {
-            imgIcone.setImageResource(R.drawable.mostradores);
+            imgIcon.setImageResource(R.drawable.mostradores);
         }
         else if (access[position] == "Ascensor") {
-            imgIcone.setImageResource(R.drawable.ascensores);
+            imgIcon.setImageResource(R.drawable.ascensores);
         }
         else if (access[position] == "Puerta") {
-            imgIcone.setImageResource(R.drawable.puertas);
+            imgIcon.setImageResource(R.drawable.puertas);
         }
         else if (access[position] == "Emergencias") {
-            imgIcone.setImageResource(R.drawable.emergencias);
+            imgIcon.setImageResource(R.drawable.emergencias);
         }
         else if (access[position] == "Luz") {
-            imgIcone.setImageResource(R.drawable.iluminacion);
+            imgIcon.setImageResource(R.drawable.iluminacion);
         }
         else if (access[position] == "Salvaescaleras") {
-            imgIcone.setImageResource(R.drawable.salvaescaleras);
+            imgIcon.setImageResource(R.drawable.salvaescaleras);
         }
         else if (access[position] == "Simulacion") {
-            imgIcone.setImageResource(R.drawable.simulacion);
+            imgIcon.setImageResource(R.drawable.simulacion);
         }
     }
     @Override
@@ -233,22 +229,21 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         }
     }
 
+    /**
+     * Show last location of the user
+     */
     private void showLast() {
         Location lastLocation = SmartLocation.with(this).location().getLastLocation();
         if (lastLocation != null) {
             currentLoc.setLongitude(lastLocation.getLongitude());
             currentLoc.setLatitude(lastLocation.getLatitude());
-            /*tv_loc.setText(
-                    String.format("[From Cache] Latitude %.6f, Longitude %.6f",
-                            lastLocation.getLatitude(),
-                            lastLocation.getLongitude())
-            );*/
         }
     }
 
-
+    /**
+     * Start listening for the location of the user
+     */
     private void startLocation() {
-
         provider = new LocationGooglePlayServicesProvider();
         provider.setCheckLocationSettings(true);
 
@@ -258,6 +253,9 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
 
     }
 
+    /**
+     * Stop listening for the location of the user
+     */
     private void stopLocation() {
         SmartLocation.with(this).location().stop();
 
@@ -268,10 +266,6 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         if (location != null) {
             currentLoc.setLongitude(location.getLongitude());
             currentLoc.setLatitude(location.getLatitude());
-            /*final String text = String.format("Latitude %.6f, Longitude %.6f",
-                    location.getLatitude(),
-                    location.getLongitude());
-            tv_loc.setText(text);*/
             stopLocation();
         }
     }
@@ -281,6 +275,9 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         showLocation(location);
     }
 
+    /**
+     * Dialog to ask for a title and description and save the itinerary
+     */
     void saveItineraryDialog() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder( CreateItineraryActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_save_itinerary, null);
@@ -296,15 +293,13 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(title.getText()!=null && description.getText()!=null){
-                    titulo = title.getText().toString().trim();
-                    descripcion = description.getText().toString().trim();
+                    CreateItineraryActivity.this.title = title.getText().toString().trim();
+                    CreateItineraryActivity.this.description = description.getText().toString().trim();
                     saveItinerary();
                     dialogInterface.dismiss();
                 }else{
                     Toast.makeText( CreateItineraryActivity.this, "Debes introducir Titulo y Desripcion", Toast.LENGTH_SHORT ).show();
                 }
-                    //saveItinerario(title.getText().toString(), description.getText().toString());
-
             }
         });
 
@@ -321,10 +316,12 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         dialog.show();
     }
 
-
+    /**
+     * Get the teacher's alias
+     */
     public void getAlias(){
-        email = user.getEmail();
-        Query qq4 = mDatabaseRef.orderByChild( "mail" ).equalTo( email );
+        teacher_email = user.getEmail();
+        Query qq4 = mDatabaseRef.orderByChild( "mail" ).equalTo(teacher_email);
 
         qq4.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
@@ -332,17 +329,13 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
 
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    profesor[0] = dataSnapshot1.getValue( Teacher.class );
+                    teacher[0] = dataSnapshot1.getValue( Teacher.class );
                 }
 
-                if (email.equals( profesor[0].getMail() )) {
+                if (teacher_email.equals( teacher[0].getMail() )) {
 
-                    alias = profesor[0].getAlias();
-                    codigo = profesor[0].getCenterCode();
-
-
-
-
+                    teacher_alias = teacher[0].getAlias();
+                    myCenterCode = teacher[0].getCenterCode();
                 }
             }
 
@@ -354,27 +347,30 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
         } );
     }
 
+    /**
+     * save the itinerary with a unique itineraryCode
+     */
     public void saveItinerary(){
-        boolean[] repetido={false};
+        boolean[] repeated={false};
 
         do {
-            repetido[0]=false;
-            codItinerario = crearcodItinerario();
-            Query qq4 = mDatabaseRef.orderByChild( "ItineraryCode" ).equalTo( codItinerario ).limitToFirst( 1 );
+            repeated[0]=false;
+            itineraryCode = createItineraryCode();
+            Query qq4 = mDatabaseRef.orderByChild( "ItineraryCode" ).equalTo(itineraryCode).limitToFirst( 1 );
             qq4.addListenerForSingleValueEvent( new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        itinerario[0] = dataSnapshot1.getValue( Itinerary.class );
+                        itinerary[0] = dataSnapshot1.getValue( Itinerary.class );
                     }
 
-                    if (itinerario[0] != null) {
+                    if (itinerary[0] != null) {
 
-                        if (itinerario[0].getItineraryCode().equals( codItinerario ) && codItinerario != null) {
+                        if (itinerary[0].getItineraryCode().equals(itineraryCode) && itineraryCode != null) {
                             Toast.makeText( CreateItineraryActivity.this, "Generando tvCode Itinerario", Toast.LENGTH_LONG ).show();
-                            repetido[0] = true;
+                            repeated[0] = true;
                         }
 
                     }
@@ -388,27 +384,28 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
 
                 }
             } );
-        } while(repetido[0] == true);
+        } while(repeated[0] == true);
 
         final DatabaseReference mDatabaseRef2 = FirebaseDatabase.getInstance().getReference("Itineraries");
 
 
-        final String clave = mDatabaseRef2.push().getKey();
+        final String key = mDatabaseRef2.push().getKey();
 
-        Itinerary iti = new Itinerary( clave, list_obst, alias, titulo, descripcion,codigo, codItinerario );
-        mDatabaseRef2.child( clave ).setValue( iti );
-        //mDatabaseRef2.push();
-
-
-
+        Itinerary iti = new Itinerary( key, list_obst, teacher_alias, title, description, myCenterCode, itineraryCode);
+        mDatabaseRef2.child( key ).setValue( iti );
     }
-    public String crearcodItinerario(){
+
+    /**
+     * Create a random itinerary code
+     * @return string containing the new itinerary code created
+     */
+    public String createItineraryCode(){
 
         for(int i=0;i<6;i++){
             int el = (int)(Math.random()*36);
-            conjunto[i] = (char)elementos[el];
+            itineraryCodePlaceholder[i] = (char) elements[el];
         }
-        return codigoItinerario = new String(conjunto);
+        return itineraryCode = new String(itineraryCodePlaceholder);
     }
 
 }
