@@ -197,7 +197,7 @@ public class MeasureDoor extends AppCompatActivity {
                         anchor1 = anchor;
                     } else {
                         anchor2 = anchor;
-                        width.setText("Anchura door_: " +
+                        width.setText("Anchura puerta: " +
                                 form_numbers.format(getMetersBetweenAnchors(anchor1, anchor2)));
 
                         door.setWidth((int)(getMetersBetweenAnchors(anchor1, anchor2)*100));
@@ -436,9 +436,9 @@ public class MeasureDoor extends AppCompatActivity {
         confirm.setText("Siguiente");
         data.setText(R.string.instr_puerta_01);
         img_instr.setImageResource(R.drawable.puerta_01);
-        width.setText("Anchura Puerta: --");
+        width.setText("Anchura puerta: --");
         mechanism.setText("Altura mecanismo: --");
-        height.setText("Altura door_: --");
+        height.setText("Altura puerta: --");
         measure_height = false;
         for (AnchorNode n : anchorNodes) {
             arFragment.getArSceneView().getScene().removeChild(n);

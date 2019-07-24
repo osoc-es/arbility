@@ -10,6 +10,7 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +36,7 @@ public class RegisterTeacherActivity extends AppCompatActivity {
     private EditText etemail;
     private EditText etPassword, etPasswordRepeatTeacher;
     private Button btnRegister;
+    private ImageButton btnBack;
 
     private DatabaseReference mDatabaseRef;
     private FirebaseAuth firebaseAuthProfe;
@@ -65,6 +67,7 @@ public class RegisterTeacherActivity extends AppCompatActivity {
         etPasswordRepeatTeacher = (EditText) findViewById( R.id.etPasswordRepeatTeacher);
 
         btnRegister = (Button) findViewById( R.id.btnRegister);
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Users" );
@@ -72,6 +75,13 @@ public class RegisterTeacherActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog( this );
 
         firebaseAuthProfe = FirebaseAuth.getInstance();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 

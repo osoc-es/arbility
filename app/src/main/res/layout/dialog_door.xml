@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="Elige el type de puerta"/>
+        android:text="Elige el tipo de puerta"/>
 
     <Spinner
         android:id="@+id/spinner_puerta"

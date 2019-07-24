@@ -109,7 +109,7 @@
     </string>
 
     <string name="descEmergencias">Se cumplen los parámetros de evacuación si:
-            \t\n•Existen simulation de emergencia.\n
+            \t\n•Existen simulaciones de emergencia.\n
            \t\n•Hay alumbrado de emergencia.\n
     </string>
 
@@ -146,10 +146,10 @@
      -->
 
     <string name="emergencia_e">De las siguientes preguntas, marque aquellas que sean ciertas.</string>
-    <string name="emergencia_p1">¿Se realizan simulation de seguridad?</string>
+    <string name="emergencia_p1">¿Se realizan simulacros de seguridad?</string>
     <string name="emergencia_p2">¿Hay alumbrado de emergencia?</string>
     <string name="emergencia_n_alumbrado">no hay alumbrado de emergencia</string>
-    <string name="emergencia_n_simulacro">no se realizan simulation</string>
+    <string name="emergencia_n_simulacro">no se realizan simulacros</string>
 
     <!--
     ////////////////////////////////////////////////////////////////////////////
@@ -160,7 +160,7 @@
     <string name="lux_exterior">Exterior </string>
     <string name="lux_interior_escalera">Interior con rampa y/o escalera </string>
     <string name="lux_interior_habitable">Interior habitable </string>
-    <string name="lux_instrucciones">En el menú desplegable superior selecciona en qué type de espacio estás y orienta
+    <string name="lux_instrucciones">En el menú desplegable superior selecciona en qué tipo de espacio estás y orienta
     la pantalla del móvil hacia la fuente de luz antes de darle al botón de medir.
         \nUna vez tengas la medición deseada, presiona el botón \"Ok\". \n\n
     Presiona este recuadro para continuar.</string>
@@ -177,8 +177,8 @@
 
     <string name="puerta_n_altura">su altura no es superior a </string>
     <string name="puerta_n_ancho">su anchura no es superior a </string>
-    <string name="puerta_n_tipo_puerta">el type de puerta no es accessible </string>
-    <string name="puerta_n_tipo_mec">el type de mecanismo no es accessible </string>
+    <string name="puerta_n_tipo_puerta">el tipo de puerta no es accessible </string>
+    <string name="puerta_n_tipo_mec">el tipo de mecanismo no es accessible </string>
     <string name="puerta_n_altura_mec">la altura del mecanismo no se encuentra entre los valores: </string>
 
     <!--
@@ -259,7 +259,7 @@
     <string name="instr_rampa_01">Toca en los extremos inferiores de la rampa a lo largo</string>
     <string name="instr_rampa_03">Sube el cubo con el deslizador hasta que su base de con el lado inferior de la barandilla</string>
     <string name="instr_rampa_02">Toca en los extremos inferiores de la rampa a lo ancho</string>
-    <string name="question_lift_braile">La botonera tiene braile</string>
+    <string name="question_lift_braille">La botonera tiene braille</string>
     <string name="question_lift_sound">El ascensor hace sonidos de apertura y cierre</string>
     <string name="question_lift_automatic">La apertura y cierre de la puerta son automaticos</string>
     <string name="question_lift_step">No hay un escalón visible de más de 1 cm</string>

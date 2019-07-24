@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +32,7 @@ public class RegisterInstitutionActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private Button btnRegister;
     private Button btnValidate;
+    private ImageButton btnBack;
 
 
     private DatabaseReference mDatabaseRef;
@@ -76,12 +78,17 @@ public class RegisterInstitutionActivity extends AppCompatActivity {
         etPasswordRepeat = (EditText) findViewById(R.id.etPasswordRepeat);
         btnRegister = (Button) findViewById( R.id.btnRegisterInstitution);
         btnValidate = (Button) findViewById( R.id.btnValidate);
-
-
-
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
         //progressDialog = new ProgressDialog(this);
         emailDani = "danisom1b@gmail.com";
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     /**

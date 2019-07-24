@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
-        android:text="@string/question_lift_braile" />
+        android:text="@string/question_lift_braille" />
 
 
     <CheckBox
