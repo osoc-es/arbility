@@ -127,7 +127,8 @@ public class RegisterTeacherActivity extends AppCompatActivity {
         Query qq2 = mDatabaseRef.orderByChild( "centerCode" ).equalTo( codigo ).limitToFirst( 1 );
         qq2.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
 
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
