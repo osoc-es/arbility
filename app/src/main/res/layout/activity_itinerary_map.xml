@@ -33,13 +33,13 @@
             style="@style/Widget.AppCompat.DropDownItem.Spinner"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:id="@+id/sp_obstaculo"
+            android:id="@+id/sp_obstacles"
             />
     </RelativeLayout>
 
     <Button
         android:layout_gravity="bottom"
-        android:id="@+id/btn_evaluar"
+        android:id="@+id/btn_evaluate"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="@string/btnEvaluarObst"

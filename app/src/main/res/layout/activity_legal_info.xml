@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-       android:layout_above="@+id/BotonEvaluar"
+       android:layout_above="@+id/btnEvaluate"
         android:layout_below="@+id/textNormativa"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"

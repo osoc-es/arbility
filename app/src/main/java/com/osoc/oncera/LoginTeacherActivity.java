@@ -20,10 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginTeacherActivity extends AppCompatActivity {
 
-    private EditText correo;
-    private EditText password;
+    private EditText etEmail;
+    private EditText etPassword;
     private FirebaseAuth auth;
-    private ImageButton atras;
+    private ImageButton btnBack;
     private DatabaseReference mDatabaseRef;
 
     private String email;
@@ -33,32 +33,37 @@ public class LoginTeacherActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
 
-        correo = (EditText) findViewById( R.id.etCorreoLogin );
-        password = (EditText) findViewById( R.id.etPasswordLogin );
-        atras = (ImageButton) findViewById(R.id.btnBack);
+        etEmail = (EditText) findViewById( R.id.etEmailLogin);
+        etPassword = (EditText) findViewById( R.id.etPasswordLogin );
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
         auth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        atras.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
     }
+
+    /**
+     * Start the activity to register a teacher
+     * @param v
+     */
     public void register(View v) {
-
-
         Intent i= new Intent( LoginTeacherActivity.this, RegisterTeacherActivity.class);
         startActivity(i);
-
     }
 
+    /**
+     * Validate email and password and login if correct
+     * @param v
+     */
     public void login(View v){
-
-        email = correo.getText().toString();
-        final String contrasenia = password.getText().toString();
+        email = etEmail.getText().toString();
+        final String contrasenia = etPassword.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(), "Introduce el Email, por favor", Toast.LENGTH_LONG).show();
@@ -71,9 +76,6 @@ public class LoginTeacherActivity extends AppCompatActivity {
         }
 
         //AUTENTIFICACION
-
-
-
         auth.signInWithEmailAndPassword(email, contrasenia)
                 .addOnCompleteListener(LoginTeacherActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -87,6 +89,5 @@ public class LoginTeacherActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 }

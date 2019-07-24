@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 public class LegalInfoActivity extends AppCompatActivity {
 
-    ImageButton botonSalir;
+    ImageButton btnBack;
     TextView desc;
-    Button botonEvaluar;
+    Button btnEvaluate;
     String descText;
     TypesManager.obsType type;
 
@@ -22,11 +22,11 @@ public class LegalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_legal_info);
 
-        botonSalir = (ImageButton)findViewById(R.id.btnBack);
-        botonEvaluar = (Button)findViewById(R.id.BotonEvaluar);
+        btnBack = (ImageButton)findViewById(R.id.btnBack);
+        btnEvaluate = (Button)findViewById(R.id.btnEvaluate);
         desc = (TextView)findViewById(R.id.descText);
 
-        botonSalir.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -40,7 +40,7 @@ public class LegalInfoActivity extends AppCompatActivity {
         selectText();
 
 
-        botonEvaluar.setOnClickListener(new View.OnClickListener() {
+        btnEvaluate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -55,6 +55,9 @@ public class LegalInfoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Select legal info text depending on the obstacle type
+     */
     private void selectText(){
 
         if(type == TypesManager.obsType.ASEOS) descText = getString(R.string.descAseos);
@@ -72,6 +75,10 @@ public class LegalInfoActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Change window to the tool to evaluate the accessibility of the obstacle
+     * @param activity the activity that will be started
+     */
     public void changeWindowTo(Class activity){
         Intent guestActivity = new Intent(this,activity);
         startActivity(guestActivity);

@@ -27,15 +27,15 @@ import com.osoc.oncera.javabean.Itinerary;
 
 public class LoginStudentActivity extends AppCompatActivity {
 
-    private EditText etCodigoItinerario;
-    private Button btnItineratio;
-    private ImageButton atras;
+    private EditText etItineraryCode;
+    private Button btnItinerary;
+    private ImageButton btnBack;
 
     private DatabaseReference mDatabaseRef;
-    private FirebaseAuth firebaseAuthProfe;
+    private FirebaseAuth firebaseAuthTeacher;
     private FirebaseUser user;
 
-    private String itinerario;
+    private String itinerary;
 
 
     private final Itinerary[] iti = new Itinerary[1];
@@ -44,32 +44,29 @@ public class LoginStudentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_login_alumno );
+        setContentView( R.layout.activity_login_student);
 
-        etCodigoItinerario = (EditText) findViewById( R.id.etCodigoItinerario );
+        etItineraryCode = (EditText) findViewById( R.id.etCodigoItinerario );
 
-        etCodigoItinerario.setInputType(InputType.TYPE_CLASS_TEXT);
+        etItineraryCode.setInputType(InputType.TYPE_CLASS_TEXT);
 
-        btnItineratio = (Button) findViewById( R.id.btnItinerario );
-        atras = (ImageButton) findViewById(R.id.btnBack);
+        btnItinerary = (Button) findViewById( R.id.btnItinerary);
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child( "Itineraries" );
 
 
-        firebaseAuthProfe = FirebaseAuth.getInstance();
+        firebaseAuthTeacher = FirebaseAuth.getInstance();
 
 
-        btnItineratio.setOnClickListener(new View.OnClickListener() {
+        btnItinerary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getItineraryCode();
-
-
-
             }
         });
 
-        atras.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -77,9 +74,13 @@ public class LoginStudentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Check if the itinerary exists. If it does the student will be redirected to the map activity
+     * otherwise an error message will be displayed
+     */
     public void getItineraryCode(){
-        itinerario = etCodigoItinerario.getText().toString().trim();
-        Query qq2 = mDatabaseRef.orderByChild( "itineraryCode" ).equalTo( itinerario ).limitToFirst( 1 );
+        itinerary = etItineraryCode.getText().toString().trim();
+        Query qq2 = mDatabaseRef.orderByChild( "itineraryCode" ).equalTo(itinerary).limitToFirst( 1 );
         qq2.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -91,10 +92,10 @@ public class LoginStudentActivity extends AppCompatActivity {
 
                 if (iti[0] != null) {
 
-                    if (iti[0].getItineraryCode().equals( itinerario ) && itinerario != null) {
+                    if (iti[0].getItineraryCode().equals(itinerary) && itinerary != null) {
                         //Toast.makeText( LoginStudentActivity.this, "REALIZANDO ACTIVITY PARA DESCARGAR ITINERARIOS", Toast.LENGTH_LONG ).show();
                         Intent i = new Intent(LoginStudentActivity.this, ItineraryMapActivity.class);
-                        i.putExtra( "itineraryCode", itinerario );
+                        i.putExtra( "itineraryCode", itinerary);
                         startActivity(i);
                     } else {
                         Toast.makeText( LoginStudentActivity.this, "El Código no Existe", Toast.LENGTH_LONG ).show();

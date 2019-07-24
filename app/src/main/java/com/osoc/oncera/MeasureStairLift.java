@@ -287,7 +287,7 @@ public class MeasureStairLift extends AppCompatActivity {
     private void stairLiftQuestionDialog() {
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeasureStairLift.this);
-        View mView = getLayoutInflater().inflate(R.layout.diaglog_chair_lift, null);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_chair_lift, null);
         mBuilder.setTitle("Rellena el cuestionario");
 
         CheckBox chkMando = (CheckBox) mView.findViewById(R.id.chkMando);

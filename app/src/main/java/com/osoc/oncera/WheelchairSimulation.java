@@ -232,24 +232,6 @@ public class WheelchairSimulation extends AppCompatActivity {
         return mytranode.getLocalRotation();
     }
 
-   /* public double set(Quaternion q1) {
-      float a, b, c;
-        if (q1.w > 1) q1.normalize(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
-        double angle = 2 * Math.acos(q1.w);
-        double s = Math.sqrt(1-q1.w*q1.w); // assuming quaternion normalised then w is less than 1, so term always positive.
-        if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
-            // if s close to zero then direction of axis not important
-            a = q1.x; // if it is important that axis is normalised then replace with x=1; y=z=0;
-            b = q1.y;
-            c = q1.z;
-        } else {
-            a = (float) (q1.x / s); // normalise axis
-            b = (float) (q1.y / s);
-            c = (float) (q1.z / s);
-        }
-        return angle;
-    }*/
-
 
     public float set(Quaternion q1) {
         Vector3 angles = new Vector3();

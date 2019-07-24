@@ -3,8 +3,6 @@ package com.osoc.oncera;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -49,15 +47,8 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
 
     private DatabaseReference mDatabaseRef;
 
-    private Button btn_evaluar;
-    private Spinner sp_obstaculo;
-
-
-    private String nombre;
-    private double longitud;
-    private double latitud;
-    private String tipo;
-    private int orden;
+    private Button btn_evaluate;
+    private Spinner sp_obstacles;
 
     private static final String SOURCE_ID = "SOURCE_ID";
     private static final String ICON_ID = "ICON_ID";
@@ -66,20 +57,10 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
     ArrayList<Feature> col = new ArrayList<>();
     private GeoJsonSource geoJsonSource;
 
-    ArrayList<Double> al_longitud = new ArrayList<Double>();
-    ArrayList<Double> al_latitud = new ArrayList<Double>();
-
     private final Itinerary[] iti = new Itinerary[1];
     private ArrayList<Obstacles> obs;
 
-
-    private LocationListener locationListener;
-    private LocationManager locationManager;
-
-    private String codigoItinerario;
-
-    private Itinerary itinerario;
-
+    private String itineraryCode;
 
 
     protected void onCreate(Bundle savedInstanceState)
@@ -88,11 +69,11 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getIntent().getExtras();
-        codigoItinerario = bundle.getString( "itineraryCode" );
+        itineraryCode = bundle.getString( "itineraryCode" );
         loadItinerary();
 
         Mapbox.getInstance(this, "pk.eyJ1IjoiZm9uY2UiLCJhIjoiY2p4b3B1NG53MDhsbTNjbnYzMXNpbjRjYiJ9.MkBM2G0smC9aOJ_IS804xg");
-        setContentView(R.layout.activity_mapa_itinerario);
+        setContentView(R.layout.activity_itinerary_map);
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -102,12 +83,11 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
 
 
 
-        btn_evaluar = (Button) findViewById(R.id.btn_evaluar);
-        sp_obstaculo = (Spinner) findViewById(R.id.sp_obstaculo);
+        btn_evaluate = (Button) findViewById(R.id.btn_evaluate);
+        sp_obstacles = (Spinner) findViewById(R.id.sp_obstacles);
 
-        //String[] list = new String[itinerario.getObstaculos().size()];
 
-        btn_evaluar.setOnClickListener(new View.OnClickListener() {
+        btn_evaluate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToEv();
@@ -118,7 +98,7 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
     private void goToEv()
     {
         Intent i;
-        String t = obs.get(sp_obstaculo.getSelectedItemPosition()).getType();
+        String t = obs.get(sp_obstacles.getSelectedItemPosition()).getType();
         if (t.equals(TypesManager.DOOR_OBS)) i = new Intent(this, MeasureDoor.class);
         else if (t.equals(TypesManager.ILLUM_OBS))i = new Intent(this, LuxMeter.class);
         else if (t.equals(TypesManager.ELEVATOR_OBS)) i = new Intent(this, MeasureElevator.class);
@@ -134,27 +114,14 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
 
     }
 
+    /**
+     * Set the style and markers on the map
+     * @param mapboxMap the instantiated MapBox object
+     */
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
 
         ItineraryMapActivity.this.mapboxMap = mapboxMap;
-
-        /*LatLng BOUND_CORNER_NW = new LatLng(itinerario.getObstaculos().get(0).getLatitud()+0.002, itinerario.getObstaculos().get(0).getLongtiud()+0.002);
-        LatLng BOUND_CORNER_SE = new LatLng(itinerario.getObstaculos().get(0).getLatitud()-0.002, itinerario.getObstaculos().get(0).getLongtiud()-0.002);
-        LatLngBounds RESTRICTED_BOUNDS_AREA = new LatLngBounds.Builder()
-                .include(BOUND_CORNER_NW)
-                .include(BOUND_CORNER_SE)
-                .build();
-        mapboxMap.setLatLngBoundsForCameraTarget(RESTRICTED_BOUNDS_AREA);
-        mapboxMap.setMinZoomPreference(16);
-
-
-        mapboxMap.setCameraPosition(new CameraPosition.Builder()
-                .target(new LatLng(itinerario.getObstaculos().get(0).getLatitud(), itinerario.getObstaculos().get(0).getLongtiud()))
-                .zoom(16)
-                .build());
-*/
-
 
         mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
             @Override
@@ -245,11 +212,14 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
         mapView.onSaveInstanceState(outState);
     }
 
+    /**
+     * Get the obstacles of the itinerary obtained from its code
+     */
     public void loadItinerary(){
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Itineraries");
 
-        Query qq = mDatabaseRef.orderByChild( "itineraryCode" ).equalTo( codigoItinerario ).limitToFirst( 1 );
+        Query qq = mDatabaseRef.orderByChild( "itineraryCode" ).equalTo(itineraryCode).limitToFirst( 1 );
 
         qq.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
@@ -262,7 +232,7 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
 
               // if (iti[0] != null) {
 
-                    if (iti[0].getItineraryCode().equals( codigoItinerario )) {
+                    if (iti[0].getItineraryCode().equals(itineraryCode)) {
                        String prueba = iti[0].getItineraryCode();
                         Toast.makeText( ItineraryMapActivity.this, prueba, Toast.LENGTH_LONG ).show();
 
@@ -282,15 +252,11 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(ItineraryMapActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,list);
 
-                        sp_obstaculo.setAdapter(adapter);
+                        sp_obstacles.setAdapter(adapter);
 
                     } else {
-                        Toast.makeText( ItineraryMapActivity.this, "AAAAAAAAAAAAAAAAAAAAAAA", Toast.LENGTH_LONG ).show();
+                        Toast.makeText( ItineraryMapActivity.this, "Itinerario no encontrado", Toast.LENGTH_LONG ).show();
                     }
-
-                //} else {
-                //    Toast.makeText( ItineraryMapActivity.this, "AAAAAAAAAAAAAAAAAAAAAAA", Toast.LENGTH_LONG ).show();
-               // }
 
             }
 

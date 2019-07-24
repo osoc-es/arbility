@@ -5,7 +5,7 @@
     android:background="@drawable/fondo_login">
 
     <Button
-        android:id="@+id/BotonRegistrarColegio"
+        android:id="@+id/RegisterCenterButton"
         android:layout_width="150dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"
@@ -17,11 +17,11 @@
         android:text="REGISTRAR\nCENTRO"/>
 
     <Button
-        android:id="@+id/BotonProfesor"
+        android:id="@+id/TeacherButton"
         android:layout_width="150dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"
-        android:layout_above="@+id/BotonRegistrarColegio"
+        android:layout_above="@+id/RegisterCenterButton"
         android:layout_marginBottom="25dp"
         android:background="@drawable/ic_button_red"
         android:textColor="@color/white"
@@ -30,11 +30,11 @@
         android:text="Profesor"/>
 
     <Button
-        android:id="@+id/BotonAlumno"
+        android:id="@+id/StudentButton"
         android:layout_width="150dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"
-        android:layout_above="@+id/BotonProfesor"
+        android:layout_above="@+id/TeacherButton"
         android:layout_marginBottom="25dp"
         android:text="Alumno"
         android:background="@drawable/ic_button_red"
@@ -42,11 +42,11 @@
         android:textSize="20dp"/>
 
     <Button
-        android:id="@+id/BotonInvitado"
+        android:id="@+id/GuestButton"
         android:layout_width="150dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"
-        android:layout_above="@+id/BotonAlumno"
+        android:layout_above="@+id/StudentButton"
         android:layout_marginBottom="25dp"
         android:background="@drawable/ic_button_red"
         android:text="Invitado"
@@ -57,7 +57,7 @@
         android:layout_width="503px"
         android:layout_height="207px"
         android:layout_centerInParent="true"
-        android:layout_above="@+id/BotonInvitado"
+        android:layout_above="@+id/GuestButton"
         android:src="@drawable/name"
         android:layout_marginBottom="100dp"
 

@@ -40,7 +40,7 @@
         />
 
     <EditText
-        android:id="@+id/etCorreoLogin"
+        android:id="@+id/etEmailLogin"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"

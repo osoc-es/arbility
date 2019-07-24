@@ -9,10 +9,10 @@ import android.widget.Button;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    private Button guestButton;
-    private Button btnProfesor;
-    private Button btnCentro;
-    private Button btnAlumno;
+    private Button btnGuest;
+    private Button btnTeacher;
+    private Button btnCenter;
+    private Button btnStudent;
 
 
     @Override
@@ -20,32 +20,34 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        guestButton = (Button)findViewById(R.id.BotonInvitado);
-        btnProfesor = (Button) findViewById( R.id.BotonProfesor );
-        btnAlumno = (Button) findViewById( R.id.BotonAlumno );
-        btnCentro = (Button)findViewById( R.id.BotonRegistrarColegio );
+        btnGuest = (Button)findViewById(R.id.GuestButton);
+        btnTeacher = (Button) findViewById( R.id.TeacherButton);
+        btnStudent = (Button) findViewById( R.id.StudentButton);
+        btnCenter = (Button)findViewById( R.id.RegisterCenterButton);
 
-        guestButton.setOnClickListener(new View.OnClickListener() {
+        btnGuest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { changeWindowTo(GuestActivity.class); }
         });
 
-        btnAlumno.setOnClickListener(new View.OnClickListener() {
+        btnStudent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { changeWindowTo(LoginStudentActivity.class); }
         });
 
-        btnCentro.setOnClickListener( new View.OnClickListener() {
+        btnCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { changeWindowTo( LoginInstitutionActivity.class); }
         } );
 
-        btnProfesor.setOnClickListener( new View.OnClickListener() {
+        btnTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { changeWindowTo( LoginTeacherActivity.class); }
         } );
-
-
     }
 
+    /**
+     * Got to the inputted activity
+     * @param activity activity that will be started
+     */
     void changeWindowTo(Class activity){
         Intent guestActivity = new Intent(this,activity);
         startActivity(guestActivity);

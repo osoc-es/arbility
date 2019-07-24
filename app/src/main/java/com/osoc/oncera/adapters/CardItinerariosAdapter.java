@@ -41,7 +41,7 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
     @Override
     public CardItinerariosAdapter.CardItinerarioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context=parent.getContext();
-        View view= LayoutInflater.from(parent.getContext()).inflate( R.layout.card_datos_itinerario,parent, false);
+        View view= LayoutInflater.from(parent.getContext()).inflate( R.layout.card_itinerary_data,parent, false);
 
         CardItinerarioViewHolder holder = new CardItinerarioViewHolder( view );
         return holder;

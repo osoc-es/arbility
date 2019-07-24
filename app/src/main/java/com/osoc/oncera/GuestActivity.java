@@ -10,43 +10,39 @@ import android.widget.LinearLayout;
 
 
 public class GuestActivity extends AppCompatActivity {
-    ImageButton botonSalir;
+    ImageButton btnBack;
+    LinearLayout btnDoor;
 
-    LinearLayout botonAseos;
-    LinearLayout botonPuertas;
+    LinearLayout btnIlum;
+    LinearLayout btnElevator;
+    LinearLayout btnCounter;
+    LinearLayout btnRamp;
+    LinearLayout btnChairLift;
+    LinearLayout btnEmergencies;
 
-    LinearLayout botonIlum;
-    LinearLayout botonAscensor;
-    LinearLayout botonMostrador;
-    LinearLayout botonRampa;
-    LinearLayout botonSalvaescaleras;
-    LinearLayout botonEstancias;
-    LinearLayout botonPasillos;
-    LinearLayout botonEmergencias;
-
-    LinearLayout botonSimulacion;
+    LinearLayout btnSimulation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest);
 
-        botonSalir = (ImageButton)findViewById(R.id.btnBack);
+        btnBack = (ImageButton)findViewById(R.id.btnBack);
 
 
-         botonPuertas= (LinearLayout)findViewById(R.id.BotonPuertas) ;
-         botonIlum = (LinearLayout)findViewById(R.id.BotonIluminacion);
-         botonAscensor= (LinearLayout)findViewById(R.id.BotonAscensores);
-         botonMostrador= (LinearLayout)findViewById(R.id.BotonMostradores);
-         botonRampa= (LinearLayout)findViewById(R.id.BotonRampas);
-         botonSalvaescaleras= (LinearLayout)findViewById(R.id.BotonSalvaescaleras);
+        btnDoor = (LinearLayout)findViewById(R.id.btnDoor) ;
+        btnIlum = (LinearLayout)findViewById(R.id.btnIlum);
+        btnElevator = (LinearLayout)findViewById(R.id.btnElevator);
+        btnCounter = (LinearLayout)findViewById(R.id.btnCounter);
+        btnRamp = (LinearLayout)findViewById(R.id.btnRamp);
+        btnChairLift = (LinearLayout)findViewById(R.id.btnChairLift);
 
-         botonEmergencias= (LinearLayout)findViewById(R.id.BotonEmergencias);
+        btnEmergencies = (LinearLayout)findViewById(R.id.btnEmergencies);
 
-        botonSimulacion = (LinearLayout)findViewById(R.id.BotonSimulacion);
+        btnSimulation = (LinearLayout)findViewById(R.id.BotonSimulacion);
 
 
-        botonSalir.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -55,42 +51,42 @@ public class GuestActivity extends AppCompatActivity {
 
 
 
-        botonPuertas.setOnClickListener(new View.OnClickListener() {
+        btnDoor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.DOOR);
             }
         });
-        botonIlum.setOnClickListener(new View.OnClickListener() {
+        btnIlum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ILLUM);
             }
         });
-        botonAscensor.setOnClickListener(new View.OnClickListener() {
+        btnElevator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ELEVATOR);
             }
         });
-        botonMostrador.setOnClickListener(new View.OnClickListener() {
+        btnCounter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { changeWindowTo(MeasureCounter.class);}
         });
-        botonRampa.setOnClickListener(new View.OnClickListener() {
+        btnRamp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.RAMPS);
             }
         });
-        botonSalvaescaleras.setOnClickListener(new View.OnClickListener() {
+        btnChairLift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.STAIRLIFTER);
             }
         });
 
-        botonEmergencias.setOnClickListener(new View.OnClickListener() {
+        btnEmergencies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.EMERGENCY);
@@ -99,7 +95,7 @@ public class GuestActivity extends AppCompatActivity {
 
 
 
-        botonSimulacion.setOnClickListener(new View.OnClickListener() {
+        btnSimulation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeWindowTo(WheelchairSimulation.class);
@@ -109,12 +105,20 @@ public class GuestActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Start the activity that is passed
+     * @param activity
+     */
     public void changeWindowTo(Class activity){
         Intent guestActivity = new Intent(this,activity);
         startActivity(guestActivity);
     }
 
+    /**
+     * Start LegalInfoActivity with the legal information corresponding to the obstacle type
+     * @param activity activity to be started (LegalInfoActivty)
+     * @param _type obstacle type
+     */
     void changeWindowTo(Class activity,TypesManager.obsType _type){
         Intent guestActivity = new Intent(this,activity);
         guestActivity.putExtra("obsType",_type.getValue());

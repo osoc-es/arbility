@@ -25,14 +25,14 @@ import com.osoc.oncera.javabean.Institution;
 
 public class InstitutionCodeActivity extends AppCompatActivity {
 
-    TextView codigo;
-    Button copiar;
+    TextView tvCode;
+    Button btnCopy;
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser usuario;
+    private FirebaseUser user;
 
-    private String emailPersona;
-    private String codCentro;
-    private ImageButton atras;
+    private String email;
+    private String centerCode;
+    private ImageButton btnBack;
 
     private final Institution[] cen = new Institution[1];
     private DatabaseReference mDatabaseRef;
@@ -40,35 +40,29 @@ public class InstitutionCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_sesion_centro );
+        setContentView( R.layout.activity_center_session);
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference( "Users" );
         firebaseAuth = FirebaseAuth.getInstance();
-        usuario = firebaseAuth.getCurrentUser();
-        emailPersona = usuario.getEmail();
-        System.out.println( emailPersona );
+        user = firebaseAuth.getCurrentUser();
+        email = user.getEmail();
+        System.out.println(email);
 
 
-        codigo = (TextView) findViewById( R.id.tvCodCentro );
-        copiar = (Button) findViewById( R.id.btnCopiarCod );
-        atras = (ImageButton) findViewById(R.id.btnBack);
+        tvCode = (TextView) findViewById( R.id.tvCenterCode);
+        btnCopy = (Button) findViewById( R.id.btnCopyCod);
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
         loadCenterCode();
 
-        copiar.setOnClickListener( new View.OnClickListener() {
+        btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = codigo.getText().toString();
-                ClipboardManager clipboard = (ClipboardManager) getSystemService( Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("text",  text);
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText( InstitutionCodeActivity.this, "Copiado en el Portapapeles", Toast.LENGTH_LONG ).show();
-
-
+                copyCodeClipboard();
             }
         } );
 
-        atras.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -76,8 +70,22 @@ public class InstitutionCodeActivity extends AppCompatActivity {
         });
     }
 
-    public void loadCenterCode(){
-        Query qq1 = mDatabaseRef.orderByChild("mail").equalTo(emailPersona);
+    /**
+     * Copy the displayed center code to the clipboard
+     */
+    private void copyCodeClipboard(){
+        String text = tvCode.getText().toString();
+        ClipboardManager clipboard = (ClipboardManager) getSystemService( Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("text",  text);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText( InstitutionCodeActivity.this, "Copiado en el Portapapeles", Toast.LENGTH_LONG ).show();
+    }
+
+    /**
+     * Get the center code and display it
+     */
+    private void loadCenterCode(){
+        Query qq1 = mDatabaseRef.orderByChild("mail").equalTo(email);
 
         qq1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -87,20 +95,17 @@ public class InstitutionCodeActivity extends AppCompatActivity {
                         cen[0] = dataSnapshot1.getValue(Institution.class);
                 }
 
-                if (emailPersona.equals( cen[0].getMail() )){
+                if (email.equals( cen[0].getMail() )){
 
-                    codCentro=cen[0].getCenterCode();
+                    centerCode =cen[0].getCenterCode();
 
-                    codigo.setText( codCentro );
+                    tvCode.setText(centerCode);
                 }
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
     }
 }

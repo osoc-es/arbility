@@ -44,7 +44,7 @@
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:id="@+id/BotonPuertas"
+        android:id="@+id/btnDoor"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp"
         >
@@ -87,7 +87,7 @@
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:id="@+id/BotonIluminacion"
+        android:id="@+id/btnIlum"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp"
         >
@@ -126,7 +126,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:id="@+id/BotonAscensores"
+        android:id="@+id/btnElevator"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp">
 
@@ -164,7 +164,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:id="@+id/BotonMostradores"
+        android:id="@+id/btnCounter"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp">
 
@@ -201,7 +201,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:id="@+id/BotonRampas"
+        android:id="@+id/btnRamp"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp">
 
@@ -239,7 +239,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:id="@+id/BotonSalvaescaleras"
+        android:id="@+id/btnChairLift"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp">
 
@@ -277,7 +277,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:id="@+id/BotonEmergencias"
+        android:id="@+id/btnEmergencies"
         android:background="@drawable/ic_roundback"
         android:layout_marginBottom="5dp"
         >

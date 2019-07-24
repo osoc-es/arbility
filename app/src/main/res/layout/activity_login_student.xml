@@ -55,7 +55,7 @@
 
 
     <Button
-        android:id="@+id/btnItinerario"
+        android:id="@+id/btnItinerary"
         android:layout_width="283dp"
         android:layout_height="52dp"
         android:layout_alignParentStart="true"

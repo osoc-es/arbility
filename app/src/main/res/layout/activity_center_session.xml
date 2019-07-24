@@ -24,7 +24,7 @@
         tools:ignore="VectorDrawableCompat"/>
 
     <TextView
-        android:id="@+id/tvCodCentro"
+        android:id="@+id/tvCenterCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnCopiarCod"
+        android:id="@+id/btnCopyCod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

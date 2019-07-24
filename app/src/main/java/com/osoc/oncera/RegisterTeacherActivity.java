@@ -55,7 +55,7 @@ public class RegisterTeacherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_register_profesor );
+        setContentView( R.layout.activity_register_teacher);
 
         centerCode = (EditText) findViewById( R.id.etCenterCodeTeacher);
         etname = (EditText) findViewById( R.id.etAlias );

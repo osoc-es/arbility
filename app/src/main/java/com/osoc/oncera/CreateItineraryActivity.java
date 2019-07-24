@@ -90,7 +90,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crear_itinerario);
+        setContentView(R.layout.activity_new_itinerary);
 
 
 
@@ -277,7 +277,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
 
     void guardarDialog() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder( CreateItineraryActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_guardar_itinerario, null);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_save_itinerary, null);
 
         EditText title = (EditText) mView.findViewById(R.id.et_title);
         EditText description = (EditText) mView.findViewById(R.id.et_desc);
@@ -375,7 +375,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
                     if (itinerario[0] != null) {
 
                         if (itinerario[0].getItineraryCode().equals( codItinerario ) && codItinerario != null) {
-                            Toast.makeText( CreateItineraryActivity.this, "Generando codigo Itinerario", Toast.LENGTH_LONG ).show();
+                            Toast.makeText( CreateItineraryActivity.this, "Generando tvCode Itinerario", Toast.LENGTH_LONG ).show();
                             repetido[0] = true;
                         }
 

@@ -47,7 +47,7 @@ public class TeacherItineraryList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_itinerarios_profesor );
+        setContentView( R.layout.activity_teacher_itinerary_list);
 
         rv = findViewById( R.id.rvItinerary);
         rv.setLayoutManager( new LinearLayoutManager( this ) );
