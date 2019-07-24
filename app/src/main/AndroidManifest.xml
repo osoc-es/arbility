@@ -29,6 +29,15 @@
             android:name=".LoginStudentActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ItineraryMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateItineraryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TeacherItineraryList"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".WheelchairSimulation"
             android:screenOrientation="portrait" />
         <activity
