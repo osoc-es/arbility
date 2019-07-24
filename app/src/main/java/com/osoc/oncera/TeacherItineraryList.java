@@ -33,7 +33,7 @@ public class TeacherItineraryList extends AppCompatActivity {
     RecyclerView rv;
 
     ArrayList<Itinerary> itineraries;
-    private final DatabaseReference mDatabaseRef =  FirebaseDatabase.getInstance().getReference("Users");
+    private  DatabaseReference mDatabaseRef;
     CardItinerariosAdapter adapter;
     FirebaseUser firebaseUser;
     Button bntAdd;
@@ -41,8 +41,6 @@ public class TeacherItineraryList extends AppCompatActivity {
     String emailPerson;
 
     private final Teacher[] prf = new Teacher[1];
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +51,6 @@ public class TeacherItineraryList extends AppCompatActivity {
         rv.setLayoutManager( new LinearLayoutManager( this ) );
 
         itineraries = new ArrayList<>();
-
-        FirebaseDatabase databse = FirebaseDatabase.getInstance();
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         emailPerson = firebaseUser.getEmail();
@@ -67,9 +63,16 @@ public class TeacherItineraryList extends AppCompatActivity {
 
         obtenerProfesor();
 
-        databse.getReference( "Itineraries" ).addValueEventListener( new ValueEventListener() {
+
+        mDatabaseRef =  FirebaseDatabase.getInstance().getReference("Itineraries");
+
+        Query qq = mDatabaseRef;
+
+        qq.addValueEventListener( new ValueEventListener()
+        {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
                 itineraries.removeAll(itineraries);
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Itinerary iti = dataSnapshot1.getValue( Itinerary.class );
@@ -81,6 +84,9 @@ public class TeacherItineraryList extends AppCompatActivity {
 
                 }
                 adapter.notifyDataSetChanged();
+
+                qq.removeEventListener(this);
+
             }
 
             @Override
@@ -128,16 +134,24 @@ public class TeacherItineraryList extends AppCompatActivity {
     /**
      * get Teacher object with the mail of the logged user
      */
-    private void obtenerProfesor(){
+    private void obtenerProfesor()
+    {
+        mDatabaseRef =  FirebaseDatabase.getInstance().getReference("Users");
+
         Query qq4 = mDatabaseRef.orderByChild( "mail" ).equalTo(emailPerson);
 
-        qq4.addListenerForSingleValueEvent( new ValueEventListener() {
+        qq4.addListenerForSingleValueEvent( new ValueEventListener()
+        {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
 
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
                     prf[0] = dataSnapshot1.getValue( Teacher.class );
                 }
+
+                qq4.removeEventListener(this);
             }
 
             @Override
@@ -146,6 +160,7 @@ public class TeacherItineraryList extends AppCompatActivity {
 
             }
         } );
+
     }
 }
 
