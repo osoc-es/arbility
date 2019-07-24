@@ -303,6 +303,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
                     dialogInterface.dismiss();
                     finish();
 
+
                 }else{
                     Toast.makeText( CreateItineraryActivity.this, "Debes introducir Titulo y Desripcion", Toast.LENGTH_SHORT ).show();
                 }

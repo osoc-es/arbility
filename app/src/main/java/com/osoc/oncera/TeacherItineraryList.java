@@ -63,7 +63,31 @@ public class TeacherItineraryList extends AppCompatActivity {
 
         obtenerProfesor();
 
+       updateItineraries();
 
+        bntAdd = findViewById( R.id.btnAddItinerary);
+        btnDel = findViewById( R.id.btnDeleteItinerary);
+
+        rv.setHasFixedSize( true );
+
+        //loadCenterCode();
+
+        bntAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newItineraryDialog();
+            }
+        } );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateItineraries();
+    }
+
+    private void updateItineraries() {
         mDatabaseRef =  FirebaseDatabase.getInstance().getReference("Itineraries");
 
         Query qq = mDatabaseRef;
@@ -77,10 +101,10 @@ public class TeacherItineraryList extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Itinerary iti = dataSnapshot1.getValue( Itinerary.class );
 
-                   if(iti.getTeacherAlias().equals(prf[0].getAlias()) && iti.getCode().equals(prf[0].getCenterCode()))
-                   {
-                       itineraries.add( iti );
-                   }
+                    if(iti.getTeacherAlias().equals(prf[0].getAlias()) && iti.getCode().equals(prf[0].getCenterCode()))
+                    {
+                        itineraries.add( iti );
+                    }
 
                 }
                 adapter.notifyDataSetChanged();
@@ -92,20 +116,6 @@ public class TeacherItineraryList extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        } );
-
-        bntAdd = findViewById( R.id.btnAddItinerary);
-        btnDel = findViewById( R.id.btnDeleteItinerary);
-
-        rv.setHasFixedSize( true );
-
-        //loadCenterCode();
-
-        bntAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newItineraryDialog();
             }
         } );
     }
@@ -123,6 +133,7 @@ public class TeacherItineraryList extends AppCompatActivity {
                         //TODO METODOS
                         Intent i = new Intent(TeacherItineraryList.this, CreateItineraryActivity.class);
                         startActivity(i);
+
                     }
                 } ).setNegativeButton( "Cancelar", null );
 

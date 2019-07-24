@@ -3,6 +3,7 @@ package com.osoc.oncera;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public final class TypesManager {
 
     public static final  String OBS_TYPE = "obsType";

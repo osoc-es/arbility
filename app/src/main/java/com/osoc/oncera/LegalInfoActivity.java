@@ -64,12 +64,11 @@ public class LegalInfoActivity extends AppCompatActivity {
         else if (type == TypesManager.obsType.DOOR)  descText = getString(R.string.descPuertas);
         else if (type == TypesManager.obsType.ILLUM)  descText = getString(R.string.descIlum);
         else if (type == TypesManager.obsType.ELEVATOR)  descText = getString(R.string.descAscensor);
-        else if (type == TypesManager.obsType.STAIRLIFTER)  descText = getString(R.string.descMostrador);
+        else if (type == TypesManager.obsType.ATTPOINT)  descText = getString(R.string.descMostrador);
         else if (type == TypesManager.obsType.RAMPS)  descText = getString(R.string.descRampa);
         else if (type == TypesManager.obsType.STAIRLIFTER)  descText = getString(R.string.descSalvaescaleras);
-        else if (type == TypesManager.obsType.ROOM)  descText = getString(R.string.descEstancias);
-        else if (type == TypesManager.obsType.STAIRLIFTER)  descText = getString(R.string.descPasillos);
         else if (type == TypesManager.obsType.EMERGENCY)  descText = getString(R.string.descEmergencias);
+
 
         desc.setText(descText);
 

@@ -71,7 +71,7 @@ public class GuestActivity extends AppCompatActivity {
         });
         btnCounter.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { changeWindowTo(MeasureCounter.class);}
+            public void onClick(View view) { changeWindowTo(LegalInfoActivity.class,TypesManager.obsType.ATTPOINT);}
         });
         btnRamp.setOnClickListener(new View.OnClickListener() {
             @Override
