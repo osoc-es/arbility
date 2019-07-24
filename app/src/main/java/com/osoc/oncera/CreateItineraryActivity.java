@@ -142,7 +142,8 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 // TODO generate obstacle id
                 String id = null;
                 list_obst.add(new Obstacles(id,
@@ -155,6 +156,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
                 order++;
                 btn_confirm.setEnabled(false);
                 // TODO guardar Obstacles en firebase
+
             }
         });
 
@@ -164,6 +166,8 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
             @Override
             public void onClick(View view) {
                 saveItineraryDialog();
+
+
             }
         });
 
@@ -300,6 +304,8 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
                     descripcion = description.getText().toString().trim();
                     saveItinerary();
                     dialogInterface.dismiss();
+                    finish();
+
                 }else{
                     Toast.makeText( CreateItineraryActivity.this, "Debes introducir Titulo y Desripcion", Toast.LENGTH_SHORT ).show();
                 }

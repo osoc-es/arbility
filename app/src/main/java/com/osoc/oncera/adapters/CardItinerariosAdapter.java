@@ -28,13 +28,15 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
     List<Itinerary> mLista;
     DatabaseReference reference;
     String nombre, descripcion, codigoItinerario, uid, codigoDelCentro, aliasProfesor;
+
+    Itinerary [] iti = new Itinerary[1];
     private Context context;
 
     private final Teacher[] teacher = new Teacher[1];
 
     public CardItinerariosAdapter(List<Itinerary> mLista) {
         this.mLista = mLista;
-        reference= FirebaseDatabase.getInstance().getReference("Itinerarios");
+        reference= FirebaseDatabase.getInstance().getReference("Itineraries");
     }
 
     @NonNull
@@ -74,10 +76,13 @@ public class CardItinerariosAdapter extends RecyclerView.Adapter<CardItinerarios
 
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    reference= FirebaseDatabase.getInstance().getReference("Itineraries");
+
                                     mLista.remove(mLista.get(position).getId());
                                     reference.child(mLista.get(position).getId()).removeValue();
                                     removeAt(position);
                                     notifyDataSetChanged();
+
                                 }
                             } ).setNegativeButton( "Cancelar", null );
 
