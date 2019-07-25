@@ -1,0 +1,72 @@
+{
+  "Standards" : {
+    "AttPoint" : {
+      "FreeLowerSpaceDepth" : 50,
+      "FreeLowerSpaceHeight" : 70,
+      "FreeLowerSpaceWidth" : 80,
+      "WorkFlatHeight" : 85,
+      "WorkFlatWidth" : 80
+    },
+    "Door" : {
+      "Height" : 200,
+      "Width" : 80,
+      "maxOpeningMec" : 120,
+      "minOpeningMec" : 80
+    },
+    "Elevator" : {
+      "AudioMark" : true,
+      "AutoClosing" : true,
+      "BrailleButtons" : true,
+      "Depth" : 140,
+      "StallDistance" : 2,
+      "Width" : 110,
+      "fDiffHeight" : 1
+    },
+    "Emergency" : {
+      "EmergencyLightning" : true,
+      "Simulation" : true
+    },
+    "Illuminance" : {
+      "Indoor" : 300,
+      "Outdoor" : 100,
+      "maxIndoorWR" : 200,
+      "minIndoorWR" : 150
+    },
+    "Ramps" : {
+      "Case1" : {
+        "Length" : 300,
+        "Slope" : 10
+      },
+      "Case2" : {
+        "Slope" : 8,
+        "maxLength" : 600,
+        "minLength" : 300
+      },
+      "Case3" : {
+        "Slope" : 6,
+        "maxLength" : 900,
+        "minLength" : 600
+      },
+      "Diameter" : 150,
+      "Width" : 120,
+      "maxHandRailHeight" : 75,
+      "minHandRailHeight" : 60
+    },
+    "Room" : {
+      "AudioSystem" : true,
+      "Diameter" : 150,
+      "FurnitureSep" : 80,
+      "Ramp" : true,
+      "ReservedSeats" : true
+    },
+    "StairLift" : {
+      "Charge" : 250,
+      "DisembarkationControl" : true,
+      "Length" : 100,
+      "PlatformControl" : true,
+      "ShipmentControl" : true,
+      "Velocity" : 0.15,
+      "Width" : 70
+    }
+  }
+}
