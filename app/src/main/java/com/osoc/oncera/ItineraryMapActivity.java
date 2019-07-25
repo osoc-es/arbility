@@ -58,6 +58,7 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
     private GeoJsonSource geoJsonSource;
 
     private final Itinerary[] iti = new Itinerary[1];
+    private final String API_KEY = "YOUR_TOKEN";
     private ArrayList<Obstacles> obs;
 
     private String itineraryCode;
@@ -72,7 +73,7 @@ public class ItineraryMapActivity extends AppCompatActivity implements OnMapRead
         itineraryCode = bundle.getString( "itineraryCode" );
         loadItinerary();
 
-        Mapbox.getInstance(this, "pk.eyJ1IjoiZm9uY2UiLCJhIjoiY2p4b3B1NG53MDhsbTNjbnYzMXNpbjRjYiJ9.MkBM2G0smC9aOJ_IS804xg");
+        Mapbox.getInstance(this, API_KEY);
         setContentView(R.layout.activity_itinerary_map);
 
         mapView = findViewById(R.id.mapView);
