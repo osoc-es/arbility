@@ -193,7 +193,7 @@ public class CreateItineraryActivity extends AppCompatActivity implements Adapte
     //Performing action onItemSelected and onNothing selected
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-        //Toast.makeText(getApplicationContext(),access[position] , Toast.LENGTH_LONG).show();
+
 
         if (access[position] == "Rampa") {
             imgIcon.setImageResource(R.drawable.rampas);

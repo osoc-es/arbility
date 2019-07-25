@@ -29,9 +29,7 @@ public class RegisterInstitutionActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etAddress;
     private EditText etPassword, etPasswordRepeat;
-    private ProgressDialog progressDialog;
     private Button btnRegister;
-    private Button btnValidate;
     private ImageButton btnBack;
 
 
@@ -47,9 +45,6 @@ public class RegisterInstitutionActivity extends AppCompatActivity {
     private String city;
     private String address;
     private Boolean validateCenter;
-
-    private String emailDani;
-
 
     private Institution institution;
 
@@ -77,11 +72,16 @@ public class RegisterInstitutionActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPasswordReg);
         etPasswordRepeat = (EditText) findViewById(R.id.etPasswordRepeat);
         btnRegister = (Button) findViewById( R.id.btnRegisterInstitution);
-        btnValidate = (Button) findViewById( R.id.btnValidate);
-        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
-        //progressDialog = new ProgressDialog(this);
-        emailDani = "danisom1b@gmail.com";
+        btnRegister.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                register();
+            }
+        } );
+
+
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +92,9 @@ public class RegisterInstitutionActivity extends AppCompatActivity {
     }
 
     /**
-     * Save new Institution in the database or generate an error message
-     * @param v view taken as a parameter
+     * Save new Institution in the database or generate an error message5
      */
-    private void register(View v) {
+    private void register() {
         String warning = validarDatos();
 
         if (warning == null) {
@@ -121,6 +120,7 @@ public class RegisterInstitutionActivity extends AppCompatActivity {
                                     Toast.makeText( RegisterInstitutionActivity.this, "Registrado Correcto, Valídalo para porder Loguearte", Toast.LENGTH_LONG ).show();
 
                                     btnRegister.setVisibility(View.INVISIBLE);
+                                    finish();
 
 
                             } else {
@@ -138,13 +138,6 @@ public class RegisterInstitutionActivity extends AppCompatActivity {
 
     }
 
-
-    private void validar(View v){
-        Intent i = new Intent( Intent.ACTION_VIEW, Uri.parse( "mailto:" + emailDani) );
-        i.putExtra(Intent.EXTRA_SUBJECT, etName.getText().toString());
-        i.putExtra(Intent.EXTRA_TEXT, etAddress.getText().toString());
-        startActivity( i );
-    }
 
     /**
      * Check whether all the data entered is correct

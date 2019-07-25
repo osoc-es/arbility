@@ -175,7 +175,7 @@ public class RegisterTeacherActivity extends AppCompatActivity {
      * error on the contrary
      * @param v
      */
-    private void checkUniqueAlias(View v){
+    public void checkUniqueAlias(View v){
         RegisterTeacherActivity.this.alias = etname.getText().toString().trim();
         Query qq4 = mDatabaseRef.orderByChild( "alias" ).equalTo( alias ).limitToFirst( 1 );
         qq4.addListenerForSingleValueEvent( new ValueEventListener() {

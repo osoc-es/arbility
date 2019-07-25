@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.admin.administrador.adapter.Adapter;
 import com.example.admin.administrador.javabean.Centro;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rv;
+    private  DatabaseReference mDatabaseRef;
 
     ArrayList<Centro> centros;
 
@@ -41,25 +44,33 @@ public class MainActivity extends AppCompatActivity {
 
         centros = new ArrayList<>();
 
-        FirebaseDatabase databse = FirebaseDatabase.getInstance();
 
         adapter = new Adapter( centros );
 
         rv.setAdapter( adapter );
 
         adapter.notifyDataSetChanged();
+        mDatabaseRef =  FirebaseDatabase.getInstance().getReference().child( "Users" );
+        final Query qq = mDatabaseRef;
 
-        databse.getReference().child( "Users" ).addValueEventListener( new ValueEventListener() {
+        qq.addValueEventListener( new ValueEventListener()
+        {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 centros.removeAll( centros );
-                for (DataSnapshot snapshost : dataSnapshot.getChildren()) {
-                    Centro centro = snapshost.getValue( Centro.class );
-                    centros.add( centro );
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Centro centro = dataSnapshot1.getValue( Centro.class );
+                    if (centro!=null) {
+                        centros.add( centro );
+
+                    }else{
+                        Toast.makeText( MainActivity.this, "Error en la Base de Datos", Toast.LENGTH_SHORT ).show();
+                    }
+
                 }
                 adapter.notifyDataSetChanged();
 
-
+               qq.removeEventListener( this );
             }
 
 
@@ -70,4 +81,6 @@ public class MainActivity extends AppCompatActivity {
         } );
 
     }
+
+
 }

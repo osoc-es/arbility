@@ -84,7 +84,19 @@ public class InstitutionCodeActivity extends AppCompatActivity {
     /**
      * Get the center code and display it
      */
-    private void loadCenterCode(){
+    /*private void loadCenterCode(){
+        Query qq1 = mDatabaseRef.orderByChild("mail").equalTo(email);
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }*/
+
+    public void loadCenterCode(){
+
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Users");
         Query qq1 = mDatabaseRef.orderByChild("mail").equalTo(email);
 
         qq1.addListenerForSingleValueEvent(new ValueEventListener() {
