@@ -1,4 +1,6 @@
 # arbility
+![arbility logo](https://github.com/osoc-es/arbility/blob/master/app/src/main/res/drawable/name.png)
+
 To clone the repository execute the command
 `git clone https://github.com/osoc-es/arbility.git`
 
