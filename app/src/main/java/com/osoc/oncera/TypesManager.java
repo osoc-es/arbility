@@ -17,7 +17,6 @@ public final class TypesManager {
     public static final String SIMULATION_OBS = "Simulacion";
 
 
-
     public enum obsType {
         ASEOS(1),
         DOOR(2),

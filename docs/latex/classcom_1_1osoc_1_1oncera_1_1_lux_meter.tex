@@ -1,0 +1,97 @@
+\hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter}{}\section{com.\+osoc.\+oncera.\+Lux\+Meter Class Reference}
+\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter}\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+Inheritance diagram for com.\+osoc.\+oncera.\+Lux\+Meter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcom_1_1osoc_1_1oncera_1_1_lux_meter}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aff48623612061b570410ee97e14a7664}{on\+Sensor\+Changed}} (Sensor\+Event sensor\+Event)
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_ae966bff7c1ad0c42e975596582103cf5}{on\+Accuracy\+Changed}} (Sensor sensor, int i)
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aeba7eb0c74354876c8df7a03e7ede8a4}{on\+Item\+Selected}} (Adapter\+View$<$?$>$ adapter\+View, View view, int i, long l)
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_afd145bd9d12862d9dcdacba78a59b943}{on\+Nothing\+Selected}} (Adapter\+View$<$?$>$ adapter\+View)
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aa62bb970de63f2e2dc33ce51b81f4cd1}{Measure}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_ab838cd3f14db334069325c11836b6df6}{Confirm}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a2faafc9b2da286b7c0aa3be82959073a}{Hide\+Instructions}} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a29325bd8ae0a741d85655bdc82119362}{on\+Create}} (Bundle saved\+Instance\+State)
+\item 
+void \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a00598d35cc0be971acfe11904f60f9ff}{on\+Resume}} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Activity that measures the light in lx using the phone sensors and evaluates its accessibility using the database standards and passes to \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_accessibility_checker}{Accessibility\+Checker}} activity. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_ab838cd3f14db334069325c11836b6df6}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_ab838cd3f14db334069325c11836b6df6}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!Confirm@{Confirm}}
+\index{Confirm@{Confirm}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{Confirm()}{Confirm()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+Confirm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Illumination values check based on location using standards. Accessibility\textquotesingle{}s message and obstacle state update and pass to \mbox{\hyperlink{classcom_1_1osoc_1_1oncera_1_1_accessibility_checker}{Accessibility\+Checker}} activity \mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a2faafc9b2da286b7c0aa3be82959073a}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a2faafc9b2da286b7c0aa3be82959073a}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!HideInstructions@{HideInstructions}}
+\index{HideInstructions@{HideInstructions}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{HideInstructions()}{HideInstructions()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+Hide\+Instructions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Hides the instructions text when clicked on \mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aa62bb970de63f2e2dc33ce51b81f4cd1}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aa62bb970de63f2e2dc33ce51b81f4cd1}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!Measure@{Measure}}
+\index{Measure@{Measure}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{Measure()}{Measure()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+Measure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+If instructions\textquotesingle{} are hidden shows the sensor value in lx and saves it into illumination obstacle \mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_ae966bff7c1ad0c42e975596582103cf5}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_ae966bff7c1ad0c42e975596582103cf5}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!onAccuracyChanged@{onAccuracyChanged}}
+\index{onAccuracyChanged@{onAccuracyChanged}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{onAccuracyChanged()}{onAccuracyChanged()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+on\+Accuracy\+Changed (\begin{DoxyParamCaption}\item[{Sensor}]{sensor,  }\item[{int}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a29325bd8ae0a741d85655bdc82119362}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a29325bd8ae0a741d85655bdc82119362}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!onCreate@{onCreate}}
+\index{onCreate@{onCreate}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{onCreate()}{onCreate()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+on\+Create (\begin{DoxyParamCaption}\item[{Bundle}]{saved\+Instance\+State }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aeba7eb0c74354876c8df7a03e7ede8a4}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aeba7eb0c74354876c8df7a03e7ede8a4}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!onItemSelected@{onItemSelected}}
+\index{onItemSelected@{onItemSelected}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{onItemSelected()}{onItemSelected()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+on\+Item\+Selected (\begin{DoxyParamCaption}\item[{Adapter\+View$<$?$>$}]{adapter\+View,  }\item[{View}]{view,  }\item[{int}]{i,  }\item[{long}]{l }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_afd145bd9d12862d9dcdacba78a59b943}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_afd145bd9d12862d9dcdacba78a59b943}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!onNothingSelected@{onNothingSelected}}
+\index{onNothingSelected@{onNothingSelected}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{onNothingSelected()}{onNothingSelected()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+on\+Nothing\+Selected (\begin{DoxyParamCaption}\item[{Adapter\+View$<$?$>$}]{adapter\+View }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a00598d35cc0be971acfe11904f60f9ff}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_a00598d35cc0be971acfe11904f60f9ff}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!onResume@{onResume}}
+\index{onResume@{onResume}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{onResume()}{onResume()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+on\+Resume (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aff48623612061b570410ee97e14a7664}\label{classcom_1_1osoc_1_1oncera_1_1_lux_meter_aff48623612061b570410ee97e14a7664}} 
+\index{com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}!onSensorChanged@{onSensorChanged}}
+\index{onSensorChanged@{onSensorChanged}!com.osoc.oncera.LuxMeter@{com.osoc.oncera.LuxMeter}}
+\subsubsection{\texorpdfstring{onSensorChanged()}{onSensorChanged()}}
+{\footnotesize\ttfamily void com.\+osoc.\+oncera.\+Lux\+Meter.\+on\+Sensor\+Changed (\begin{DoxyParamCaption}\item[{Sensor\+Event}]{sensor\+Event }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/\+Escritorio/\+Nueva carpeta/\mbox{\hyperlink{_lux_meter_8java}{Lux\+Meter.\+java}}\end{DoxyCompactItemize}
