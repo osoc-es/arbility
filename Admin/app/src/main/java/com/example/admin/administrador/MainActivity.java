@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     Adapter adapter;
 
+    String nombre, ciudad, direccion;
+    Boolean validar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,37 +53,11 @@ public class MainActivity extends AppCompatActivity {
         rv.setAdapter( adapter );
 
         adapter.notifyDataSetChanged();
-        mDatabaseRef =  FirebaseDatabase.getInstance().getReference().child( "Users" );
-        final Query qq = mDatabaseRef;
 
-        qq.addValueEventListener( new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                centros.removeAll( centros );
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Centro centro = dataSnapshot1.getValue( Centro.class );
-                    if (centro!=null) {
-                        centros.add( centro );
-
-                    }else{
-                        Toast.makeText( MainActivity.this, "Error en la Base de Datos", Toast.LENGTH_SHORT ).show();
-                    }
-
-                }
-                adapter.notifyDataSetChanged();
-
-               qq.removeEventListener( this );
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        } );
 
     }
+
+
 
 
 }

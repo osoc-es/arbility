@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.admin.administrador.MainActivity;
 import com.example.admin.administrador.R;
 import com.example.admin.administrador.javabean.Centro;
 import com.google.firebase.database.DataSnapshot;
@@ -53,6 +54,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CentroViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull Adapter.CentroViewHolder holder, final int position) {
+
+        updateInstitution();
 
         Centro centro = centros.get( position );
 
@@ -177,6 +180,43 @@ holder.btnSi.setOnClickListener( new View.OnClickListener() {
             }
         } );
 
+    }
+
+    public void updateInstitution(){
+
+        {
+            reference =  FirebaseDatabase.getInstance().getReference("Users");
+
+            Query qq = reference;
+
+            qq.addValueEventListener( new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
+                    centros.removeAll(centros);
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        Centro ctr = dataSnapshot1.getValue( Centro.class );
+                        if(ctr.getId()!=null) {
+
+                            Nombre = ctr.getNombre();
+                            Ciudad = ctr.getCiudad();
+                            Direccion = ctr.getDireccion();
+                            Validar = ctr.getValidar();
+
+                        }else{
+                            Toast.makeText( context, "No hay centros", Toast.LENGTH_SHORT ).show();
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            } );
+        }
     }
 
 }
