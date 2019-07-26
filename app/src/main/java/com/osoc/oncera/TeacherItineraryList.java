@@ -100,12 +100,13 @@ public class TeacherItineraryList extends AppCompatActivity {
                 itineraries.removeAll(itineraries);
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Itinerary iti = dataSnapshot1.getValue( Itinerary.class );
-
-                    if(iti.getTeacherAlias().equals(prf[0].getAlias()) && iti.getCode().equals(prf[0].getCenterCode()))
-                    {
-                        itineraries.add( iti );
-                    }
-
+if(iti.getTeacherAlias()!=null) {
+    if (iti.getTeacherAlias().equals( prf[0].getAlias() ) && iti.getCode().equals( prf[0].getCenterCode() )) {
+        itineraries.add( iti );
+    }
+}else{
+    Toast.makeText( TeacherItineraryList.this, "Bienvenido", Toast.LENGTH_SHORT ).show();
+}
                 }
                 adapter.notifyDataSetChanged();
 
